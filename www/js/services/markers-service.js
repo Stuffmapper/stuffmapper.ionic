@@ -4,21 +4,17 @@ angular.module('stuffmobile')
   var markers = [];
  
   return {
-    getMarkers: function(boundObj){
+    getMarkers: function(box){
 
       var url =  ApiEndpoint.url + "/posts/geolocated";
-      console.log('post url ', url);
-      return $http.get({url: url,
-                        params: {
-                          nwLat: boundObj.nwLat,
-                          seLat: boundObj.seLat,
-                          nwLng: boundObj.nwLng,
-                          seLng: boundObj.seLng
-                        }
-          }).then(function(response){
+      return $http({
+        url: url,
+        params: box
+      }).success(function(response){
+        console.log('response from get markers ', response);
           markers = response;
           return markers;
-      }, function (err) {
+      }).error(function(err) {
         console.log('err ', err);
       });
  

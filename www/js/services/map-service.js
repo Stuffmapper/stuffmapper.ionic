@@ -69,18 +69,16 @@ angular.module('stuffmobile')
   }
 
   function getLatLon(map) {
-    var bounds = map.getBounds();
-    console.log('get bounds response ', bounds);
-    console.log('seLon ', bounds.Qa.J);
-    console.log('seLat ', bounds.Ma.J);
-    console.log('nwLat ', bounds.Qa.j);
-    console.log('nwLat ', bounds.Ma.j);
-    return {
-      seLng: bounds.Qa.J,
-      seLat: bounds.Ma.J,
-      nwLng: bounds.Qa.j,
-      nwLat: bounds.Ma.j
-    }
+    var center = map.getCenter();
+    var box = map.getBounds(center, 30);
+    console.log('box ', box);
+    var params = {
+        nwLat: box.Ma.j - 1,
+        seLat: box.Ma.J + 1,
+        nwLng: box.Qa.j + 1,
+        seLng: box.Qa.J -1
+      }
+    return params;
   }
  
   function addInfoWindow(marker, message, record) {
