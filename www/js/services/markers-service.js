@@ -5,17 +5,17 @@ angular.module('stuffmobile')
  
   return {
     getMarkers: function(box){
-
       var url =  ApiEndpoint.url + "/posts/geolocated";
       return $http({
         url: url,
         params: box
-      }).success(function(response){
-        console.log('response from get markers ', response);
-          markers = response;
+      }).then(function(response, err){
+        if (err) {
+          console.log('error ', err);
+          return err;
+        }
+          markers = response.data.posts;
           return markers;
-      }).error(function(err) {
-        console.log('err ', err);
       });
  
     }

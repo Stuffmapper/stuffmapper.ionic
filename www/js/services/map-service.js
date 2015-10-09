@@ -44,12 +44,11 @@ angular.module('stuffmobile')
  
         console.log("Markers: ", markers);
  
-        var records = markers.data.result;
  
-        for (var i = 0; i < records.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
  
-          var record = records[i];   
-          var markerPos = new google.maps.LatLng(record.lat, record.lng);
+          var marker = markers[i];   
+          var markerPos = new google.maps.LatLng(marker.latitude, marker.longitude);
  
           // Add the markerto the map
           var marker = new google.maps.Marker({
@@ -58,9 +57,9 @@ angular.module('stuffmobile')
               position: markerPos
           });
  
-          var infoWindowContent = "<h4>" + record.name + "</h4>";          
+          var infoWindowContent;          
  
-          addInfoWindow(marker, infoWindowContent, record);
+          addInfoWindow(marker, infoWindowContent, marker);
  
         }
  
@@ -73,10 +72,10 @@ angular.module('stuffmobile')
     var box = map.getBounds(center, 30);
     console.log('box ', box);
     var params = {
-        nwLat: box.Ma.j - 1,
-        seLat: box.Ma.J + 1,
-        nwLng: box.Qa.j + 1,
-        seLng: box.Qa.J -1
+        nwLng: box.Ma.j - 1,
+        seLng: box.Ma.J + 1,
+        nwLat: box.Qa.j + 1,
+        seLat: box.Qa.J -1
       }
     return params;
   }
