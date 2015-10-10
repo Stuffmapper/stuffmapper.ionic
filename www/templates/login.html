@@ -1,0 +1,18 @@
+<ion-content>
+  <div class="container-fluid signin" id="signin" ng-controller='UserCtrl as userCtrl'>
+      <h3>Login</h3>
+      <a href="#" ng-click="userCtrl.notSignUp()">Need to sign up?</a>
+     <form >
+        <div class="form-group">
+          <label for="username">Username or Email *</label>
+          <input type="text" class="form-control" id="username" placeholder="Username" ng-model="username">
+          <label for="password">Password *</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" ng-model="password">
+          <a href='#' ng-click='userCtrl.resetPW() ' class='pull-left'>Forgot Password?</a>
+        </div>
+        <button class="btn btn-primary" ng-click="userCtrl.signin()">Sign In</button>
+
+        <button class="btn btn-warning " ng-click="userCtrl.cancel()">Cancel</button>
+      </form>
+  </div>
+</ion-content>

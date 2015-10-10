@@ -30,8 +30,16 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
     templateUrl: 'templates/map.html',
     controller: 'MapCtrl',
     controllerAs: 'mapctrl'
-  });
- 
+  })  
+  .state('user', {
+    url: '/user',
+    templateUrl: 'templates/login.html',
+    controller: 'UserCtrl',
+    controllerAs: 'userCtrl'
+  })
+
+
+
   $urlRouterProvider.otherwise("/");
  
-})
+});

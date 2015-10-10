@@ -1,10 +1,9 @@
 angular.module('stuffmobile')
-.factory('Markers', function($http, ApiEndpoint) {
+.factory('Posts', function($http, ApiEndpoint) {
  
-  var markers = [];
+  var posts = [];
  
-  return {
-    getMarkers: function(box){
+  getPosts = function(box){
       var url =  ApiEndpoint.url + "/posts/geolocated";
       return $http({
         url: url,
@@ -14,10 +13,22 @@ angular.module('stuffmobile')
           console.log('error ', err);
           return err;
         }
-          markers = response.data.posts;
-          return markers;
+          posts = response.data.posts;
+          return posts;
       });
- 
-    }
   }
+  getInfoWindow = function(posts) {
+    var innerContent = "<div ><div id='siteNotice' class='stuff-map-image'></div> <img src=" +
+           posts.image_url + " width='200px' ></img> <div id='bodyContent'> <p>" +
+           posts.description + "</p> </div> </div> </div>";
+    return new google.maps.InfoWindow({
+      content: innerContent
+    })
+  }
+
+  return {
+    getPosts: getPosts,
+    getInfoWindow: getInfoWindow
+  }
+  
 })

@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-.factory('Map', function($cordovaGeolocation, Markers){
+.factory('Map', function($cordovaGeolocation, Posts){
  
   var apiKey = false;
   var map = null;
@@ -30,6 +30,16 @@ angular.module('stuffmobile')
  
     }, function(error){
       console.log("Could not get location");
+
+      var latLng = new google.maps.LatLng(47, -122);
+ 
+      var mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+ 
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
  
         //Load the markers
         loadMarkers();
@@ -40,15 +50,15 @@ angular.module('stuffmobile')
   function loadMarkers(){
       var NeSwBounds = getLatLon(map); 
       //Get all of the markers from our Markers factory
-      Markers.getMarkers(NeSwBounds).then(function(markers){
+      Posts.getPosts(NeSwBounds).then(function(posts){
  
-        console.log("Markers: ", markers);
+        console.log("posts: ", posts);
  
  
-        for (var i = 0; i < markers.length; i++) {
+        for (var i = 0; i < posts.length; i++) {
  
-          var marker = markers[i];   
-          var markerPos = new google.maps.LatLng(marker.latitude, marker.longitude);
+          var post = posts[i];   
+          var markerPos = new google.maps.LatLng(post.latitude, post.longitude);
  
           // Add the markerto the map
           var marker = new google.maps.Marker({
@@ -57,9 +67,7 @@ angular.module('stuffmobile')
               position: markerPos
           });
  
-          var infoWindowContent;          
- 
-          addInfoWindow(marker, infoWindowContent, marker);
+          addInfoWindow(marker, post);
  
         }
  
@@ -72,22 +80,20 @@ angular.module('stuffmobile')
     var box = map.getBounds(center, 30);
     console.log('box ', box);
     var params = {
-        nwLng: box.Ma.j - 1,
-        seLng: box.Ma.J + 1,
-        nwLat: box.Qa.j + 1,
-        seLat: box.Qa.J -1
+        nwLng: box.Ma.j - .5,
+        seLng: box.Ma.J + .5,
+        nwLat: box.Qa.j + .5,
+        seLat: box.Qa.J - .5
       }
     return params;
   }
  
-  function addInfoWindow(marker, message, record) {
+  function addInfoWindow(marker, post) {
  
-      var infoWindow = new google.maps.InfoWindow({
-          content: message
-      });
+      var infoWindow = Posts.getInfoWindow(post);
  
       google.maps.event.addListener(marker, 'click', function () {
-          infoWindow.open(map, marker);
+        infoWindow.open(map, marker);
       });
  
   }
