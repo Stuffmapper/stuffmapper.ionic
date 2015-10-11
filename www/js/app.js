@@ -8,7 +8,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
   url: 'http://localhost:3000/api'
 })
 
-.run(function($ionicPlatform, Map) {
+.run(function($ionicPlatform, $rootScope, Map) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,7 +18,10 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-
+    //keeps track of previous state
+    $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+        $rootScope.$previousState = from;
+    });
     
   });
 })
@@ -31,16 +34,25 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
     templateUrl: 'templates/tabs.html'
   })
   .state('tabs.map', {
-    url: '/map',
+    url: '/get',
     views: {
-      'home-tab': {
+      'get-tab': {
         templateUrl: 'templates/map.html',
         controller: 'MapCtrl',
         controllerAs: 'mapctrl'     
       }
     }
-
-  })  
+  })
+  .state('tabs.givestuff', {
+    url: '/givestuff',
+    views: {
+      'give-tab': {
+        templateUrl: 'templates/give-stuff.html',
+        // controller: 'StuffCtrl',
+        // controllerAs: 'stuffctrl'     
+      }
+    }
+  })   
   .state('user', {
     url: '/user',
     templateUrl: 'templates/login.html',
@@ -50,6 +62,6 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
 
 
 
-  $urlRouterProvider.otherwise("/tabs/map");
+  $urlRouterProvider.otherwise("/tabs/get");
  
 });

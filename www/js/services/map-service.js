@@ -50,7 +50,7 @@ angular.module('stuffmobile')
   function loadMarkers(){
       var NeSwBounds = getLatLon(map); 
       //Get all of the markers from our Markers factory
-      Posts.getPosts(NeSwBounds).then(function(posts){
+      PostsService.getPosts(NeSwBounds).then(function(posts){
  
         console.log("posts: ", posts);
  
@@ -90,7 +90,7 @@ angular.module('stuffmobile')
  
   function addInfoWindow(marker, post) {
  
-      var infoWindow = Posts.getInfoWindow(post);
+      var infoWindow = PostsService.getInfoWindow(post);
  
       google.maps.event.addListener(marker, 'click', function () {
         infoWindow.open(map, marker);
