@@ -1,6 +1,6 @@
 angular.module('stuffmobile')
 
-.factory('UserService', function($http, $q, LocalService, ApiEndpoint) {
+.factory('UserService', function($http, $q, $ionicPopup, LocalService, ApiEndpoint) {
   var UserService = this;
   UserService.checking = false;
   UserService.checkingQueue = [];
@@ -34,11 +34,19 @@ angular.module('stuffmobile')
       };
       return $http.post(ApiEndpoint.url + '/sessions/create', loginData).success(function(data) {
         if (data && data.user) {
+          $ionicPopup.alert({
+            title: 'Success :)',
+            template: data.user + ' is now logged in',
+          })
           that.currentUser = data.user;
           that.token = data.token;
           LocalService.set('sMToken', JSON.stringify(data));
         } else {
           console.log(data);
+          $ionicPopup.alert({
+            title: 'Error :(',
+            template: 'The Username and Password did not match',
+          })
           LocalService.unset('sMToken');
           that.currentUser = false;
         }
@@ -46,6 +54,10 @@ angular.module('stuffmobile')
       }).error(function(err) {
         console.log(err);
         that.currentUser = false;
+        $ionicPopup.alert({
+          title: 'Error :(',
+          template: 'The Username and Password did not match',
+        })
         return callback(err);
       });
     },
@@ -56,6 +68,10 @@ angular.module('stuffmobile')
       //should this passed into LocalService?
       return $http.get(ApiEndpoint.url + '/log_out').success(function(data) {
         that.currentUser = false;
+        $ionicPopup.alert({
+          title: 'Succcess',
+          template: 'Logout Successfull',
+        })
         // return callback(null, data);
       }).error(function(err) {
         console.log('error in user service logout', err)

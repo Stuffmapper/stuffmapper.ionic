@@ -1,7 +1,7 @@
+//logout handled on main, ionic nav-header-bar greatness...
 angular.module('stuffmobile')
-.controller('UserCtrl', function($scope, $ionicModal, $window, $state, UserService){
+.controller('UserCtrl', function($scope, $window, $state, UserService){
   var userCtrl = this;
-  console.log($scope);
 
   //sends to sign up page
   userCtrl.notSignUp = function(){
@@ -17,7 +17,6 @@ angular.module('stuffmobile')
     return UserService.login($scope.username, $scope.password, function(err, data) {
       console.log(data)
       if (err) {
-        console.log('need to add an alert system wrong credentials');
         return null;
       } else if (data.user) {
         console.log('sign in successfull');
