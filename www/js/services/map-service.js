@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-.factory('Map', function($cordovaGeolocation, Posts){
+.factory('Map', function($cordovaGeolocation, PostsService){
  
   var apiKey = false;
   var map = null;

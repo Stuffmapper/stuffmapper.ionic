@@ -19,17 +19,27 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
       StatusBar.styleDefault();
     }
 
-    Map.init();
+    
   });
 })
 .config(function($stateProvider, $urlRouterProvider) {
  
   $stateProvider
-  .state('map', {
-    url: '/',
-    templateUrl: 'templates/map.html',
-    controller: 'MapCtrl',
-    controllerAs: 'mapctrl'
+  .state('tabs', {
+    url: '/tabs',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
+  .state('tabs.map', {
+    url: '/map',
+    views: {
+      'home-tab': {
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl',
+        controllerAs: 'mapctrl'     
+      }
+    }
+
   })  
   .state('user', {
     url: '/user',
@@ -40,6 +50,6 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
 
 
 
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/tabs/map");
  
 });

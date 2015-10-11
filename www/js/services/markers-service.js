@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-.factory('Posts', function($http, ApiEndpoint) {
+.factory('PostsService', function($http, ApiEndpoint) {
  
   var posts = [];
  
