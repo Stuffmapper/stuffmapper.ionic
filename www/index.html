@@ -33,8 +33,8 @@
       <ion-header-bar class="bar-energized">
         <h1 class="title">Stuffmapper</h1>
         <div  class="buttons">
-          <button ng-if='main.getCurrentUser() == undefined' class="button button-clear" ui-sref='user'>Login</button>
-          <button ng-if='main.getCurrentUser()' class="button button-clear" ui-sref='#'>Logout</button>
+          <button ng-hide='main.getCurrentUser()' class="button button-clear" ui-sref='user'>Login</button>
+          <button ng-show='main.getCurrentUser()' class="button button-clear" ng-click='main.logout()'>Logout</button>
         </div>
       </ion-header-bar>
       <ion-nav-view></ion-nav-view>

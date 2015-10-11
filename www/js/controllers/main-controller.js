@@ -4,4 +4,7 @@ angular.module('stuffmobile')
     main.getCurrentUser = function(){
       return UserService.currentUser;
     }
+    main.logout = function() {
+      return UserService.logout();
+    }
 });

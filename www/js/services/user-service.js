@@ -56,9 +56,10 @@ angular.module('stuffmobile')
       //should this passed into LocalService?
       return $http.get(ApiEndpoint.url + '/log_out').success(function(data) {
         that.currentUser = false;
-        return callback(null, data);
+        // return callback(null, data);
       }).error(function(err) {
-        return callback(err);
+        console.log('error in user service logout', err)
+        // return callback(err);
       });
     },
     check: function(){
