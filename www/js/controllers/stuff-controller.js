@@ -1,13 +1,13 @@
 angular.module('stuffmobile')
 .controller('StuffCtrl', [
-    '$scope', '$timeout', '$routeParams', '$window', '$q',
+    '$scope', '$timeout', '$window', '$q',
     '$resource', 'ImageService','LocalService', 'LocationService',
     'Map','MarkerService', 'UserService', 'AlertService','$rootScope',
     '$http', function($scope, $timeout, $location, $window,
-      $modal,$q, $resource, $route, ImageService,LocalService, LocationService,
+      $modal,$q, $resource, ImageService, LocalService, LocationService,
       MapsService, MarkerService, UserService, $ionicPopup, $rootScope,
       $http) {
-
+      console.log('stuff controller');
        // $SCOPE OBJECTS
 
       $scope.categories = MarkerService.categories;
@@ -18,20 +18,8 @@ angular.module('stuffmobile')
       $scope.myPosts =  {};
       $scope.myWants = {};
 
-      $scope.UserService = UserService;
-      $scope.MarkerService = MarkerService;
-
       $scope.search = {};//NOTE am I used yet?
       $scope.stuff = {};
-
-      $scope.tabs = {
-        getStuff: [ true, true ],
-        giveStuff:[ false,  false ],
-        myStuff: [ false, false ],
-        details: [ false,  false],
-        mydetails: [ false,  false],
-        editing: [ false, false]
-      };
 
       //WATCHES
 
@@ -80,18 +68,7 @@ angular.module('stuffmobile')
         } 
       }
 
-
-
-      //This is in the model now -TODO// make sure it is needed here
-      $scope.getDetails = function(id) {
-        //TODO - 
-        $rootScope.$broadcast('detailsWanted', {
-          markerId: id
-        });
-      };
-
       $scope.getStuff = function() {
-        $location.path('/menu/getStuff', false).search({tab: 'gs'})
         $scope.menuHeight = 'menu-0';
         $scope.mapHeight = 'map-0';
         return MapsService.getCenter()
@@ -119,7 +96,8 @@ angular.module('stuffmobile')
       };
 
       $scope.giveState = function(state){ 
-        var current = innerState() || '1'; 
+        console.log('give state bein called yall');
+        var current = '1'; 
         return current === String(state) 
       };
 
@@ -234,46 +212,6 @@ angular.module('stuffmobile')
         }
       };
 
-   
-   
-
-      $scope.showTab = function(tab) {
-        //NOTE this is an important function
-        //It triggers the appropriate action for
-        //the tab in addition to making it visible
-        //calls the function related to the tab
-        //if it is a function otherwise will
-        //not call a function (i.e. for edit and details).
-        var original;
-        angular.forEach($scope.tabs, function(value, key){
-          //resets all the tabs
-          if(value[1]){
-            original = key;
-          }
-          $scope.tabs[key][1] = false;
-          $scope.tabs[key][0] = false;
-        });
-        //sets correct states
-        $scope.tabs[tab][1] = true;
-        $scope.tabs[tab][0] = true;
-        if (tab === 'details' || tab === 'mydetails') {
-          //TODO make this cleaner
-          $scope.tabs['details'][1] = false;
-          $scope.tabs['mydetails'][1] = false;
-          $scope.tabs[original][1] = true;
-        }
-        //calls corresponding function if exists
-        $scope.stuff.last = original;
-        //TODO store this state elsewhere
-
-        if(typeof $scope[tab] === 'function'){ $scope[tab]()
-          .then(function(){ MapsService.resizeMap() }) 
-        }
-      };
-
-
-
-
       $scope.submitPost = function() {
         //TODO move this into marker service resource
         var image = $scope.post.images.original;
@@ -351,37 +289,7 @@ angular.module('stuffmobile')
         );
       };
 
-
-      //calls the function related to the tab
-      //if it is a function otherwise will
-      //not call a function (i.e. for edit and details).
-      $scope.showTab = function(tab) {
-        var original;
-        angular.forEach($scope.tabs, function(value, key){
-          //resets all the tabs
-          if(value[1]){
-            original = key;
-          }
-          $scope.tabs[key][1] = false;
-          $scope.tabs[key][0] = false;
-        });
-        //sets correct states
-        $scope.tabs[tab][1] = true;
-        $scope.tabs[tab][0] = true;
-        if (tab === 'details' || tab === 'mydetails') {
-          //TODO make this cleaner
-          $scope.tabs['details'][1] = false;
-          $scope.tabs['mydetails'][1] = false;
-          $scope.tabs[original][1] = true;
-        }
-        //calls corresponding function if exists
-        $scope.stuff.last = original;
-        //TODO store this state elsewhere
-
-        if(typeof $scope[tab] === 'function'){ $scope[tab]() }
-        MapsService.resizeMap();
-      };
-
+      //not sure why this is here... wkc
       $scope.updateMarkers = function(coords) {
         var defer = $q.defer();
         //TODO turn 15 into a variable
@@ -446,34 +354,6 @@ angular.module('stuffmobile')
         ImageService.addImageGroup(id, image)
       };
 
-      var init = function() {
-        UserService.check();
-        setMenu();
-        if ($routeParams.postId) {
-          //NOTE Works on initial page load only.. otherwise routeparams inaccurate
-          $scope.getDetails($routeParams.postId);
-        } if ( $routeParams.menuState == 'editing' && $routeParams.next ){
-          //TODO use a better router
-          $scope.showEdit($routeParams.next);
-        }   
-        loadCache();
-        var getPosition = function(){
-          MapsService.getCenter()
-          .then( function(center){
-            $scope.$emit( 'mapChanged', center )
-          }); 
-        };
-        $scope.centerMap().then(
-          function(){
-            MapsService.addMapListener('dragend', getPosition );
-            getPosition();
-        })
-      };
-
-      //TODO remove this and use ui-router
-      var innerState = function(){
-        return $location.path().split('/' ).length >= 4 && $location.path().split('/' )[3];
-      };
 
       var loadCache = function(){
         //TODO put this in the Main controller
@@ -525,19 +405,6 @@ angular.module('stuffmobile')
           }
         )
       }
-
-
-      var setMenu = function() {
-        //NOTE Works on inital page load only
-        if($routeParams.menuState){
-          $scope.showTab($routeParams.menuState);
-        } else if($location.url() == '/' ) {
-          var position = MapsService.getCenter()
-          $scope.getStuff();
-        }
-      };
-      init();
-
     }
   ]);
 

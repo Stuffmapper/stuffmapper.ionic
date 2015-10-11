@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('stuffmobile', ['ionic', 'ngCordova'])
+angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
   url: 'http://localhost:3000/api'
 })
@@ -48,8 +48,8 @@ angular.module('stuffmobile', ['ionic', 'ngCordova'])
     views: {
       'give-tab': {
         templateUrl: 'templates/give-stuff.html',
-        // controller: 'StuffCtrl',
-        // controllerAs: 'stuffctrl'     
+        controller: 'StuffCtrl',
+        controllerAs: 'stuffctrl'     
       }
     }
   })   
