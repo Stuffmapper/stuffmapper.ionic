@@ -1,8 +1,8 @@
 
 <ion-vew>
 <ion-content>
-<div ng-hide='currentUser' class='overlay-info add-margin-top-50' >
-  Please <a class='btn' ng-click="showSignin()" >Sign In</a> to give stuff
+<div ng-hide='main.getCurrentUser()' class='overlay-info add-margin-top-50' >
+  Please <a class='btn' ui-sref='user' >Sign In</a> to give stuff
 
 </div>
 <div ng-show="loading" class="col-lg-12 col-md-12 col-xs-12 overlay-info">

@@ -2,7 +2,7 @@ angular.module('stuffmobile')
 .controller('StuffCtrl', [
     '$scope', '$timeout', '$routeParams', '$window', '$q',
     '$resource', 'ImageService','LocalService', 'LocationService',
-    'Map','MarkerService', 'UserService', '$ionicPopup','$rootScope',
+    'Map','MarkerService', 'UserService', 'AlertService','$rootScope',
     '$http', function($scope, $timeout, $location, $window,
       $modal,$q, $resource, $route, ImageService,LocalService, LocationService,
       MapsService, MarkerService, UserService, $ionicPopup, $rootScope,
@@ -36,7 +36,8 @@ angular.module('stuffmobile')
       //WATCHES
 
       $scope.$watchCollection('UserService', function() {
-        return $scope.currentUser = UserService.currentUser;
+        $scope.currentUser = UserService.currentUser;
+        console.log(currentUser)
       });
 
       // $SCOPE FUNCTIONS
@@ -400,8 +401,8 @@ angular.module('stuffmobile')
           for (i = 0, len = ref.length; i < len; i++) {
             marker = ref[i];
             if (marker.originalImage === 'missing') {
-              marker.originalImage = '<%= asset_path('processing.png')%>';
-              marker.image_url = '<%= asset_path('processing.png')%>';
+              // marker.originalImage = '<%= asset_path('processing.png')%>';
+              marker.image_url = 'https://pixabay.com/static/uploads/photo/2013/10/28/05/11/kaleidoscopes-201646_640.jpg';//'<%= asset_path('processing.png')%>';
             }
             marker.currentUser = UserService.currentUser;
             MarkerService.setMarker(marker);
@@ -540,4 +541,3 @@ angular.module('stuffmobile')
     }
   ]);
 
-})

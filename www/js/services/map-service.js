@@ -3,6 +3,7 @@ angular.module('stuffmobile')
  
   var apiKey = false;
   var map = null;
+  var mapInitialized;
  
   function mapInit(){
  
@@ -22,7 +23,7 @@ angular.module('stuffmobile')
  
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(map, 'idle', function(){
- 
+        mapInitialized = true;
         //Load the markers
         loadMarkers();
  
@@ -68,11 +69,8 @@ angular.module('stuffmobile')
           });
  
           addInfoWindow(marker, post);
- 
         }
- 
       }); 
- 
   }
 
   function getLatLon(map) {
@@ -100,7 +98,9 @@ angular.module('stuffmobile')
  
   return {
     init: function(){
-      mapInit();
+      if (!mapInitialized){
+        mapInit();
+      }
     }
   }
  
