@@ -1,16 +1,17 @@
 angular.module('stuffmobile')
 .controller('StuffCtrl', [
     '$scope', '$timeout', '$window', '$q',
-    '$resource', 'ImageService','LocalService', 'LocationService',
-    'Map','MarkerService', 'UserService', 'AlertService','$rootScope',
-    '$http', function($scope, $timeout, $location, $window,
-      $modal,$q, $resource, ImageService, LocalService, LocationService,
-      MapsService, MarkerService, UserService, $ionicPopup, $rootScope,
+    '$resource', 'ImageService','LocalService', 
+    'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
+    '$http', function($scope, $timeout, $window,
+      $q, $resource, ImageService, LocalService,
+      Map, PostsService, UserService, $ionicPopup, $rootScope,
       $http) {
       console.log('stuff controller');
+      Map.giveInit();
        // $SCOPE OBJECTS
 
-      $scope.categories = MarkerService.categories;
+      $scope.categories = PostsService.categories;
       $scope.loading = false;
       $scope.menuHeight = 'menu-0';
       $scope.mapHeight = 'map-0'
@@ -25,7 +26,7 @@ angular.module('stuffmobile')
 
       $scope.$watchCollection('UserService', function() {
         $scope.currentUser = UserService.currentUser;
-        console.log(currentUser)
+        console.log($scope.currentUser)
       });
 
       // $SCOPE FUNCTIONS
@@ -75,7 +76,7 @@ angular.module('stuffmobile')
         .then(function(center){
           $scope.updateMarkers(center)
           .then(function(){
-            MarkerService.setAll({status:'new'}, {temporary:true});//
+            PostsService.setAll({status:'new'}, {temporary:true});//
             $scope.$emit('markersUpdated', function(){})
           });
         });
@@ -85,13 +86,12 @@ angular.module('stuffmobile')
         var stat = String(id);
         $scope.mapHeight = 'map-1-' + stat
         $scope.menuHeight = 'menu-1-' + stat;
-        $location.path('menu/giveStuff/' + stat, false).search({gsp: stat});
         return MapsService.resizeMap() 
         .then(function(){ 
           return $q.when( MapsService.panToMarker(
-          MarkerService.getMarker('giveStuff').marker) ) })
+          PostsService.getMarker('giveStuff').marker) ) })
         .then(function(){  
-          return MarkerService.clearMarkers('giveStuff'); 
+          return PostsService.clearMarkers('giveStuff'); 
         });
       };
 
@@ -104,17 +104,17 @@ angular.module('stuffmobile')
       $scope.giveStuff = function() {
         var state = innerState() || '1';
         addImageGroup('giveStuff');
-        return MarkerService.getSetTemporary('giveStuff')
+        return PostsService.getSetTemporary('giveStuff')
         .then( function(marker){ 
           marker.images = ImageService.images['giveStuff']
-          $scope.post = MarkerService.getMarker('giveStuff');
+          $scope.post = PostsService.getMarker('giveStuff');
           return $scope.giveNext(state); 
         })
       };
 
 
       $scope.markers = function(hasAttribute, hasNoAttribute){
-        return MarkerService.where( hasAttribute, hasNoAttribute );
+        return PostsService.where( hasAttribute, hasNoAttribute );
       };
 
 
@@ -126,7 +126,6 @@ angular.module('stuffmobile')
       $scope.myStuff = function() {
         $scope.menuHeight = 'menu-2';
         $scope.mapHeight = 'map-2';
-        $location.path('/menu/myStuff', false).search({tab: 'ms'});
         return UserService.getCurrentUser()
         .then(
           function(user){
@@ -138,7 +137,7 @@ angular.module('stuffmobile')
           }
         )
         .then(function(){
-          MarkerService.setAll([
+          PostsService.setAll([
             { type:'want' },
             { type: 'myPost' }
           ]);
@@ -161,8 +160,8 @@ angular.module('stuffmobile')
         //TODO delete code and "mydetails.html" if it is never used
         //var template = ( $location.search().tab === 'ms' ?
         // 'mydetails' : 'details'); 
-        // MarkerService.updateWindow(id);
-        // MarkerService.clearWindows(id, $scope.ma)
+        // PostsService.updateWindow(id);
+        // PostsService.clearWindows(id, $scope.ma)
         var template = 'details';
         
         //TODO have the state use another service or write own solution
@@ -170,36 +169,34 @@ angular.module('stuffmobile')
         //render the page and attempt to reload the google map
         $scope.menuHeight = 'menu-0';
         $scope.mapHeight = 'map-0';
-        $scope.stuff = MarkerService.getMarker(id);
+        $scope.stuff = PostsService.getMarker(id);
         if (!$scope.stuff ){
-          MarkerService.getMarkerAsync(id)
+          PostsService.getMarkerAsync(id)
           .then( function(){ 
               //NOT TESTED TEST ME
-              $scope.stuff = MarkerService.getMarker(id);
-              $location.path('/post/' + id, false);
-              $scope.showTab(template)
+              $scope.stuff = PostsService.getMarker(id);
+              $state.go('/post/' + id);
             },
               function(){ 
                 console.log("this is not found")
                 alert('404 Marker not found') }
           );
         } else {
-          $location.path('/post/' + id, false);
-          $scope.showTab(template);
+          $state.go('/post/' + id);
         }
       };
 
       $scope.showEdit = function(id){
-        $location.path('/menu/editing' +'/' + id, false);
+        $state.go('/details/' + id + '/edit')
         var template = 'editing';
         $scope.mapHeight = 'map-1-2';
         $scope.menuHeight = 'menu-1-2';
-        $scope.editItem = MarkerService.getMarker(id);
+        $scope.editItem = PostsService.getMarker(id);
           if (!$scope.editItem ){
-            MarkerService.getMarkerAsync(id)
+            PostsService.getMarkerAsync(id)
             .then( function(){ 
               //NOT TESTED TEST ME
-                $scope.editItem = MarkerService.getMarker(id);
+                $scope.editItem = PostsService.getMarker(id);
                 $scope.showTab(template)
               },
               function(){ 
@@ -218,12 +215,12 @@ angular.module('stuffmobile')
         return $scope.post.create()
         .then(
           function(post){
-            AlertService.add('success', "Your post has been added");
-            MarkerService['delete']('giveStuff');
+            $ionicPopup.add('success', "Your post has been added");
+            PostsService['delete']('giveStuff');
 
-            return MarkerService.setMarker(post)
+            return PostsService.setMarker(post)
             .then( function(){
-              MarkerService.getMarker(post.id).image_url = image;
+              PostsService.getMarker(post.id).image_url = image;
               $scope.showDetails(post.id);
             })
             .then(
@@ -234,7 +231,7 @@ angular.module('stuffmobile')
           },
           function(error){
             console.log(error);
-            AlertService.add('danger', "Something went wrong");
+            $ionicPopup.add('danger', "Something went wrong");
           }
         );
  
@@ -245,7 +242,7 @@ angular.module('stuffmobile')
         .then( function() {
           var formdata;
           if (UserService.currentUser) {
-            angular.forEach(MarkerService.editProperties, function(value){
+            angular.forEach(PostsService.editProperties, function(value){
               if($scope.editItem[value]){
                 formdata.append(value, $scope.editItem[value]);
               }
@@ -264,7 +261,7 @@ angular.module('stuffmobile')
                 $scope.editItem.marker.setPosition($scope.editMarker.getPosition());
                 $scope.editMarker.setMap(null);
               }
-              AlertService.add('success', "Your post has been updated");
+              $ionicPopup.add('success', "Your post has been updated");
               $scope.attached = false;
               delete $scope.file;
               $scope.loading = false;
@@ -274,13 +271,13 @@ angular.module('stuffmobile')
               results = [];
               for (key in data) {
                 value = data[key];
-                results.push(AlertService.add('danger', key + ' ' + value));
+                results.push($ionicPopup.add('danger', key + ' ' + value));
               }
             });
           }
         },
         function(){
-          AlertService.add('danger', 'Please sign in to continue');
+          $ionicPopup.add('danger', 'Please sign in to continue');
           $modal.open({
             templateUrl: 'signIn.html',
             controller: 'SignUpCtrl'
@@ -313,7 +310,7 @@ angular.module('stuffmobile')
               marker.image_url = 'https://pixabay.com/static/uploads/photo/2013/10/28/05/11/kaleidoscopes-201646_640.jpg';//'<%= asset_path('processing.png')%>';
             }
             marker.currentUser = UserService.currentUser;
-            MarkerService.setMarker(marker);
+            PostsService.setMarker(marker);
           };
           defer.resolve('markers updated')
         });
@@ -346,11 +343,11 @@ angular.module('stuffmobile')
         $scope.updateMarkers(args);
       });
       $scope.$on('markersUpdated', function(){
-        $scope.mapped = MarkerService.where({status: 'new'}, {temporary:true});
+        $scope.mapped = PostsService.where({status: 'new'}, {temporary:true});
       });
       //HELPER FUNCTIONS 
       var addImageGroup = function(id) {
-        var image = MarkerService.getMarker(id) && MarkerService.getMarker(id).image_url;
+        var image = PostsService.getMarker(id) && PostsService.getMarker(id).image_url;
         ImageService.addImageGroup(id, image)
       };
 
@@ -359,7 +356,7 @@ angular.module('stuffmobile')
         //TODO put this in the Main controller
         var markers = LocalService.getJSON('markers'); 
         angular.forEach(markers, function(marker, key){
-            MarkerService.setMarker(marker)
+            PostsService.setMarker(marker)
         })
         $scope.$emit('markersUpdated', function(){})
       };
@@ -375,7 +372,7 @@ angular.module('stuffmobile')
               marker.icon = 'dibber';//TODO not working 
               marker.currentUser = UserService.currentUser;
               marker.dibber = UserService.currentUser;
-              promises.push( MarkerService.setMarker(marker)
+              promises.push( PostsService.setMarker(marker)
                 .then(function(marker){ $scope.myWants[marker.id] = marker }) );
             });
             return $q.all(promises)
@@ -393,7 +390,7 @@ angular.module('stuffmobile')
                 marker.type = 'myPost'; 
                 marker.icon = 'creator'; //TODO not working
                 marker.currentUser = UserService.currentUser;
-                promises.push( MarkerService.setMarker(marker)
+                promises.push( PostsService.setMarker(marker)
                   .then(function(marker){ $scope.myPosts[marker.id]  = marker }) );
               });
               return $q.all(promises)
