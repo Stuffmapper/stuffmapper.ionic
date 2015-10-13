@@ -63,7 +63,7 @@ angular.module('stuffmobile')
  
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(giveMap, 'idle', function(){
-        deferred.resolve(giveMap); 
+        deferred.resolve(giveMap);
       });
  
     }, function(error){
@@ -82,6 +82,7 @@ angular.module('stuffmobile')
     });
     return deferred.promise; 
   }
+
   function loadMarkers(map){
       var NeSwBounds = getLatLon(map); 
       //Get all of the markers from our Markers factory
