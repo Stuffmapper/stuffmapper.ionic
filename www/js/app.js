@@ -25,7 +25,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
     
   });
 })
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
  
   $stateProvider
   .state('tabs', {
@@ -63,5 +63,5 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 
 
   $urlRouterProvider.otherwise("/tabs/get");
- 
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/); 
 });

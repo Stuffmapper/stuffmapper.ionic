@@ -3,10 +3,10 @@ angular.module('stuffmobile')
     '$scope', '$timeout', '$window', '$q',
     '$resource', 'ImageService','LocalService', 
     'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
-    '$http', function($scope, $timeout, $window,
+    '$http', 'ImageService', function($scope, $timeout, $window,
       $q, $resource, ImageService, LocalService,
       Map, PostsService, UserService, $ionicPopup, $rootScope,
-      $http) {
+      $http, ImageService) {
       console.log('stuff controller');
       Map.giveInit();
        // $SCOPE OBJECTS
@@ -30,9 +30,15 @@ angular.module('stuffmobile')
       });
 
       // $SCOPE FUNCTIONS
+      $scope.takePicture = function() {
+        ImageService.takePicture().then(function(imageURI) {
+          console.log(imageURI);
+        }, function(err) {
+          console.err(err);
+        });      
+      }
 
-
-      $scope.cancelGive = function() {
+      $scope.selectPicture = function() {
         //REVIEW this has changed
 
         //needs a test behind it
@@ -41,27 +47,8 @@ angular.module('stuffmobile')
   
       };
 
-      $scope.centerMap = function(){
-        var center;
-        return LocationService.get().then(
-          function(position){
-            center = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            LocalService.set('mapcenter', JSON.stringify(center))
-          },
-          function(error){
-            MapsService.getCenter()
-            .then(function (mapcenter){
-              return center = mapcenter;
-            })
-          }
-         )
-         .then( function(){
-
-           return MapsService.panTo(center);
-         });
+      $scope.panToLocation= function(){
+        return Map.panToLocation();
       };
       $scope.edit = function(){
         if($routeParams.next){

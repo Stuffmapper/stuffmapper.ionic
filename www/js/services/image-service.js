@@ -1,91 +1,44 @@
- angular.module('stuffmobile')
- .factory('ImageService',[ '$q','$http','$timeout','$ionicPopup', function($q,$http,$timeout, $ionicPopup){
+angular.module('stuffmobile')
+.factory('ImageService', ['$q', function($q) {
 
-        return {
-          images: {},
-          addImageGroup:function (id, image ){
-            this.images[id] = { 
-              original: image,
-              thumbnail: image };
+  return {
+    takePicture: function() {
+      var deffered = $q.defer();
+      console.log(navigator);
 
-          },
-          convert: function( maxWidth, maxHeight, file, img ) {
-            var deferred = $q.defer();
-            $timeout( function(){ deferred.reject(new Error('Timeout try again')) }, 5000);
-            var canvas, ctx, img, reader;
-            img = document.createElement('img');
-            canvas = document.createElement('canvas');
-            ctx = canvas.getContext("2d");
-            reader = new FileReader();
-            img.addEventListener("load", function() {
-              var height, width;
-              ctx.drawImage(img, 0, 0);
-              width = img.width;
-              height = img.height;
-              if (width > height) {
-                if (width > maxWidth) {
-                  height *= maxWidth / width;
-                  width = maxWidth;
-                }
-              } else {
-                if (height > maxHeight) {
-                  width *= maxHeight / height;
-                  height = maxHeight;
-                }
-              }
-              canvas.width = width;
-              canvas.height = height;
-              ctx = canvas.getContext("2d");
-              ctx.drawImage(img, 0, 0, width, height);
-              var results = canvas.toDataURL("image/png");
-              deferred.resolve(results);
-            });
-            reader.onload = function() {
-              img.src = reader.result;
-            };
-            reader.readAsDataURL(file);
-            console.log(reader.result)
-            return deferred.promise;
-         },
-         createGroup: function(args){
-           var self = this;
-           return $q(function(resolve, reject){
-             if(!self.images[args.origin]){
-               self.addImageGroup(args.origin)
-             } 
-             var group = self.images[args.origin]
-             self.convert(1000, 1000, args.file)
-             .then(
-              function(original){
-               return group.original = original;
-              },
-              function(error){
-                reject(error);
-              }
-             )
-             .then( function(){
-               self.convert(300, 300, args.file)
-               .then(function(thumbnail){
-                  group.thumbnail = thumbnail;
-                  resolve(group);
-                },
-                function(error){
-                 reject(error);
-                }
-               );
-             });
-           });
-         },
-         upload: function(image,id,type) {
-          //TODO put this in it's own controller or create uploader
-          var deferred = $q.defer();
-          $http.post('/api/images', {image: image, id: id, type:type } )
-          .success(function(results){ deferred.resolve(results) })
-          .error(function(error){
-            console.error(error)
-            deferred.reject(error)});
-          return deferred.promise;
-        },
+      var options = {
+        quality: 50,
+        destinationType: navigator.Camera.DestinationType.DATA_URL,
+        sourceType: navigator.Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: navigator.Camera.EncodingType.JPEG,
+        targetWidth: 300,
+        targetHeight: 300,
+        saveToPhotoAlbum: false
+      }
+      navigator.camera.getPicture(options).then(function(imageData) {
+        var imgSrc = "data:image/jpeg;base64," + imageData;
+        deffered.resolve(imgSrc)
+      }, function(err) {
+        console.log('an error occured', err);
+      });
 
-       }
- }])
+      return deffered.promise;
+    },
+
+    selectPicture: function() {
+      var deffered = $q.defer();
+      var options = {
+        destinationType: navigator.Camera.DestinationType.FILE_URI,
+        sourceType: navigator.Camera.PictureSourceType.PHOTOLIBRARY
+      };
+
+      navigator.camera.getPicture(options).then(function(imageUri) {
+        return deffered.resolve(imageUri);
+      }, function(err) {
+        console.log('an error occured', err);
+      })
+      return deffered.promise;
+    }
+  }
+}]);

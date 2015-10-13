@@ -6,10 +6,10 @@ angular.module('stuffmobile')
  
   var apiKey = false;
   var getMap = null, giveMap = null;
- 
+  var options = {timeout: 10000, enableHighAccuracy: true};
   function getMapInit(){
     var deferred = $q.defer(); 
-    var options = {timeout: 10000, enableHighAccuracy: true};
+    
  
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
  
@@ -134,7 +134,22 @@ angular.module('stuffmobile')
       });
  
   }
-//the give and get parameters keep the two maps strait 
+
+  function panToLocation(){
+    console.log('panning home....')
+    var latLng;
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+      var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      giveMap.panTo(latLng);
+    }, function(error) {
+      return error;
+    })
+  }
+
+  function getCenter(){
+    return giveMap.getCenter();
+  }
+//the give and get keep the two maps strait 
   return {
     getInit: function(){
       if (getMap == null){
@@ -149,7 +164,9 @@ angular.module('stuffmobile')
         console.log('init give map')
         giveMapInit();
       }
-    }
+    },
+    panToLocation: panToLocation,
+    getCenter: getCenter
   }
  
 }])
