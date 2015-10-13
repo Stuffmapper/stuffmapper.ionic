@@ -7708,15 +7708,15 @@ a.button {
   height: 50%; }
 
 .centerMarker::before {
+  content: '';
   position: absolute;
   /*url of the marker*/
-  content: '';
   display: block;
   background: url(http://maps.gstatic.com/mapfiles/markers2/marker.png) no-repeat;
   /*center the marker*/
   top: 50%;
   left: 50%;
-  z-index: 9999;
+  z-index: 1;
   /*fix offset when needed*/
   margin-left: -10px;
   margin-top: -34px;

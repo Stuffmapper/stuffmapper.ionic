@@ -110,13 +110,17 @@ angular.module('stuffmobile')
 
   function getLatLon(map) {
     var center = map.getCenter();
+
     var box = map.getBounds(center, 30);
+    var neCorner = box.getNorthEast();
+    var swCorner = box.getSouthWest();
+    console.log(neCorner, swCorner)
     console.log('box ', box);
     var params = {
-        nwLng: box.Ma.j - .5,
-        seLng: box.Ma.J + .5,
-        nwLat: box.Qa.j + .5,
-        seLat: box.Qa.J - .5
+        nwLng: neCorner.lng() - .5,
+        seLng: swCorner.lng() + .5,
+        nwLat: swCorner.lat() + .5,
+        seLat: neCorner.lat() - .5
       }
     return params;
   }

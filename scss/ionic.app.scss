@@ -30,11 +30,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   height: 50%;
 }
 
-.blah{}
 
-#giveMap .centerMarker::after{
+.centerMarker::before{
+  content: '';
   position:absolute;
   /*url of the marker*/
+  display: block;
   background:url(http://maps.gstatic.com/mapfiles/markers2/marker.png) no-repeat;
   /*center the marker*/
   top:50%;left:50%;
