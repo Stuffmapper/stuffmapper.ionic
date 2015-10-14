@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-.controller('StuffCtrl', [
+.controller('MyCtrl', [
     '$scope', '$timeout', '$window', '$q',
     '$resource', 'ImageService','LocalService', 
     'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',

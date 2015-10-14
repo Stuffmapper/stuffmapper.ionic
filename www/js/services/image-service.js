@@ -1,26 +1,28 @@
 angular.module('stuffmobile')
-.factory('ImageService', ['$q', function($q) {
+.factory('ImageService', ['$q', '$cordovaCamera', 'ApiEndpoint', function($q, $cordovaCamera, ApiEndpoint) {
 
   return {
     takePicture: function() {
       var deffered = $q.defer();
-      console.log(navigator);
+      console.log($cordovaCamera);
 
       var options = {
         quality: 50,
-        destinationType: navigator.Camera.DestinationType.DATA_URL,
-        sourceType: navigator.Camera.PictureSourceType.CAMERA,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
         allowEdit: true,
-        encodingType: navigator.Camera.EncodingType.JPEG,
+        encodingType: Camera.EncodingType.JPEG,
         targetWidth: 300,
         targetHeight: 300,
         saveToPhotoAlbum: false
       }
-      navigator.camera.getPicture(options).then(function(imageData) {
+      $cordovaCamera.getPicture(options).then(function(imageData) {
         var imgSrc = "data:image/jpeg;base64," + imageData;
-        deffered.resolve(imgSrc)
+        console.log(imgSrc);
+        return deffered.resolve(imgSrc)
       }, function(err) {
         console.log('an error occured', err);
+        return deffered.reject();
       });
 
       return deffered.promise;
@@ -29,16 +31,36 @@ angular.module('stuffmobile')
     selectPicture: function() {
       var deffered = $q.defer();
       var options = {
-        destinationType: navigator.Camera.DestinationType.FILE_URI,
-        sourceType: navigator.Camera.PictureSourceType.PHOTOLIBRARY
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY
       };
 
-      navigator.camera.getPicture(options).then(function(imageUri) {
+      $cordovaCamera.getPicture(options).then(function(imageUri) {
+        console.log(imageUri)
         return deffered.resolve(imageUri);
       }, function(err) {
         console.log('an error occured', err);
+        return deffered.reject();
       })
       return deffered.promise;
+    },
+    uploadPicture: function(picURI) {
+      console.log('picuri', picURI)
+      var options = new FileUploadOptions();
+      options.fileKey="file";
+      options.chunkedMode = false;
+      options.mimType="image/jpeg";
+      var ft = new FileTransfer();
+      ft.upload(picURI, encodeURI(ApiEndpoint + "/images"), onUploadSuccess, onUploadFail, options);
     }
+  }
+  //helpers
+  function onUploadSuccess() {
+    console.log('picture upload success');
+  }
+  function onUploadFail(error) {
+    console.log('failed to upload picture');
+    console.log("upload error source " + error.source);
+    console.log("upload error target " + error.target);
   }
 }]);

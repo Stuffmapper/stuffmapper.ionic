@@ -22,7 +22,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
     $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
         $rootScope.$previousState = from;
     });
-    
+
   });
 })
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
@@ -53,6 +53,16 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
       }
     }
   })   
+  .state('tabs.mystuff', {
+    url:'/mystuff',
+    views: {
+      'my-tab': {
+        templateUrl: 'templates/my-stuff.html',
+        controller: 'MyCtrl',
+        controllerAs: 'myCtrl'
+      }
+    }
+  })
   .state('user', {
     url: '/user',
     templateUrl: 'templates/login.html',
@@ -63,5 +73,5 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 
 
   $urlRouterProvider.otherwise("/tabs/get");
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/); 
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|cdvfile|content):|data:image\//); 
 });
