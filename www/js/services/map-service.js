@@ -117,10 +117,10 @@ angular.module('stuffmobile')
     console.log(ne, sw)
     console.log('box ', box);
     var params = {
-        swLng: sw.lng() - .5,
-        neLng: ne.lng() + .5,
-        neLat: ne.lat() + .5,
-        swLat: sw.lat() - .5
+        nwLng: sw.lng() - .5,
+        seLng: ne.lng() + .5,
+        nwLat: ne.lat() + .5,
+        seLat: sw.lat() - .5
       }
       console.log(params, 'params')
     return params;

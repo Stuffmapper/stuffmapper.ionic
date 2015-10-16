@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
-  url: 'http://localhost:3000'
+  url: 'http://localhost:3000/api'
 })
 
 .run(function($ionicPlatform, $rootScope, Map) {
