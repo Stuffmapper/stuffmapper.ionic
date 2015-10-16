@@ -112,16 +112,17 @@ angular.module('stuffmobile')
     var center = map.getCenter();
 
     var box = map.getBounds(center, 30);
-    var neCorner = box.getNorthEast();
-    var swCorner = box.getSouthWest();
-    console.log(neCorner, swCorner)
+    var ne = box.getNorthEast();
+    var sw = box.getSouthWest();
+    console.log(ne, sw)
     console.log('box ', box);
     var params = {
-        nwLng: neCorner.lng() - .5,
-        seLng: swCorner.lng() + .5,
-        nwLat: swCorner.lat() + .5,
-        seLat: neCorner.lat() - .5
+        swLng: sw.lng() - .5,
+        neLng: ne.lng() + .5,
+        neLat: ne.lat() + .5,
+        swLat: sw.lat() - .5
       }
+      console.log(params, 'params')
     return params;
   }
  
