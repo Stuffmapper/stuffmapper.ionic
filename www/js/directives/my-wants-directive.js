@@ -22,7 +22,7 @@ angular.module('stuffmobile')
       }
     ],
     replace: true,
-    templateUrl: 'misc/myWant.html',
+    templateUrl: 'templates/my-stuff/my-wants.html',
     link: link
   };
 });

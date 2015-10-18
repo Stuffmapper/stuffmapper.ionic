@@ -27,7 +27,7 @@ angular.module('stuffmobile')
     ],
     replace: true,
     link: linker,
-    templateUrl: 'misc/myPost.html' 
+    templateUrl: 'templates/my-stuff/my-posts.html' 
   };
 });
 

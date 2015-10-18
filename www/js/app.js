@@ -8,7 +8,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
   url: 'http://localhost:3000/api'
 })
 
-.run(function($ionicPlatform, $rootScope, Map) {
+.run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -25,7 +25,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 
   });
 })
-.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $httpProvider) {
  
   $stateProvider
   .state('tabs', {
@@ -63,6 +63,14 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
       }
     }
   })
+  .state('details', {
+    url:'/details/:id',
+    views: {
+      templateUrl: 'templates/details.html',
+      controller: 'DetailCtrl',
+      controllerAs: 'detailCtrl'
+    }
+  })
   .state('user', {
     url: '/user',
     templateUrl: 'templates/login.html',
@@ -74,4 +82,11 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 
   $urlRouterProvider.otherwise("/tabs/get");
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|cdvfile|content):|data:image\//); 
+
+  // read CSRF token
+  token = $("meta[name=\"csrf-token\"]").attr("content")
+
+  // include token in $httpProvider default headers
+  $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = token
+  $httpProvider.interceptors.push('AuthInterceptor')
 });
