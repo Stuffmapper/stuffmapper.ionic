@@ -1,34 +1,10 @@
 angular.module('stuffmobile')
 
-.factory('UserService', function($http, $q, $ionicPopup, LocalService, ApiEndpoint) {
+.factory('UserService', ['$http', '$q', '$ionicPopup', 'LocalService', 'ApiEndpoint', '$state', function($http, $q, $ionicPopup, LocalService, ApiEndpoint, $state) {
   var UserService = this;
   UserService.checking = false;
   UserService.checkingQueue = [];
-  return {
-    signUp: function(userInfo) {
-      return $http.post(ApiEndpoint.url + '/users', {
-        user: user
-      }).success(function() {
-        $ionicPopup.alert({
-          title: 'Success',
-          template: 'Logged In'
-        })
-        $state.go('map')
-      }).error(function(data) {
-        $ionicPopup.alert({
-          title: 'failure',
-          template: 'Something went wrong'
-        })
-        var key, results, value;
-        results = [];
-        for (key in data) {
-          value = data[key];
-        }
-        console.log(value);
-        return results;
-      });    
-    },
-    login: function(username, password, callback) {
+  var login = function(username, password, callback) {
       //TODO switch to promises for consistency
       var that = this;
       loginData = {
@@ -36,6 +12,8 @@ angular.module('stuffmobile')
         password: password
       };
       return $http.post(ApiEndpoint.url + '/sessions/create', loginData).success(function(data) {
+        console.log('\n\n\n\n\n\n\n\n\n Data from login', data)
+
         if (data && data.user) {
           $ionicPopup.alert({
             title: 'Success :)',
@@ -44,6 +22,7 @@ angular.module('stuffmobile')
           that.currentUser = data.user;
           that.token = data.token;
           LocalService.set('sMToken', JSON.stringify(data));
+          return callback(null, data);
         } else {
           console.log(data);
           $ionicPopup.alert({
@@ -53,17 +32,48 @@ angular.module('stuffmobile')
           LocalService.unset('sMToken');
           that.currentUser = false;
         }
-        return callback(null, data);
+        // return callback(null, data);
       }).error(function(err) {
         console.log(err);
         that.currentUser = false;
         $ionicPopup.alert({
           title: 'Error :(',
-          template: 'The Username and Password did not match',
+          template: 'An error occurred, please try again ' + data,
         })
         return callback(err);
       });
+    }
+  return {
+    signUp: function(userInfo) {
+      var deffered = $q.defer();
+      $http.post(ApiEndpoint.url + '/users', {
+        user: userInfo
+      }).success(function(data) {
+        console.log('\n\n\n\n\n\n\n\n\n Data from signup', data)
+        // $ionicPopup.alert({
+        //   title: 'Success',
+        //   template: 'Logged In'
+        // })
+        login(userInfo.username, userInfo.password)
+        deffered.resolve(userInfo.username);
+      }).error(function(data) {
+        console.log('\n\n\n\n\n\n\n\n\n Data from signup ERROR', data)
+        $ionicPopup.alert({
+          title: 'failure',
+          template: 'Something went wrong'
+        })
+        console.log('error in signup');
+        var key, results, value;
+        results = [];
+        for (key in data) {
+          value = data[key];
+        }
+        console.log(value);
+        deffered.reject();
+      });    
+      return deffered.promise;
     },
+    login: login,
     logout: function(callback) {
       //TODO switch to promises for consistency
       var that = this;
@@ -127,4 +137,4 @@ angular.module('stuffmobile')
       } else { return that.check() }
     }
   };
-});
+}]);

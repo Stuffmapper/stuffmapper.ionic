@@ -1,0 +1,42 @@
+<div class='settings-group'>
+  <ul>
+    <li class='settings-btn-wrapper'>
+      <button class='settings-btn'>
+        Settings&nbsp;<span class='glyphicon glyphicon-cog'></span>
+      </button>
+      <ul>
+        <li ng-show='currentDib'>
+          <button class='setting-option-btn message'>
+            <span class='glyphicon glyphicon-pencil'></span>&nbsp;&gt;&gt;
+          </button>
+        </li>
+        <li ng-click="post.markGone()">
+          <button class='setting-option-btn mark-as-picked-up' 
+          ng-click='post.markGone()'>
+            Mark As Picked Up
+          </button>
+        </li>
+        <li ng-show='post.showWanted()'>
+          <button class='setting-option-btn reject-dibs'
+          ng-click="post.rejectDibber()">
+            Reject Dibs
+          </button>
+        </li>
+        <li>
+          <button class='setting-option-btn edit-item'
+          ng-click="post.edit()">
+          <!-- consider putting edit into a directive that has this function in lieu of relying on the stuffctrl -->
+            Edit Item
+          </button>
+        </li>
+        <li ng-hide='currentDib'>
+          <button class='setting-option-btn delete-item' 
+          ng-click='post.remove()'>
+          <!-- consider putting deletPost into a directive that has this function in lieu of relying on the stuffctrl -->
+            Delete
+          </button>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

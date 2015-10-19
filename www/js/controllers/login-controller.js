@@ -14,10 +14,10 @@ angular.module('stuffmobile')
 
   //sign in user
   userCtrl.signin = function() {
-    return UserService.login($scope.username, $scope.password, function(err, data) {
+    UserService.login($scope.username, $scope.password, function(err, data) {
       console.log(data)
       if (err) {
-        return null;
+        console.log('error in sign in', err)
       } else if (data.user) {
         console.log('sign in successfull');
         $scope.user = data.user

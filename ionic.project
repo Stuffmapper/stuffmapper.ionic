@@ -5,6 +5,12 @@
     "sass",
     "watch"
   ],
+  "proxies": [
+    {
+      "path": "http://stuffmapper.com/api",
+      "proxyUrl": "http://stuffmapper.com/api"
+    }
+  ],
   "watchPatterns": [
     "www/**/*",
     "!www/lib/**/*"
