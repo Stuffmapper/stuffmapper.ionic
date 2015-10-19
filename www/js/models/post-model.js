@@ -38,7 +38,7 @@ angular.module('stuffmobile')
       var url = ApiEndpoint + '/posts';
       var params = {};
       angular.forEach(self.baseProperties, function(property){
-        params[property] =  self[property];
+        params[property] = self[property];
       })
       return $q(function(resolve, reject){
         $http.post(url, params)
@@ -59,7 +59,7 @@ angular.module('stuffmobile')
     constructor.dib = function(){
       var self = this;
       return $q(function(resolve, reject){
-        $http.post(self.getUrl() + '/dibs')
+        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/dibs')
         .then( function(data){
           angular.extend(self, data.data.post)
           resolve(self)
@@ -77,7 +77,7 @@ angular.module('stuffmobile')
       var self = this;
       if(self.temporary ){ throw new Error('cant get a temporary marker') }
       return $q(function(resolve, reject){
-        $http.get(self.getUrl())
+        $http.get(ApiEndpoint.url + '/posts/' + self.id)
         .success(function(data){
           angular.extend(self, data.post)
           self.locallyUpdated = Date.now();
@@ -94,10 +94,9 @@ angular.module('stuffmobile')
 
     constructor.markGone = function(){
       var self = this;
-      console.log('106 in marker')
       var params = {status: 'gone'};
       return $q(function(resolve, reject){
-        $http.patch(self.getUrl(), params)
+        $http.put(ApiEndpoint.url + '/posts/' + self.id, params)
         .then( function(data){
           var updated = data.data.post;
           updated.locallyUpdated = Date.now();
@@ -119,7 +118,7 @@ angular.module('stuffmobile')
       //does not delete itself .. will need to be handle else where
       //should mark for deletion
       return $q(function(resolve, reject){
-        $http.delete(self.getUrl() + '/remove')
+        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/remove')
         .success( function(data){
           angular.extend(self, data.post)
           self.deleteLocal();
@@ -139,7 +138,7 @@ angular.module('stuffmobile')
       //does not delete itself .. will need to be handled else where
       //should mark for deletion
       return $q(function(resolve, reject){
-        $http.post(self.getUrl() + '/removecurrentdib')
+        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/removecurrentdib')
         .success( function(data){
           angular.extend(self, data.post)
           resolve(self)
@@ -157,7 +156,7 @@ angular.module('stuffmobile')
       //does not delete itself .. will need to be handle else where
       //should mark for deletion
       return $q(function(resolve, reject){
-        $http.post(self.getUrl() + '/undib')
+        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/undib')
         .success( function(data){
           angular.extend(self, data.post)
           resolve(self)
@@ -173,7 +172,7 @@ angular.module('stuffmobile')
       //updates this post
       // new images should be handled seperately
       var self = this;
-      return self.create(self.getUrl())
+      return self.create(ApiEndpoint.url + '/posts/' + self.id)
       
     }; 
 

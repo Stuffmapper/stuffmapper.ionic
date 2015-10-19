@@ -7733,3 +7733,60 @@ a.button {
   padding-top: 50px;
   padding-left: 10px;
   padding-right: 10px; }
+
+/*settings*/
+.settings-group {
+  display: inline; }
+
+.settings-group ul {
+  list-style: none;
+  position: relative;
+  float: right;
+  padding-left: 0;
+  margin-bottom: 0; }
+  .settings-group ul li {
+    position: relative; }
+
+.settings-group ul li ul {
+  display: none;
+  position: absolute;
+  right: 0px;
+  width: 10em; }
+  .settings-group ul li ul :last-child {
+    margin-bottom: 2px; }
+
+.settings-group li:hover ul, .settings-group li:active ul {
+  display: block;
+  float: right;
+  z-index: 2;
+  background-color: #FFFFFF; }
+
+.setting-option-btn {
+  outline: 0;
+  color: #FFFFFF;
+  text-align: center;
+  width: 100%;
+  margin-top: 2px;
+  border: none;
+  font-size: 14px;
+  margin-left: 3px;
+  margin-right: 3px; }
+
+.setting-option-btn.message {
+  background-color: #3BE073; }
+
+.setting-option-btn.mark-as-picked-up {
+  background-color: #545454; }
+
+.setting-option-btn.reject-dibs {
+  background-color: #E45B5A; }
+
+.setting-option-btn.edit-item {
+  background-color: #0078BE; }
+
+.setting-option-btn.delete-item {
+  background-color: #E45B5A; }
+
+/*get stuff pane*/
+.get-stuff {
+  height: 300px; }

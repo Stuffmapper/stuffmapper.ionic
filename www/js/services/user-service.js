@@ -9,19 +9,22 @@ angular.module('stuffmobile')
       return $http.post(ApiEndpoint.url + '/users', {
         user: user
       }).success(function() {
-        $modalInstance.dismiss('cancel');
-        $modal.open({
-          templateUrl: 'welcome.html',
-          controller: 'SignUpCtrl'
-        });
-        return $location.path('/');
+        $ionicPopup.alert({
+          title: 'Success',
+          template: 'Logged In'
+        })
+        $state.go('map')
       }).error(function(data) {
+        $ionicPopup.alert({
+          title: 'failure',
+          template: 'Something went wrong'
+        })
         var key, results, value;
         results = [];
         for (key in data) {
           value = data[key];
-          results.push(AlertService.add('danger', key + ' ' + value));
         }
+        console.log(value);
         return results;
       });    
     },

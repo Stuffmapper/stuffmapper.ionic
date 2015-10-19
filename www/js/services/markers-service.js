@@ -1,9 +1,9 @@
 angular.module('stuffmobile')
-.factory('PostsService', function($http, ApiEndpoint) {
+.factory('PostsService', ['$http', 'ApiEndpoint', '$q', function($http, ApiEndpoint, $q) {
  
   var posts = [];
  
-  getPosts = function(box){
+  var getPosts = function(box){
       var url =  ApiEndpoint.url + "/posts/geolocated";
       return $http({
         url: url,
@@ -17,7 +17,7 @@ angular.module('stuffmobile')
           return posts;
       });
   }
-  getInfoWindow = function(posts) {
+  var getInfoWindow = function(posts) {
     var innerContent = "<div ><div id='siteNotice' class='stuff-map-image'></div> <img src=" +
            posts.image_url + " width='200px' ></img> <div id='bodyContent'> <p>" +
            posts.description + "</p> </div> </div> </div>";
@@ -26,9 +26,18 @@ angular.module('stuffmobile')
     })
   }
 
+  var getLoadedPosts = function() {
+    var deffered = $q.defer();
+    if (posts.length > 0) {
+      deffered.resolve(posts);
+    }
+    return deffered.promise
+  }
+
   return {
     getPosts: getPosts,
-    getInfoWindow: getInfoWindow
+    getInfoWindow: getInfoWindow,
+    getLoadedPosts: getLoadedPosts
   }
   
-})
+}])

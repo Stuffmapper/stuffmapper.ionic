@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
-  url: 'http://localhost:3000/api'
+  url: 'http://stuffmapper.com/api'
 })
 
 .run(function($ionicPlatform, $rootScope) {
@@ -77,6 +77,12 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
     controller: 'UserCtrl',
     controllerAs: 'userCtrl'
   })
+  .state('signup', {
+    url:'/signup',
+    templateUrl: 'templates/sign-up.html',
+    controller: 'SignupCtrl',
+    controllerAs: 'signupCtrl'
+  })
 
 
 
@@ -84,7 +90,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|cdvfile|content):|data:image\//); 
 
   // read CSRF token
-  token = $("meta[name=\"csrf-token\"]").attr("content")
+  var token = $("meta[name=\"csrf-token\"]").attr("content")
 
   // include token in $httpProvider default headers
   $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = token

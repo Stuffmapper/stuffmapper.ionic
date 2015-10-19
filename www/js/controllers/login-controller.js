@@ -4,8 +4,8 @@ angular.module('stuffmobile')
   var userCtrl = this;
 
   //sends to sign up page
-  userCtrl.notSignUp = function(){
-
+  userCtrl.openSignup = function(){
+    $state.go('signup');
   }
 
   //send to resets pw

@@ -3,10 +3,10 @@ angular.module('stuffmobile')
     '$scope', '$timeout', '$window', '$q',
     '$resource', 'ImageService','LocalService', 
     'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
-    '$http', 'ImageService', 'Post', 'ApiEndpoint', function($scope, $timeout, $window,
+    '$http', 'ImageService', 'Post', 'ApiEndpoint', 'Post', function($scope, $timeout, $window,
       $q, $resource, ImageService, LocalService,
       Map, PostsService, UserService, $ionicPopup, $rootScope,
-      $http, ImageService, Post, ApiEndpoint) {
+      $http, ImageService, Post, ApiEndpoint, Post) {
       var myCtrl = this;
       console.log('my stuff controller');
       myCtrl.loadMyStuff  = function(currentUser){
@@ -14,16 +14,12 @@ angular.module('stuffmobile')
         return $http.get(ApiEndpoint.url + '/my-dibs')
         .then( 
           function(data){ 
-            var promises = [] 
-            angular.forEach(data.data.posts, function(marker) {
-              marker.type = 'want';
-              marker.icon = 'dibber';//TODO not working 
-              marker.currentUser = UserService.currentUser;
-              marker.dibber = UserService.currentUser;
-              promises.push( PostsService.setMarker(marker)
-                .then(function(marker){ $scope.myWants[marker.id] = marker }) );
-            });
-            return $q.all(promises)
+            console.log(data.data.posts);
+            var mydibs = data.data.posts;
+            $scope.myDibs = [];
+            for(var i = 0; i < mydibs.length; i++) {
+              $scope.myDibs.push(new Post(mydibs[i]));
+            }
           },
           function(err){
             return err
@@ -33,15 +29,12 @@ angular.module('stuffmobile')
           function(){
             return $http.get(ApiEndpoint.url + '/my-stuff')
             .then(function(data){
-              var promises = [] 
-              angular.forEach(data.data.posts, function(marker) {
-                marker.type = 'myPost'; 
-                marker.icon = 'creator'; //TODO not working
-                marker.currentUser = UserService.currentUser;
-                promises.push( PostsService.setMarker(marker)
-                  .then(function(marker){ $scope.myPosts[marker.id]  = marker }) );
-              });
-              return $q.all(promises)
+              var myposts = data.data.posts;
+              $scope.myPosts = [];
+              for(var i = 0; i < myposts.length; i++) {
+                $scope.myPosts.push(new Post(myposts[i]));
+              }
+              console.log($scope.myPosts);
             })
 
           },
@@ -78,34 +71,6 @@ angular.module('stuffmobile')
           $scope.showEdit($routeParams.next);
         } 
       }
-
-      $scope.getStuff = function() {
-        $scope.menuHeight = 'menu-0';
-        $scope.mapHeight = 'map-0';
-        return MapsService.getCenter()
-        .then(function(center){
-          $scope.updateMarkers(center)
-          .then(function(){
-            PostsService.setAll({status:'new'}, {temporary:true});//
-            $scope.$emit('markersUpdated', function(){})
-          });
-        });
-      };
-
-      $scope.giveNext = function(id) {
-        var stat = String(id);
-        $scope.mapHeight = 'map-1-' + stat
-        $scope.menuHeight = 'menu-1-' + stat;
-        return MapsService.resizeMap() 
-        .then(function(){ 
-          return $q.when( MapsService.panToMarker(
-          PostsService.getMarker('giveStuff').marker) ) })
-        .then(function(){  
-          return PostsService.clearMarkers('giveStuff'); 
-        });
-      };
-
-
 
       $scope.markers = function(hasAttribute, hasNoAttribute){
         return PostsService.where( hasAttribute, hasNoAttribute );
