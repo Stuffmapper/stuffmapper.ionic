@@ -1,8 +1,9 @@
 <ion-view>
     <ion-content>
     <div class='get-stuff'>
-    <div ng-repeat="post in posts">
-      {{post}}
+    <div ng-repeat="currentpost in posts">
+      <ngpost post='currentpost'></ngpost>
+      
     </div>
     </div>
         <div  id="getMap" class="map" data-tap-disabled="true"></div>

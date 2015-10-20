@@ -84,28 +84,31 @@ angular.module('stuffmobile')
   }
 
   function loadMarkers(map){
-      var NeSwBounds = getLatLon(map); 
-      //Get all of the markers from our Markers factory
-      PostsService.getPosts(NeSwBounds).then(function(posts){
- 
-        console.log("posts: ", posts);
- 
- 
-        for (var i = 0; i < posts.length; i++) {
- 
-          var post = posts[i];   
-          var markerPos = new google.maps.LatLng(post.latitude, post.longitude);
- 
-          // Add the markerto the map
-          var marker = new google.maps.Marker({
-              map: map,
-              animation: google.maps.Animation.DROP,
-              position: markerPos
-          });
- 
-          addInfoWindow(marker, post, map);
-        }
-      }); 
+    var deffered = $q.defer();
+    var NeSwBounds = getLatLon(map); 
+    //Get all of the markers from our Markers factory
+    PostsService.getPosts(NeSwBounds).then(function(posts){
+
+      console.log("posts: ", posts);
+
+
+      for (var i = 0; i < posts.length; i++) {
+
+        var post = posts[i];   
+        var markerPos = new google.maps.LatLng(post.latitude, post.longitude);
+
+        // Add the markerto the map
+        var marker = new google.maps.Marker({
+            map: map,
+            animation: google.maps.Animation.DROP,
+            position: markerPos
+        });
+
+        addInfoWindow(marker, post, map);
+      }
+      deffered.resolve(posts)
+    }); 
+    return deffered.promise;
   }
 
   function getLatLon(map) {
@@ -152,14 +155,8 @@ angular.module('stuffmobile')
   }
 //the give and get keep the two maps strait 
   return {
-    getInit: function(){
-      if (getMap == null){
-        console.log('init get map')
-        getMapInit().then(function(map){
-          loadMarkers(map);
-        });
-      }
-    },
+    getInit: getMapInit,
+    loadMarkers: loadMarkers,
     giveInit: function(){
       if (giveMap == null){
         console.log('init give map')

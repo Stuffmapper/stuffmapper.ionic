@@ -7790,3 +7790,28 @@ a.button {
 /*get stuff pane*/
 .get-stuff {
   height: 300px; }
+
+/*post styling
+*/
+.stuff-view {
+  margin: auto;
+  padding: 0;
+  height: 170px;
+  border: 1px solid grey;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer; }
+
+.stuff-category {
+  top: 8px;
+  background-color: lightgray;
+  float: right; }
+
+.stuff-status {
+  background-color: #784B87;
+  top: 8px;
+  color: #FFFFFF;
+  float: left; }
+
+.stuff-image {
+  width: 100%; }

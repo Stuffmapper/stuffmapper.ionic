@@ -26,18 +26,9 @@ angular.module('stuffmobile')
     })
   }
 
-  var getLoadedPosts = function() {
-    var deffered = $q.defer();
-    if (posts.length > 0) {
-      deffered.resolve(posts);
-    }
-    return deffered.promise
-  }
-
   return {
     getPosts: getPosts,
     getInfoWindow: getInfoWindow,
-    getLoadedPosts: getLoadedPosts
   }
   
 }])
