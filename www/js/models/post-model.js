@@ -5,8 +5,7 @@ angular.module('stuffmobile')
 
 
     var Marker = function(params){
-      if (!params.id){ throw new Error('id is required')}
-      var self = this;
+      // var self = this;
       angular.extend(self, params);
     };
 
@@ -35,7 +34,7 @@ angular.module('stuffmobile')
       //NOTE a controller will have to wrap this function to change
       //the key in the marker service and set the marker on success
       var self = this;
-      var url = ApiEndpoint + '/posts';
+      var url = ApiEndpoint.url + '/posts';
       var params = {};
       angular.forEach(self.baseProperties, function(property){
         params[property] = self[property];

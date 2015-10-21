@@ -11,6 +11,7 @@ angular.module('stuffmobile')
       if (token) {
         config.headers.Authorization = 'Bearer ' + token;
       }
+      console.log(config);
       return config;
     },
     responseError: function(response) {

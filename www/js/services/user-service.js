@@ -45,8 +45,7 @@ angular.module('stuffmobile')
     }
   return {
     signUp: function(userInfo) {
-      var deffered = $q.defer();
-      $http.post(ApiEndpoint.url + '/users', {
+      return $http.post(ApiEndpoint.url + '/users', {
         user: userInfo
       }).success(function(data) {
         console.log('\n\n\n\n\n\n\n\n\n Data from signup', data)
@@ -55,23 +54,15 @@ angular.module('stuffmobile')
         //   template: 'Logged In'
         // })
         login(userInfo.username, userInfo.password)
-        deffered.resolve(userInfo.username);
-      }).error(function(data) {
-        console.log('\n\n\n\n\n\n\n\n\n Data from signup ERROR', data)
+        return userInfo.username;
+      }).error(function(error) {
+        console.log('\n\n\n\n\n\n\n\n\n Data from signup ERROR', error)
         $ionicPopup.alert({
           title: 'failure',
           template: 'Something went wrong'
         })
-        console.log('error in signup');
-        var key, results, value;
-        results = [];
-        for (key in data) {
-          value = data[key];
-        }
-        console.log(value);
-        deffered.reject();
+        throw error;
       });    
-      return deffered.promise;
     },
     login: login,
     logout: function(callback) {

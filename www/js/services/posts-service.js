@@ -2,6 +2,17 @@ angular.module('stuffmobile')
 .factory('PostsService', ['$http', 'ApiEndpoint', '$q', function($http, ApiEndpoint, $q) {
  
   var posts = [];
+  var categories = [
+        'Arts & Crafts',
+        'Books, Games, Media',
+        'Building & Garden Materials',
+        'Clothing & Accessories',
+        'Electronics',
+        'Furniture & Household',
+        'General',
+        'Kids & Babies',
+        'Recreation'
+      ]; 
  
   var getPosts = function(box){
       var url =  ApiEndpoint.url + "/posts/geolocated";
@@ -29,6 +40,7 @@ angular.module('stuffmobile')
   return {
     getPosts: getPosts,
     getInfoWindow: getInfoWindow,
+    categories: categories
   }
   
 }])

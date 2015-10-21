@@ -39,7 +39,7 @@ angular.module('stuffmobile')
         });      
       }
 
-      $scope.selectPicture = function() {
+      $scope.selectPictureStorage = function() {
         ImageService.selectPicture().then(function(imageURI) {
           $scope.imgSrc = imageURI;
           console.log('imageURI', imageURI);
@@ -48,14 +48,18 @@ angular.module('stuffmobile')
         });   
       };
 
-      $scope.uploadPicture = function(imgUri){
-        ImageService.uploadPicture(imgUri);
+      $scope.uploadPicture = function(imgUri, id){
+        ImageService.uploadPicture(imgUri, id);
         //will need to make a callback when able
         //to upload pictures
-        $scope.pictureUploaded = true;
       }
 
-      $scope.cancelUpload = function() {
+      $scope.choosePicture = function(imgSrc) {
+        $scope.imgSrc = imgSrc;
+        $scope.pictureChosen = true;
+      }
+
+      $scope.unselectPicture = function() {
         $scope.imgSrc = undefined;
       }
 
@@ -78,19 +82,6 @@ angular.module('stuffmobile')
             PostsService.setAll({status:'new'}, {temporary:true});//
             $scope.$emit('markersUpdated', function(){})
           });
-        });
-      };
-
-      $scope.giveNext = function(id) {
-        var stat = String(id);
-        $scope.mapHeight = 'map-1-' + stat
-        $scope.menuHeight = 'menu-1-' + stat;
-        return MapsService.resizeMap() 
-        .then(function(){ 
-          return $q.when( MapsService.panToMarker(
-          PostsService.getMarker('giveStuff').marker) ) })
-        .then(function(){  
-          return PostsService.clearMarkers('giveStuff'); 
         });
       };
 
@@ -216,30 +207,28 @@ angular.module('stuffmobile')
         post.category = $scope.category;
         post.title = $scope.title;
         post.description = $scope.description;
-        post.image_url = $scope.imgUrl;
 
         return post.create()
-        .then(
-          function(post){
+          .then(function(post){
+            console.log('returned post after create', post);
+            ImageService.uploadPicture(imgURI, post.id);
+            //need to add error handling for pic upload
             $ionicPopup.add('success', "Your post has been added");
             PostsService['delete']('giveStuff');
 
-            return PostsService.setMarker(post)
-            .then( function(){
-              PostsService.getMarker(post.id).image_url = image;
-              $scope.showDetails(post.id);
-            })
-            .then(
-              function(){
-                return ImageService.upload(image,post.id,'post')
-              }
-            )
-          },
-          function(error){
-            console.log(error);
+            return PostsService.setMarker(post);
+          })
+          .then(function(){
+            PostsService.getMarker(post.id).image_url = image;
+            $scope.showDetails(post.id);
+          })
+          .then(function(){
+            return ImageService.upload(image, post.id, 'post')
+          })
+          .error(function(error){
+            throw error;
             $ionicPopup.add('danger', "Something went wrong");
-          }
-        );
+          });
  
       };
       $scope.updateStuff = function() {

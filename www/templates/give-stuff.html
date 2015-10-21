@@ -1,6 +1,6 @@
 
 <ion-vew>
-<ion-content>
+<ion-content overflow-scroll="true">
 <div  id="giveMap" class="centerMarker" data-tap-disabled="true"></div>
 <div ng-hide='main.getCurrentUser()' class='overlay-info add-margin-top-50' >
   Please <a class='btn' ui-sref='user' >Sign In</a> to give stuff
@@ -43,12 +43,12 @@
     </div>
 
 
-         <span>It's correct! Let's add a photo >> </span>
+         <span>It's correct! Let's add a photo &gt;&gt; </span>
     <button ng-if="imgSrc == undefined" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
       green-btn' ng-click="takePicture()">Camera
     </button>
     <button ng-if="imgSrc == undefined" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="selectPicture()">Select Image
+      green-btn' ng-click="selectPictureStorage()">Choose from Storage 
     </button>
     <div class='card'>
       <div class='item item-image'>
@@ -56,14 +56,14 @@
       </div>
     </div>
      <button ng-if="imgSrc" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="uploadPicture(imgSrc)">Upload Image
+      green-btn' ng-click="choosePicture(imgSrc)">Select Image
     </button> 
      <button ng-if="imgSrc" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="cancelUpload()">Select Another Picture
+      green-btn' ng-click="unselectPicture()">Select Another Picture
     </button> 
   </div>
 
-  <div id="give-2" ng-show='pictureUploaded' class='pull-sm-bottom to-edge'>
+  <div id="give-2" ng-show='pictureChosen' class='pull-sm-bottom to-edge'>
     <div class="card">
       <img class="item item-image" 
       ng-src="{{post.imageSrc}}"></img>

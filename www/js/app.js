@@ -6,7 +6,7 @@
 angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
   // url: 'http://stuffmapper.com/api'
-  url: 'http://localhost:3000/api'
+  url: 'https://blooming-eyrie-8909.herokuapp.com/api'
 })
 
 .run(function($ionicPlatform, $rootScope) {
@@ -94,6 +94,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
   var token = $("meta[name=\"csrf-token\"]").attr("content")
 
   // include token in $httpProvider default headers
+  $httpProvider.defaults.withCredentials = true;
   $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = token
   $httpProvider.interceptors.push('AuthInterceptor')
 });

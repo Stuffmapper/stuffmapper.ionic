@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+
     <title></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -28,7 +30,7 @@
     <script src="js/controllers/stuff-controller.js"></script>
     <script src="js/controllers/my-stuff-controller.js"></script>
     <!-- services -->
-    <script src="js/services/markers-service.js"></script>
+    <script src="js/services/posts-service.js"></script>
     <script src="js/services/map-service.js"></script>
     <script src="js/services/local-service.js"></script>
     <script src="js/services/user-service.js"></script>
