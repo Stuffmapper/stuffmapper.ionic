@@ -201,17 +201,20 @@ angular.module('stuffmobile')
 
       $scope.submitPost = function() {
         //TODO move this into marker service resource
-        var latLng = Map.getCenter();
-        console.log(latLng);
-        var post = new Post();
-        post.category = $scope.category;
-        post.title = $scope.title;
-        post.description = $scope.description;
-
+        var latlng = Map.getCenter();
+        console.log(latlng);
+        var params = {
+          category: $scope.category,
+          title: $scope.title,
+          description: $scope.description,
+          latitude: latlng.lat(),
+          longitude: latlng.lng()
+        }        
+        var post = new Post(params);
         return post.create()
           .then(function(post){
             console.log('returned post after create', post);
-            ImageService.uploadPicture(imgURI, post.id);
+            ImageService.uploadPicture($scope.imgURI, post.id);
             //need to add error handling for pic upload
             $ionicPopup.add('success', "Your post has been added");
             PostsService['delete']('giveStuff');

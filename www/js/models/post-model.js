@@ -5,7 +5,8 @@ angular.module('stuffmobile')
 
 
     var Marker = function(params){
-      // var self = this;
+      // if (!params.id){ throw new Error('id is required')}
+      var self = this;
       angular.extend(self, params);
     };
 
@@ -39,20 +40,18 @@ angular.module('stuffmobile')
       angular.forEach(self.baseProperties, function(property){
         params[property] = self[property];
       })
-      return $q(function(resolve, reject){
-        $http.post(url, params)
-        .then( function(data){
+      return $http.post(url, params)
+        .then(function(data){
           self.status = 'new'; //review
           var updated = data.data.post;
           updated.locallyUpdated = Date.now();
           angular.extend(self, updated)
           // self.saveLocal();
-          resolve(updated) },
-          function(error){
-            //TODO handle specific errors
-            reject(error);
+          return updated;
+        },function(error){
+          //TODO handle specific errors
+          throw error;
         }); 
-      });
     };
 
     constructor.dib = function(){
