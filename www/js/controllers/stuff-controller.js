@@ -3,10 +3,10 @@ angular.module('stuffmobile')
     '$scope', '$timeout', '$window', '$q',
     '$resource', 'ImageService','LocalService', 
     'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
-    '$http', 'ImageService', 'Post', function($scope, $timeout, $window,
+    '$http', 'ImageService', 'Post', '$state', function($scope, $timeout, $window,
       $q, $resource, ImageService, LocalService,
       Map, PostsService, UserService, $ionicPopup, $rootScope,
-      $http, ImageService, Post) {
+      $http, ImageService, Post, $state) {
       console.log('stuff controller');
       Map.giveInit();
        // $SCOPE OBJECTS
@@ -214,10 +214,12 @@ angular.module('stuffmobile')
         return post.create()
           .then(function(post){
             console.log('returned post after create', post);
-            ImageService.uploadPicture($scope.imgSrc, post.id);
+            ImageService.uploadPicture($scope.imgSrc, post.id).then(function(){
+              $ionicPopup.alert({title: 'success', template: "Your post has been added"});
+            }).then(function(){
+              $state.go('tabs.map');
+            });
             //need to add error handling for pic upload
-            $ionicPopup.alert('success', "Your post has been added");
-            PostsService['delete']('giveStuff');
 
             return PostsService.setMarker(post);
           })
