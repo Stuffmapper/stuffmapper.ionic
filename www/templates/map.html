@@ -1,11 +1,20 @@
 <ion-view>
     <ion-content overflow-scroll="true">
-    <div class='get-stuff' overflow-scroll="true">
-    <div ng-repeat="currentpost in posts">
-      <ngpost post='currentpost'></ngpost>
-      
-    </div>
-    </div>
-        <div  id="getMap" class="map" data-tap-disabled="true"></div>
+      <row row-top>
+        <ion-scroll class='get-stuff' ng-class="openState">
+          <div class='get-stuff' overflow-scroll="true">
+            <div ng-repeat="currentpost in posts">
+              <ngpost post='currentpost'></ngpost>
+            </div>
+          </div>
+        </ion-scroll>
+      </row>
+      <row>
+      <button ng-show='listOpen' class='get-resive-btn ion-ios-arrow-up' ng-click='toggleList()'></button>
+      <button ng-hide='listOpen' class='get-resive-btn ion-ios-arrow-down' ng-click='toggleList()'></button>
+      </row>
+      <row>
+        <div id="getMap" ng-class="openState" class="map" data-tap-disabled="true"></div>
+      </row>
     </ion-content>
 </ion-view>

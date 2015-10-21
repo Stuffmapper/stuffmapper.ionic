@@ -7,8 +7,8 @@
   ],
   "proxies": [
     {
-      "path": "http://stuffmapper.com/api",
-      "proxyUrl": "http://stuffmapper.com/api"
+      "path": "/api",
+      "proxyUrl": "https://blooming-eyrie-8909.herokuapp.com/api"
     }
   ],
   "watchPatterns": [

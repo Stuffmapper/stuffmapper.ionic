@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
-  // url: 'http://stuffmapper.com/api'
-  url: 'https://blooming-eyrie-8909.herokuapp.com/api'
+  // url: "https://blooming-eyrie-8909.herokuapp.com/"
+  url: '/api'
 })
 
 .run(function($ionicPlatform, $rootScope) {

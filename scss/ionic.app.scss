@@ -51,7 +51,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 #getMap {
   width: 100%;
-  height: 100%;
+  height: 75%;
 }
 
 .signin {
@@ -158,4 +158,25 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .stuff-image {
   width: 100%;
+}
+
+/*up down button on get stuff*/
+.get-resive-btn {
+  width: 100%;
+  text-align: center;
+  height: 8%;
+}
+
+.get-stuff.closed {
+  height: 0%;
+}
+#getMap.closed {
+  height: 92%;
+}
+
+.get-stuff.open {
+  height: 70%;
+}
+#getMap.open {
+  height: 22%;
 }
