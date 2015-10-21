@@ -214,9 +214,9 @@ angular.module('stuffmobile')
         return post.create()
           .then(function(post){
             console.log('returned post after create', post);
-            ImageService.uploadPicture($scope.imgURI, post.id);
+            ImageService.uploadPicture($scope.imgSrc, post.id);
             //need to add error handling for pic upload
-            $ionicPopup.add('success', "Your post has been added");
+            $ionicPopup.alert('success', "Your post has been added");
             PostsService['delete']('giveStuff');
 
             return PostsService.setMarker(post);
