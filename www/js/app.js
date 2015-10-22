@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
-  // url: "https://blooming-eyrie-8909.herokuapp.com/"
-  url: '/api'
+  url: "https://blooming-eyrie-8909.herokuapp.com/api"
+  // url: '/api'
 })
 
 .run(function($ionicPlatform, $rootScope) {
@@ -66,11 +66,9 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
   })
   .state('details', {
     url:'/details/:id',
-    views: {
-      templateUrl: 'templates/details.html',
-      controller: 'DetailCtrl',
-      controllerAs: 'detailCtrl'
-    }
+    templateUrl: 'templates/details.html',
+    controller: 'DetailCtrl',
+    controllerAs: 'detailCtrl'
   })
   .state('user', {
     url: '/user',

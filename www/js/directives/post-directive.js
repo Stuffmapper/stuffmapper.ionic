@@ -7,9 +7,9 @@ angular.module('stuffmobile')
     },
     controller: [
       '$state', '$scope', function($state, $scope){
-        console.log($scope.post);
         $scope.getDetails = function(post) {
-          $state.go('details/' + post.id);
+          console.log('going to', post.id)
+          $state.go('details', {id: post.id.toString()});
         }
       }
     ],

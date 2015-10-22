@@ -8,4 +8,5 @@ angular.module('stuffmobile')
     main.logout = function() {
       return UserService.logout();
     }
+    UserService.check();
 });

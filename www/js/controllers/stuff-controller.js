@@ -199,41 +199,27 @@ angular.module('stuffmobile')
         }
       };
 
-      $scope.submitPost = function() {
+      $scope.submitPost = function(postParams) {
         //TODO move this into marker service resource
         var latlng = Map.getCenter();
         console.log(latlng);
-        var params = {
-          category: $scope.category,
-          title: $scope.title,
-          description: $scope.description,
-          latitude: latlng.lat(),
-          longitude: latlng.lng()
-        }        
-        var post = new Post(params);
-        return post.create()
+        postParams.latitude = latlng.lat(),
+        postParams.longitude = latlng.lng()
+        var post = new Post(postParams);
+        post.create()
           .then(function(post){
             console.log('returned post after create', post);
-            ImageService.uploadPicture($scope.imgSrc, post.id).then(function(){
+            return ImageService.uploadPicture($scope.imgSrc, post.id)
+            .then(function(){
               $ionicPopup.alert({title: 'success', template: "Your post has been added"});
-            }).then(function(){
+            })
+            .then(function(){
               $state.go('tabs.map');
             });
             //need to add error handling for pic upload
 
             return PostsService.setMarker(post);
           })
-          .then(function(){
-            PostsService.getMarker(post.id).image_url = image;
-            $scope.showDetails(post.id);
-          })
-          .then(function(){
-            return ImageService.upload(image, post.id, 'post')
-          })
-          .error(function(error){
-            throw error;
-            $ionicPopup.add('danger', "Something went wrong");
-          });
  
       };
       $scope.updateStuff = function() {

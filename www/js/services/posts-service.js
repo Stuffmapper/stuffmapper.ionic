@@ -36,9 +36,21 @@ angular.module('stuffmobile')
       content: innerContent
     })
   }
+  var get = function(postId){
+    return $http.get(ApiEndpoint.url + '/posts/' + postId)
+    .success(function(data){
+      return data.post;
+    })
+    .error(function(err){
+      //TEST ME - REJECT NOT TESTED
+      throw err;
+    })
+  }
+
 
   return {
     getPosts: getPosts,
+    get: get,
     getInfoWindow: getInfoWindow,
     categories: categories
   }
