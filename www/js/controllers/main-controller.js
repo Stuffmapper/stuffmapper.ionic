@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-  .controller('MainCtrl', function($scope, $cordovaGeolocation, UserService){
+  .controller('MainCtrl', function($scope, $cordovaGeolocation, UserService, BackService){
     var main = this;
     main.getCurrentUser = function(){
       $scope.currentUser = UserService.currentUser;
@@ -7,6 +7,9 @@ angular.module('stuffmobile')
     }
     main.logout = function() {
       return UserService.logout();
+    }
+    main.back = function() {
+      BackService.back();
     }
     UserService.check();
 });

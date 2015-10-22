@@ -1,7 +1,7 @@
 angular.module('stuffmobile')
 .factory('Post', [
-  '$http','LocalService','$resource', '$q', '$rootScope', 'ApiEndpoint', 
-   function($http,LocalService,$resource, $q, $rootScope, ApiEndpoint ) {
+  '$http','LocalService','$resource', '$q', '$rootScope', '$ionicPopup', 'ApiEndpoint', 'UserService', 
+   function($http,LocalService,$resource, $q, $rootScope, $ionicPopup, ApiEndpoint, UserService) {
 
 
     var Marker = function(params){
@@ -60,16 +60,13 @@ angular.module('stuffmobile')
 
     constructor.dib = function(){
       var self = this;
-      return $q(function(resolve, reject){
-        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/dibs')
+      return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/dibs')
         .then( function(data){
           angular.extend(self, data.data.post)
-          resolve(self)
+          return self;
+        }, function(error){
+          throw error;
         })
-        .error( function(error){
-          throw new Error( "can't dib this " + self )
-        })
-      });
     };
 
 
@@ -219,8 +216,8 @@ angular.module('stuffmobile')
     //VISUALIZATION BOOLEANS
 
     constructor.showEdit = function() {
-      return ( this.creator && this.currentUser &&
-        this.creator === this.currentUser);
+      return ( this.creator && UserService.currentUser &&
+        this.creator == UserService.currentUser);
     };
 
     constructor.showDib = function() {

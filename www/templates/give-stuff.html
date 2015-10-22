@@ -1,66 +1,50 @@
 
 <ion-vew>
 <ion-content overflow-scroll="true">
-<div  id="giveMap" class="centerMarker" data-tap-disabled="true"></div>
+<div  id="giveMap" class="centerMarker" ng-class='mapStatus' data-tap-disabled="true"></div>
 <div ng-hide='main.getCurrentUser()' class='overlay-info add-margin-top-50' >
   Please <a class='btn' ui-sref='user' >Sign In</a> to give stuff
 
 </div>
-<div ng-show="loading" class="col-lg-12 col-md-12 col-xs-12 overlay-info">
-  <div class="col-lg-10 col-md-10 col-xs-10" ><h5>Uploading Photo</h5>
-    <div class="progress">
-      <div class="progress-bar progress-bar-striped active" role="progressbar"
-      aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-2 col-md-2 col-xs-2 " >
-    <img class='img-responsive' ng-src={{current_image}} >
-  </div>
-</div>
 
 <div id="give-stuff" class="col-lg-12 col-md-12 col-xs-12 to-edge">
 
+    <div ng-hide='locationSelected'>
+      <div ng-hide='pictureChosen' class='add-margin-top-15'>
+        <div class="col-lg-12
+          col-md-12 col-xs-12 text-0">
+           <h4 class='text-0-bold'> Is your location correct? </h4>
+           <p><span> This is where your stuff will show up on the map. If the pickup
+             location is somewhere else, move the</span> <!-- <img class='emoji-size' ng-src='<%= asset_path('pin.svg')%>' > -->
+            <span class='text-1'>pin</span><span> to where you want to map the item. </span> </p>
+        </div>
 
-  <div class="col-lg-12 col-md-12 col-xs-12"
-   ng-class="loading || !currentUser ? 'overlay-active' : 'overlay-inactive' ">
-  </div>
-
-  <div id='give-1' ng-show='giveState(1)' class='add-margin-top-15'>
-    <div class="col-lg-12
-      col-md-12 col-xs-12 text-0">
-       <h4 class='text-0-bold'> Is your location correct? </h4>
-       <p><span> This is where your stuff will show up on the map. If the pickup
-         location is somewhere else, move the</span> <!-- <img class='emoji-size' ng-src='<%= asset_path('pin.svg')%>' > -->
-        <span class='text-1'>pin</span><span> to where you want to map the item. </span> </p>
+        <div class="col-lg-12 col-md-12 col-xs-12 add-margin-top-15"></div>
+      <button class='button'
+       ng-click='panToLocation()'>
+        <span class="glyphicon glyphicon-screenshot"
+          aria-hidden="true"></span><span> Find my Location</span>
+      </button>
+      <button class='button button-positive' ng-click='locationSelected = true'>Choose a photo &gt;&gt;</button>
     </div>
-
-    <div class="col-lg-12 col-md-12 col-xs-12 add-margin-top-15"></div>
-    <div class='col-lg-4 col-sm-hide col-md-hide to-edge btn stuff-btn gray-btn'
-     ng-click='panToLocation()'>
-      <span class="glyphicon glyphicon-screenshot"
-        aria-hidden="true"></span><span> Find my Location</span>
     </div>
-
-
-         <span>It's correct! Let's add a photo &gt;&gt; </span>
-    <button ng-if="imgSrc == undefined" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="takePicture()">Camera
-    </button>
-    <button ng-if="imgSrc == undefined" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="selectPictureStorage()">Choose from Storage 
-    </button>
-    <div class='card'>
-      <div class='item item-image'>
-        <img ng-src="{{imgSrc}}"/>
+    <div class='camera-buttons' ng-show='locationSelected'>
+      <button ng-if="imgSrc == undefined" class='button button-calm' ng-click="takePicture()">Take a Picture
+      </button>
+      <button ng-if="imgSrc == undefined" class='button button-calm' ng-click="selectPictureStorage()">Choose from Storage 
+      </button>
+      <div class='card'>
+        <div class='item item-image'>
+          <img ng-src="{{imgSrc}}"/>
+        </div>
       </div>
     </div>
-     <button ng-if="imgSrc" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="choosePicture(imgSrc)">Select Image
-    </button> 
-     <button ng-if="imgSrc" class='btn col-lg-8 col-md-12 col-xs-12  stuff-btn
-      green-btn' ng-click="unselectPicture()">Select Another Picture
-    </button> 
+    <div class="camera-buttons">
+       <button ng-if="imgSrc" class='button button-balanced' ng-click="choosePicture(imgSrc)">Select Image
+      </button> 
+       <button ng-if="imgSrc" class='button button-positive' ng-click="unselectPicture()">Select Another Picture
+      </button> 
+    </div>
   </div>
 
   <div id="give-2" ng-show='pictureChosen' class='pull-sm-bottom to-edge'>
@@ -96,14 +80,14 @@
       </div>
     </div>
 
-    <div class="">
-      <button class=""
+    <div class="camera-buttons">
+      <button class="button button-positive"
       id="give-stuff-submit" ng-click="submitPost(postParams)">
-        Map my stuff! >>
+        Submit Post >>
       </button>
 
-      <a href='#'class=""
-       ng-click="cancelGive()">
+      <a class=""
+       ui-sref='tabs.map'>
         Cancel
       </a>
     </div>

@@ -1,6 +1,6 @@
 //logout handled on main, ionic nav-header-bar greatness...
 angular.module('stuffmobile')
-.controller('UserCtrl', function($scope, $window, $state, $rootScope, UserService){
+.controller('UserCtrl', ['$scope', '$window', '$state', '$rootScope', 'UserService', 'BackService', function($scope, $window, $state, $rootScope, UserService, BackService){
   var userCtrl = this;
 
   //sends to sign up page
@@ -21,11 +21,7 @@ angular.module('stuffmobile')
       } else if (data.user) {
         console.log('sign in successfull');
         $scope.user = data.user
-        if ($rootScope.$previousState) {
-          $state.go($rootScope.$previousState.name);
-        } else {
-          $state.go('tabs.map');
-        }
+        BackService.back();
         return data.user;
       } else {
         return console.log(data.error);
@@ -38,6 +34,6 @@ angular.module('stuffmobile')
     $state.go('map');
   }
 
-});
+}]);
 
 

@@ -3,13 +3,16 @@
 
 
 <div>
-  <settings></settings>
+  <button class= 'dib-button dib-button-details' ng-click='back()'>Back &lt;&lt;</button>
+
+  <settings ng-if='post.showEdit()'></settings>
+
 
   <hr class='thin-hr'>
   <div ng-show='post.isCurrentDibber'>
     <button  class= "dib-button dib-button-send-message"
     >Dibbed! Send a message to the lister! &gt;&gt;</button>
-    <a href='#' class='undib-link' ng-click="post.unDib()"
+    <a href='#' class='undib-link' ng-click="unDib(post)"
     >Undib! I don't want this anymore</a>
     <hr class='thin-hr'>
   </div>
@@ -44,17 +47,12 @@
     </img>
   </a>
 
-  <div class='col-lg-12 col-md-12 col-xs-12 detail-description'>
+  <div class='detail-description'>
     <span>{{post.description}}</span>
   </div>
 
-  <div ng-hide="post.showEdit()">
-    <button ng-show="post.showDib()" class= 'dib-button dib-button-details' ng-click='giveMe()'>I want this stuff! &gt;&gt;</button>"
+  <button ng-show="post.showDib()" class= 'dib-button dib-button-details' ng-click='dib(post)'>I want this stuff! &gt;&gt;</button>
 
-  </div>
-
-  <button class="btn-close-details glyphicon glyphicon-triangle-top"></button>
-  <button class="btn-close-details glyphicon glyphicon-triangle-bottom"></button>
 </div>
 </ion-content>
 </ion-view>

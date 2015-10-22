@@ -8,11 +8,11 @@
           <input type="text" class="form-control" id="username" placeholder="Username" ng-model="username">
           <label for="password">Password *</label>
           <input type="password" class="form-control" id="password" placeholder="Password" ng-model="password">
-          <a href='#' ng-click='userCtrl.resetPW() ' class='pull-left'>Forgot Password?</a>
+          <!-- <a href='#' ng-click='userCtrl.resetPW() ' class='pull-left'>Forgot Password?</a> -->
         </div>
         <button class="btn btn-primary" ng-click="userCtrl.signin()">Sign In</button>
 
-        <button class="btn btn-warning " ng-click="userCtrl.cancel()">Cancel</button>
+        <button class="btn btn-warning " ng-click='main.back()'>Cancel</button>
       </form>
   </div>
 </ion-content>

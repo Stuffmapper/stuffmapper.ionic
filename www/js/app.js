@@ -49,8 +49,8 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
     views: {
       'give-tab': {
         templateUrl: 'templates/give-stuff.html',
-        controller: 'StuffCtrl',
-        controllerAs: 'stuffctrl'     
+        controller: 'GiveCtrl',
+        controllerAs: 'givectrl'     
       }
     }
   })   
