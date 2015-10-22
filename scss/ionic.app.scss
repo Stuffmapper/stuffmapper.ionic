@@ -21,8 +21,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+/*misc*/
 .scroll {
   height: 100%;
+}
+.pull-right {
+  right: 0px;
 }
 
 #giveMap {
@@ -30,7 +34,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   height: 50%;
 }
 
-
+/*give stuff marker placement*/
 .centerMarker::before{
   content: '';
   position:absolute;
@@ -66,6 +70,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   display: inline;
 }
 .settings-group ul {
+  width: 100px;
   list-style: none;
   position: relative;
   float: right;
@@ -189,4 +194,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 #giveMap.closed {
   height: 0%;
+}
+
+/*my stuff*/
+
+.my-img {
+  height: 100px;
+  padding-left: 8px;
+  max-width: 100px;
 }

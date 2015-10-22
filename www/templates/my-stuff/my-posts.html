@@ -1,16 +1,20 @@
-<div>
-  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mystuff-row">
-    <img class="img-responsive" ng-src={{post.image_url}}></img>
+<div class='card row'>
+  <div class="col-33">
+    <img class="item item-thumbnail-left my-img" ng-src={{post.image_url}}></img>
   </div>
-  <div class="col-lg-8 col-md-8 col-sm-8">
-    <div class="mystuff-half-row">
-      test
-      <settings post=post></settings>
+  <div class="col-67">
+    <div class='row'>
+      <div class="col col-66">
+        {{post.title}}
+      </div>
+      <div class='col col-33'>
+        <settings post='post'></settings>
+      </div>
     </div>
-        
-    <button ng-show='post.showWanted()' class="col-lg-12 col-md-12 col-sm-12 mystuff-half-row">
-    Wanted!(Waiting for messages)
-    </button>
+    <div class='row'>    
+      <button ng-show='post.showWanted()' class="mystuff-half-row">
+      Wanted!(Waiting for messages)
+      </button>
+    </div>
   </div>
-
 </div>
