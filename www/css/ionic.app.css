@@ -7711,6 +7711,11 @@ a.button {
   width: 100%;
   height: 50%; }
 
+/*info window*/
+.infoWinderContent {
+  width: 300px;
+  height: 300px; }
+
 /*give stuff marker placement*/
 .centerMarker::before {
   content: '';
@@ -7732,7 +7737,7 @@ a.button {
 
 #getMap {
   width: 100%;
-  height: 75%; }
+  height: 92%; }
 
 .signin {
   padding-top: 50px;
@@ -7853,3 +7858,18 @@ a.button {
   height: 100px;
   padding-left: 8px;
   max-width: 100px; }
+
+.my-button {
+  width: 100%; }
+
+.newMessage:after {
+  content: 'New Message!'; }
+
+.noNewMessage:after {
+  content: 'Messages'; }
+
+.listed:after {
+  content: 'Listed'; }
+
+.my-post-wrapper {
+  height: 125px; }

@@ -94,18 +94,17 @@ angular.module('stuffmobile')
     constructor.markGone = function(){
       var self = this;
       var params = {status: 'gone'};
-      return $q(function(resolve, reject){
-        $http.put(ApiEndpoint.url + '/posts/' + self.id, params)
+      return $http.put(ApiEndpoint.url + '/posts/' + self.id, params)
         .then( function(data){
           var updated = data.data.post;
           updated.locallyUpdated = Date.now();
           angular.extend(self, updated)
           self.saveLocal();
-          resolve(updated) },
-          function(error){
-            reject(error);
-        }); 
-      });       
+          return update;
+        }, function(error){
+          throw error;
+        }
+     );       
     };
 
 
@@ -116,17 +115,16 @@ angular.module('stuffmobile')
       //deletes on the server
       //does not delete itself .. will need to be handle else where
       //should mark for deletion
-      return $q(function(resolve, reject){
-        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/remove')
-        .success( function(data){
+      return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/remove')
+        .then( function(data){
           angular.extend(self, data.post)
           self.deleteLocal();
           resolve(self)
-        })
-        .error( function(error){
+        },
+        function(error){
           throw new Error( "can't delete " + self )
-        })
-      });
+        }
+      );
     };
 
 
@@ -136,17 +134,16 @@ angular.module('stuffmobile')
       //deletes on the server
       //does not delete itself .. will need to be handled else where
       //should mark for deletion
-      return $q(function(resolve, reject){
-        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/removecurrentdib')
-        .success( function(data){
+      return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/removecurrentdib')
+        .then(function(data){
           angular.extend(self, data.post)
           resolve(self)
-        })
-        .error( function(error){
-          throw new Error( "can't delete " + self )
-        })
-      });
-    };
+        },
+        function(error){
+          throw error;
+        }
+      );
+    }
 
      constructor.unDib = function(){
       var self = this;
@@ -154,17 +151,16 @@ angular.module('stuffmobile')
       //deletes on the server
       //does not delete itself .. will need to be handle else where
       //should mark for deletion
-      return $q(function(resolve, reject){
-        $http.post(ApiEndpoint.url + '/posts/' + self.id + '/undib')
-        .success( function(data){
+      return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/undib')
+        .then(function(data){
           angular.extend(self, data.post)
           resolve(self)
-        })
-        .error( function(error){
-          throw new Error( "can't delete " + self )
-        })
-      });
-    };
+        },
+        function(error){
+          throw error;
+        }
+      );
+    }
 
     // update
     constructor.update = function(){

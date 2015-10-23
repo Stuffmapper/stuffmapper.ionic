@@ -29,9 +29,10 @@ angular.module('stuffmobile')
       });
   }
   var getInfoWindow = function(posts) {
-    var innerContent = "<div ><div id='siteNotice' class='stuff-map-image'></div> <img src=" +
-           posts.image_url + " width='200px' ></img> <div id='bodyContent'> <p>" +
-           posts.description + "</p> </div> </div> </div>";
+    var innerContent = "<div class='infowWindowContent'><div ui-sref='details({id:" +
+           posts.id + "})' id='siteNotice' class='stuff-map-image'> <img src=" +
+           posts.image_url + " width='200px' height='200px'></img> </div><div id='bodyContent'> <p>" +
+           posts.title + "</p> </div> </div>";
     return new google.maps.InfoWindow({
       content: innerContent
     })

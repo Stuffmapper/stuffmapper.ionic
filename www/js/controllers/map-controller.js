@@ -20,6 +20,7 @@ angular.module('stuffmobile')
       $scope.listOpen = true;
       $scope.openState = 'open';
     }
+    Map.getCheckResize();
   }
 
 }]);

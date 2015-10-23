@@ -1,4 +1,4 @@
-<div class='card row'>
+<div class='card row my-post-wrapper' ng-class='expandForChat'>
   <div class="col-33">
     <img class="item item-thumbnail-left my-img" ng-src={{post.image_url}}></img>
   </div>
@@ -12,9 +12,9 @@
       </div>
     </div>
     <div class='row'>    
-      <button ng-show='post.showWanted()' class="mystuff-half-row">
-      Wanted!(Waiting for messages)
+      <button class="button my-button" ng-class="{'button-stable listed' : post.currentDib === false, 'button-balanced newMessage' : post.newMessage === true, 'button-calm noNewMessage' : post.newMessage === false && post.currentDib === true}">
       </button>
     </div>
-  </div>
+
+    </div>
 </div>

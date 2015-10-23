@@ -42,6 +42,7 @@ angular.module('stuffmobile')
       getMap = new google.maps.Map(document.getElementById("getMap"), mapOptions);
       deferred.resolve(getMap); 
     });
+
     return deferred.promise; 
   }
  
@@ -63,6 +64,7 @@ angular.module('stuffmobile')
  
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(giveMap, 'idle', function(){
+        google.maps.event.trigger(getMap, 'resize');
         deferred.resolve(giveMap);
       });
  
@@ -153,6 +155,10 @@ angular.module('stuffmobile')
   function getCenter(){
     return giveMap.getCenter();
   }
+
+  function getCheckResize() {
+    google.maps.event.trigger(getMap, 'resize');
+  }
 //the give and get keep the two maps strait 
   return {
     getInit: getMapInit,
@@ -164,7 +170,8 @@ angular.module('stuffmobile')
       }
     },
     panToLocation: panToLocation,
-    getCenter: getCenter
+    getCenter: getCenter,
+    getCheckResize: getCheckResize
   }
  
 }])
