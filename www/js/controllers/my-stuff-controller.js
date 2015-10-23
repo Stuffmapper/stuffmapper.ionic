@@ -14,12 +14,12 @@ angular.module('stuffmobile')
         return $http.get(ApiEndpoint.url + '/my-dibs')
         .then( 
           function(data){ 
-            console.log(data.data.posts);
             var mydibs = data.data.posts;
             $scope.myDibs = [];
             for(var i = 0; i < mydibs.length; i++) {
               $scope.myDibs.push(new Post(mydibs[i]));
             }
+            console.log($scope.myDibs);
           },
           function(err){
             return err

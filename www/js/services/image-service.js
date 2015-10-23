@@ -4,7 +4,6 @@ angular.module('stuffmobile')
   return {
     takePicture: function() {
       var deffered = $q.defer();
-      console.log($cordovaCamera);
 
       var options = {
         quality: 50,
@@ -18,7 +17,6 @@ angular.module('stuffmobile')
       }
       $cordovaCamera.getPicture(options).then(function(imageData) {
         var imgSrc = "data:image/jpeg;base64," + imageData;
-        console.log('image from camera',imgSrc);
         return deffered.resolve(imgSrc)
       }, function(err) {
         console.log('an error occured', err);
@@ -41,7 +39,6 @@ angular.module('stuffmobile')
 
       $cordovaCamera.getPicture(options).then(function(imageData) {
         var imgSrc = "data:image/jpeg;base64," + imageData;
-        console.log(imgSrc)
         return deffered.resolve(imgSrc);
       }, function(err) {
         console.log('an error occured', err);
@@ -50,7 +47,6 @@ angular.module('stuffmobile')
       return deffered.promise;
     },
     uploadPicture: function(picURI, id) {
-      console.log('picuri', picURI)
       // var options = new FileUploadOptions();
       var options = {};
       options.fileKey="stuffImage";

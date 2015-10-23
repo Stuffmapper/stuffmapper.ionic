@@ -26,7 +26,6 @@ angular.module('stuffmobile')
       $scope.takePicture = function() {
         ImageService.takePicture().then(function(imageURI) {
           $scope.imgSrc = imageURI;
-          console.log('image uri', imageURI);
         }, function(err) {
           console.err(err);
         });      
@@ -35,7 +34,6 @@ angular.module('stuffmobile')
       $scope.selectPictureStorage = function() {
         ImageService.selectPicture().then(function(imageURI) {
           $scope.imgSrc = imageURI;
-          console.log('imageURI', imageURI);
         }, function(err) {
           console.err(err);
         });   
@@ -80,7 +78,6 @@ angular.module('stuffmobile')
       };
 
       $scope.giveState = function(state){ 
-        console.log('give state bein called yall');
         var current = '1'; 
         return current === String(state) 
       };
@@ -142,19 +139,17 @@ angular.module('stuffmobile')
       $scope.submitPost = function(postParams) {
         //TODO move this into marker service resource
         var latlng = Map.getCenter();
-        console.log(latlng);
         postParams.latitude = latlng.lat(),
         postParams.longitude = latlng.lng()
         var post = new Post(postParams);
         post.create()
           .then(function(post){
-            console.log('returned post after create', post);
             return ImageService.uploadPicture($scope.imgSrc, post.id)
             .then(function(){
               $ionicPopup.alert({title: 'success', template: "Your post has been added"});
             })
             .then(function(){
-              $state.go('tabs.map');
+              $state.go('tabs.map', {}, {reload: true});
             });
             //need to add error handling for pic upload
 

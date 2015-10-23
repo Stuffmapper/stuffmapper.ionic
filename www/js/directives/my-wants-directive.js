@@ -8,7 +8,7 @@ angular.module('stuffmobile')
       post: '='
     },
     controller: [
-      '$scope', 'MessageService', function($scope, MessageService) {
+      '$scope', function($scope) {
         var getColor = function(){
 
         };

@@ -28,6 +28,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .pull-right {
   right: 0px;
 }
+.center {
+  margin: auto;
+}
 
 #giveMap {
   width: 100%;
@@ -69,6 +72,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 /*settings*/
+.settings-btn-wrapper {
+  float: right;
+  margin-right:0;
+  padding-right:0px;
+}
 
 .settings-group {
   display: inline;
@@ -203,13 +211,20 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 /*my stuff*/
 
 .my-img {
-  height: 100px;
-  padding-left: 8px;
-  max-width: 100px;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
 }
-
+.my-settings {
+  margin-right: 0px;
+  float: right;
+}
 .my-button {
   width: 100%;
+}
+
+.my-detail-container {
+  margin: auto;
 }
 
 .newMessage:after {
@@ -224,6 +239,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   content: 'Listed';
 }
 
-.my-post-wrapper {
-  height: 125px;
+/*chat*/
+.my-post-container {
+  margin: auto;
+}
+.chat-window {
+  max-height: 250px;
+  flex: 0 0 auto;
+}
+
+.chat-container {
+  margin: auto;
 }

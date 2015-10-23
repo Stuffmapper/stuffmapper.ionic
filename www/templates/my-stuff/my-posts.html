@@ -1,20 +1,28 @@
-<div class='card row my-post-wrapper' ng-class='expandForChat'>
-  <div class="col-33">
-    <img class="item item-thumbnail-left my-img" ng-src={{post.image_url}}></img>
-  </div>
-  <div class="col-67">
-    <div class='row'>
-      <div class="col col-66">
-        {{post.title}}
+<div class='my-post-container'>
+
+  <div class='card'>
+    <div class='row my-detail-container' ng-class='expandForChat'>
+      <div class="col col-33">
+        <img class="item my-img" ng-src={{post.image_url}}></img>
       </div>
-      <div class='col col-33'>
-        <settings post='post'></settings>
+      <div class="col">
+        <div class='row'>
+          <div class="col col-67">
+            {{post.title}}
+          </div>
+          <div class='col my-settings'>
+            <settings post='post'></settings>
+          </div>
+        </div>
+        <div class='row'>    
+          <button class="button my-button" ng-class="{'button-stable listed' : post.current_dib_id == null, 'button-balanced newMessage' : post.newMessage === true, 'button-calm noNewMessage' : post.newMessage === false && post.current_dib_id}">
+          </button>
+        </div>
       </div>
-    </div>
-    <div class='row'>    
-      <button class="button my-button" ng-class="{'button-stable listed' : post.currentDib === false, 'button-balanced newMessage' : post.newMessage === true, 'button-calm noNewMessage' : post.newMessage === false && post.currentDib === true}">
-      </button>
-    </div>
 
     </div>
+    <div class='row chat-container'>
+      <chat chat='post.chat'></chat>
+    </div>
+  </div>
 </div>

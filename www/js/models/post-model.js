@@ -5,10 +5,8 @@ angular.module('stuffmobile')
 
 
     var Marker = function(params){
-      console.log('marker params', params);
       var self = this;
       angular.extend(self, params);
-      console.log('marker after marker creation', self);
     };
 
     var constructor = Marker.prototype;
@@ -41,10 +39,8 @@ angular.module('stuffmobile')
       angular.forEach(self.baseProperties, function(property){
         params[property] = self[property];
       })
-      console.log('post params in post.create', params);
       return $http.post(url, params)
         .then( function(data){
-          console.log('data back after creating a post', data);
           self.status = 'new'; //review
           var updated = data.data.post;
           updated.locallyUpdated = Date.now();

@@ -3,7 +3,7 @@ angular.module('stuffmobile')
 .directive('mypost', function() {
   var linker = function(scope, element, attrs) {
     //some jquery on element to change btn color
-
+    scope.post.chat = [{user:'asdfuiahsdfa', message:'asdufhaosdfhja'},{user:'asdfuiahsdfa', message:'asdufhaosdfhja'},{user:'asdfuiahsdfa', message:'asdufhaosdfhja'},{user:'asdfuiahsdfa', message:'asdufhaosdfhja'}];
   }
   return {
     restrict: 'E',
@@ -11,6 +11,7 @@ angular.module('stuffmobile')
       post: '='
     },
     controller: ['$scope', function($scope) {
+      $scope.post.chat = [{user:'asdfuiahsdfa', message:'asdufhaosdfhja'},{user:'asdfuiahsdfa', message:'asdufhaosdfhja'},{user:'asdfuiahsdfa', message:'asdufhaosdfhja'},{user:'asdfuiahsdfa', message:'asdufhaosdfhja'}];
         $scope.msg= function()  {  
           var msg = $scope.post.showWanted() ? 'Wanted' : 'Listed';
           return msg; 

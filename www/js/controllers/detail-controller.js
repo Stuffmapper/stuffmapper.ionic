@@ -5,8 +5,6 @@ angular.module('stuffmobile')
   PostsService.get($stateParams.id).then(function(post) {
     console.log('post data in detail', post)
     $scope.post = new Post(post.data.post);
-    console.log('show dib result' , $scope.post.showDib());
-    console.log('show edit result' , $scope.post.showEdit());
   }, function(err){
     throw err;
   });

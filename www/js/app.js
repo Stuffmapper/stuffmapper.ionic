@@ -42,7 +42,8 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
         controller: 'MapCtrl',
         controllerAs: 'mapctrl'     
       }
-    }
+    },
+    cache: false,
   })
   .state('tabs.givestuff', {
     url: '/givestuff',
@@ -52,7 +53,8 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
         controller: 'GiveCtrl',
         controllerAs: 'givectrl'     
       }
-    }
+    },
+    cache: false,
   })   
   .state('tabs.mystuff', {
     url:'/mystuff',
@@ -62,7 +64,8 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
         controller: 'MyCtrl',
         controllerAs: 'myCtrl'
       }
-    }
+    },
+    cache: false,
   })
   .state('details', {
     url:'/details/:id',

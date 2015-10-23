@@ -1,6 +1,6 @@
 angular.module('stuffmobile')
 
-.factory('UserService', ['$http', '$q', '$ionicPopup', 'LocalService', 'ApiEndpoint', '$state', function($http, $q, $ionicPopup, LocalService, ApiEndpoint, $state) {
+.factory('UserService', ['$http', '$q', '$ionicPopup', '$ionicHistory', 'LocalService', 'ApiEndpoint', '$state', function($http, $q, $ionicPopup, $ionicHistory, LocalService, ApiEndpoint, $state) {
   var UserService = this;
   UserService.checking = false;
   UserService.checkingQueue = [];
@@ -12,7 +12,6 @@ angular.module('stuffmobile')
         password: password
       };
       return $http.post(ApiEndpoint.url + '/sessions/create', loginData).success(function(data) {
-        console.log('\n\n\n\n\n\n\n\n\n Data from login', data)
 
         if (data && data.user) {
           $ionicPopup.alert({
@@ -24,7 +23,6 @@ angular.module('stuffmobile')
           LocalService.set('sMToken', JSON.stringify(data));
           return callback(null, data);
         } else {
-          console.log(data);
           $ionicPopup.alert({
             title: 'Error :(',
             template: 'The Username and Password did not match',
@@ -72,10 +70,17 @@ angular.module('stuffmobile')
       //should this passed into LocalService?
       return $http.get(ApiEndpoint.url + '/log_out').success(function(data) {
         that.currentUser = false;
-        $ionicPopup.alert({
-          title: 'Succcess',
-          template: 'Logout Successfull',
+        $ionicHistory.clearCache().then(function() {
+          return $ionicPopup.alert({
+            title: 'Succcess',
+            template: 'Logout Successfull',
+          })
         })
+        .then(function(){
+          $state.go('tabs.map', {}, {reload: true});
+        })
+
+
         // return callback(null, data);
       }).error(function(err) {
         console.log('error in user service logout', err)

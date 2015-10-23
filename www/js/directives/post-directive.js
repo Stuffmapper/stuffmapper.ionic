@@ -9,7 +9,7 @@ angular.module('stuffmobile')
       '$state', '$scope', function($state, $scope){
         $scope.getDetails = function(post) {
           console.log('going to', post.id)
-          $state.go('details', {id: post.id.toString()});
+          $state.go('details', {id: post.id.toString()}, {reload: true});
         }
       }
     ],

@@ -91,7 +91,6 @@ angular.module('stuffmobile')
     //Get all of the markers from our Markers factory
     PostsService.getPosts(NeSwBounds).then(function(posts){
 
-      console.log("posts: ", posts);
 
 
       for (var i = 0; i < posts.length; i++) {
@@ -119,15 +118,12 @@ angular.module('stuffmobile')
     var box = map.getBounds(center, 30);
     var ne = box.getNorthEast();
     var sw = box.getSouthWest();
-    console.log(ne, sw)
-    console.log('box ', box);
     var params = {
         nwLng: sw.lng() - .5,
         seLng: ne.lng() + .5,
         nwLat: ne.lat() + .5,
         seLat: sw.lat() - .5
       }
-      console.log(params, 'params')
     return params;
   }
  
@@ -155,9 +151,8 @@ angular.module('stuffmobile')
   function getCenter(){
     return giveMap.getCenter();
   }
-
-  function getCheckResize() {
-    google.maps.event.trigger(getMap, 'resize');
+  function resizeMap() {
+      google.maps.event.trigger(getMap, 'resize');
   }
 //the give and get keep the two maps strait 
   return {
@@ -171,7 +166,7 @@ angular.module('stuffmobile')
     },
     panToLocation: panToLocation,
     getCenter: getCenter,
-    getCheckResize: getCheckResize
+    resizeMap: resizeMap 
   }
  
 }])
