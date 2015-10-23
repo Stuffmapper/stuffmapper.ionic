@@ -100,7 +100,7 @@ angular.module('stuffmobile')
           updated.locallyUpdated = Date.now();
           angular.extend(self, updated)
           self.saveLocal();
-          return update;
+          return updated;
         }, function(error){
           throw error;
         }
@@ -119,7 +119,7 @@ angular.module('stuffmobile')
         .then( function(data){
           angular.extend(self, data.post)
           self.deleteLocal();
-          resolve(self)
+          return self;
         },
         function(error){
           throw new Error( "can't delete " + self )
