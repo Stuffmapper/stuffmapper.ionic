@@ -1,19 +1,19 @@
 angular.module('stuffmobile')
 .controller('MapCtrl', ['$scope', '$state', '$cordovaGeolocation', 'Map', 'PostsService', function($scope, $state, $cordovaGeolocation, Map, PostsService) {
 
-  if($scope.getMap) {
-    Map.loadMarkers($scope.getMap).then(function(posts) {
+  if(Map.getMap) {
+    Map.loadMarkers(Map.getMap).then(function(posts) {
       $scope.posts = posts;
+    });
+  } else {
+    Map.getInit().then(function(map) {
+      Map.loadMarkers(map).then(function(posts){
+        $scope.posts = posts;
+      });
     });
   }
   console.log('get ctrl')
-  $scope.getMap = false;
-  Map.getInit().then(function(map) {
-    Map.loadMarkers(map).then(function(posts){
-      $scope.posts = posts;
-      $scope.getMap = map;
-    });
-  });
+
 
 
 

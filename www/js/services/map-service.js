@@ -1,8 +1,7 @@
 angular.module('stuffmobile')
-.factory('Map', ['$cordovaGeolocation', '$q', 'PostsService', function($cordovaGeolocation, $q, PostsService){
+.factory('Map', ['$cordovaGeolocation', '$q', '$timeout', 'PostsService', function($cordovaGeolocation, $q, $timeout, PostsService){
   var Map = this;
   //need two maps because in different states
-  //therefore need two mapInits :(
  
   var apiKey = false;
   var getMap = null;
@@ -20,13 +19,15 @@ angular.module('stuffmobile')
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
- 
-      getMap = new google.maps.Map(document.getElementById("getMap"), mapOptions);
- 
+      var mapEl = document.getElementById("getMap")
+      getMap = new google.maps.Map(mapEl, mapOptions);
+
+
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(getMap, 'idle', function(){
         deferred.resolve(getMap); 
       });
+
  
     }, function(error){
       console.log("Could not get location");
@@ -152,30 +153,34 @@ angular.module('stuffmobile')
     return giveMap.getCenter();
   }
   function resizeMap() {
+    $timeout(function() {
       google.maps.event.trigger(getMap, 'resize');
+    }, 1)
   }
 //the give and get keep the two maps strait 
   return {
     getInit: function(){
       var deffered = $q.defer();
-      if (getMap == null){
+      // if (getMap == null){
         console.log('init get map')
         deffered.resolve(getMapInit());
-      } else {
-        deffered.resolve(getMap);
-      }
+      // } else {
+      //   deffered.resolve(getMap);
+      // }
       return deffered.promise;
     },
     loadMarkers: loadMarkers,
     giveInit: function(){
-      if (giveMap == null){
+      // if (giveMap == null){
         console.log('init give map')
         giveMapInit();
-      }
+      // }
     },
     panToLocation: panToLocation,
     getCenter: getCenter,
-    resizeMap: resizeMap 
+    resizeMap: resizeMap,
+    getMap: getMap,
+    giveMap: giveMap
   }
  
 }])
