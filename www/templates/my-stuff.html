@@ -15,7 +15,7 @@
   <hr>
   <div class="" >
     <div class="row" ng-repeat="want in myDibs | orderObjectBy:'updated_at':true track by $index" >
-      <mywant post='want'></mywantsbtn>
+      <mywant ng-if='post.status === dibbed' post='want'></mywantsbtn>
     </div>  
   </div>
 
@@ -27,7 +27,7 @@
   <div class="center">
     <div class="row center" ng-repeat="post in myPosts | orderObjectBy:'updated_at':true track by $index" >
     <!-- <div>{{post}}</div> -->
-      <mypost post='post'></mypost>
+      <mypost ng-if="post.status === 'new' || post.status === 'dibbed'" post='post'></mypost>
     </div> 
   </div>
   <hr>
