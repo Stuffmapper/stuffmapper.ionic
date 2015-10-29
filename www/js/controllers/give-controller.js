@@ -10,18 +10,9 @@ angular.module('stuffmobile')
       console.log(' give stuff controller');
       Map.giveInit();
        // $SCOPE OBJECTS
-
+      $scope.locationSelected = false;
+      $scope.pictureChosen = false;
       $scope.categories = PostsService.categories;
-      $scope.loading = false;
-      $scope.menuHeight = 'menu-0';
-      $scope.mapHeight = 'map-0'
-      $scope.post = {};
-      $scope.myPosts =  {};
-      $scope.myWants = {};
-
-      $scope.search = {};//NOTE am I used yet?
-      $scope.stuff = {};
-
       // $SCOPE FUNCTIONS
       $scope.takePicture = function() {
         ImageService.takePicture().then(function(imageURI) {
@@ -35,7 +26,7 @@ angular.module('stuffmobile')
         ImageService.selectPicture().then(function(imageURI) {
           $scope.imgSrc = imageURI;
         }, function(err) {
-          console.err(err);
+          throw err;
         });   
       };
 
@@ -51,8 +42,20 @@ angular.module('stuffmobile')
         $scope.pictureChosen = true;
       }
 
+      $scope.selectLocation = function() {
+        $scope.locationSelected = true;
+      }
+
       $scope.unselectPicture = function() {
         $scope.imgSrc = undefined;
+        $scope.pictureChosen = false;
+      }
+
+      $scope.returnToSelectLocation = function() {
+        $scope.mapStatus = 'open'
+        $scope.locationSelected = false;
+        $scope.imgSrc = undefined;
+        $scope.pictureChosen = false;
       }
 
       $scope.panToLocation= function(){
@@ -75,11 +78,6 @@ angular.module('stuffmobile')
             $scope.$emit('markersUpdated', function(){})
           });
         });
-      };
-
-      $scope.giveState = function(state){ 
-        var current = '1'; 
-        return current === String(state) 
       };
 
       $scope.giveStuff = function() {

@@ -6,7 +6,9 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var replace = require('replace');
 
+var replaceFiles = ['./www/js/app.js'];
 var paths = {
   sass: ['./scss/**/*.scss']
 };
@@ -50,3 +52,24 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+//proxy
+gulp.task('add-proxy', function() {
+  return replace({
+    regex: "https://blooming-eyrie-8909.herokuapp.com/api",
+    replacement: "'/api'",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+})
+
+gulp.task('remove-proxy', function() {
+  return replace({
+    regex: "'/api'",
+    replacement: "https://blooming-eyrie-8909.herokuapp.com/api",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+})

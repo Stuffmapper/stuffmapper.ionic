@@ -24,7 +24,8 @@ angular.module('stuffmobile')
       'type',
       'status',
       'chat',
-      'showChat'
+      'showChat',
+      'current_dib_id'
     ];
     //TODO make this work with angular resource
     //Read the source code for angular resource to confirm  
@@ -118,7 +119,7 @@ angular.module('stuffmobile')
           return self;
         },
         function(error){
-          throw new Error( "can't delete " + self )
+          throw error;
         }
       );
     };
@@ -133,7 +134,7 @@ angular.module('stuffmobile')
       return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/removecurrentdib')
         .then(function(data){
           angular.extend(self, data.post)
-          resolve(self)
+          return self;
         },
         function(error){
           throw error;
@@ -143,6 +144,7 @@ angular.module('stuffmobile')
 
      constructor.unDib = function(){
       var self = this;
+      console.log('undibbing')
       //removes from local cache 
       //deletes on the server
       //does not delete itself .. will need to be handle else where
@@ -150,7 +152,8 @@ angular.module('stuffmobile')
       return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/undib')
         .then(function(data){
           angular.extend(self, data.post)
-          resolve(self)
+          console.log('undib success');
+          return self;
         },
         function(error){
           throw error;

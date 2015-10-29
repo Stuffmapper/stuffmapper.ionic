@@ -1,15 +1,15 @@
 angular.module('stuffmobile')
 .factory('Map', ['$cordovaGeolocation', '$q', 'PostsService', function($cordovaGeolocation, $q, PostsService){
-
+  var Map = this;
   //need two maps because in different states
   //therefore need two mapInits :(
  
   var apiKey = false;
-  var getMap = null, giveMap = null;
+  var getMap = null;
+  var giveMap = null;
   var options = {timeout: 10000, enableHighAccuracy: true};
   function getMapInit(){
     var deferred = $q.defer(); 
-    
  
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
  
@@ -156,7 +156,16 @@ angular.module('stuffmobile')
   }
 //the give and get keep the two maps strait 
   return {
-    getInit: getMapInit,
+    getInit: function(){
+      var deffered = $q.defer();
+      if (getMap == null){
+        console.log('init get map')
+        deffered.resolve(getMapInit());
+      } else {
+        deffered.resolve(getMap);
+      }
+      return deffered.promise;
+    },
     loadMarkers: loadMarkers,
     giveInit: function(){
       if (giveMap == null){

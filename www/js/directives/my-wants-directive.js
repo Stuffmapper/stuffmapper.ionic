@@ -7,18 +7,35 @@ angular.module('stuffmobile')
     scope: {
       post: '='
     },
-    controller: [
-      '$scope', function($scope) {
-        var getColor = function(){
-
-        };
-        $scope.msg= 'Wanted';
-        $scope.btnClass = 'green';
+    controller: ['$scope', 'ChatService', '$interval', '$state', function($scope, ChatService, $interval, $state) {
+      $scope.unread = false;
+      $scope.showChat = false;
+        $interval(function() {
+          var dibs = $scope.post.currentDib.id;
+          if(dibs) {
+            ChatService.getUnread(dibs).then(function(data) {
+              if(data.data.dibs.length > 0) {
+                $scope.unread = true;
+              }
+            });
+          }
+        }, 10000)
         $scope.btnAction = function(){
           throw new Error('not implemented')
         }
+        $scope.toggleChat = function() {
+          if ($scope.showChat) {
+            $scope.showChat = false;
+          } else {
+            $scope.showChat = true;
+            $scope.unread = false
+          }
+          console.log($scope.showChat);
+        }
 
-
+        $scope.getDetails = function(){
+          $state.go('details', {id: $scope.post.id.toString()}, {reload: true});
+        }
       }
     ],
     replace: true,

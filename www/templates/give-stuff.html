@@ -2,58 +2,57 @@
 <ion-vew>
 <ion-content overflow-scroll="true">
 <div  id="giveMap" class="centerMarker" ng-class='mapStatus' data-tap-disabled="true"></div>
-<div ng-hide='main.getCurrentUser()' class='overlay-info add-margin-top-50' >
+<div ng-hide='main.getCurrentUser()'>
   Please <a class='btn' ui-sref='user' >Sign In</a> to give stuff
 
 </div>
 
-<div id="give-stuff" class="col-lg-12 col-md-12 col-xs-12 to-edge">
+<div id="give-stuff">
 
-    <div ng-hide='locationSelected'>
-      <div ng-hide='pictureChosen' class='add-margin-top-15'>
-        <div class="col-lg-12
-          col-md-12 col-xs-12 text-0">
-           <h4 class='text-0-bold'> Is your location correct? </h4>
+    <div ng-if='!locationSelected'>
+      <div ng-if='!pictureChosen'>
+        <div>
+           <h4> Is your location correct? </h4>
            <p><span> This is where your stuff will show up on the map. If the pickup
-             location is somewhere else, move the</span> <!-- <img class='emoji-size' ng-src='<%= asset_path('pin.svg')%>' > -->
-            <span class='text-1'>pin</span><span> to where you want to map the item. </span> </p>
+             location is somewhere else, move the</span> 
+            <span>pin to where you want to map the item. </span> </p>
         </div>
 
-        <div class="col-lg-12 col-md-12 col-xs-12 add-margin-top-15"></div>
-      <button class='button'
+      <button class='button btn-margin'
        ng-click='panToLocation()'>
         <span class="glyphicon glyphicon-screenshot"
           aria-hidden="true"></span><span> Find my Location</span>
       </button>
-      <button class='button button-positive' ng-click='locationSelected = true'>Choose a photo &gt;&gt;</button>
+      <button class='button button-positive btn-margin' ng-click='selectLocation()'>Choose a photo &gt;&gt;</button>
     </div>
     </div>
-    <div class='camera-buttons' ng-show='locationSelected'>
-      <button ng-if="imgSrc == undefined" class='button button-calm' ng-click="takePicture()">Take a Picture
+    <div class='camera-buttons' ng-if='locationSelected'>
+      <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="takePicture()">Take a Picture
       </button>
-      <button ng-if="imgSrc == undefined" class='button button-calm' ng-click="selectPictureStorage()">Choose from Storage 
+      <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose from Storage 
       </button>
-      <div class='card'>
+      <div class='card' ng-if='imgSrc'>
         <div class='item item-image'>
           <img ng-src="{{imgSrc}}"/>
         </div>
       </div>
     </div>
     <div class="camera-buttons">
-       <button ng-if="imgSrc" class='button button-balanced' ng-click="choosePicture(imgSrc)">Select Image
+       <button ng-if="imgSrc" class='button button-calm btn-margin' ng-click="returnToSelectLocation()">Change Location</button>
+       <button ng-if="imgSrc && pictureChosen == false" class='button button-balanced btn-margin' ng-click="choosePicture(imgSrc)">Accept Image?
       </button> 
-       <button ng-if="imgSrc" class='button button-positive' ng-click="unselectPicture()">Select Another Picture
+       <button ng-if="imgSrc" class='button button-positive btn-margin' ng-click="unselectPicture()">Change Image
       </button> 
     </div>
   </div>
 
-  <div id="give-2" ng-show='pictureChosen' class='pull-sm-bottom to-edge'>
+  <div ng-if='pictureChosen'>
     <div class="card">
       <img class="item item-image" 
       ng-src="{{post.imageSrc}}"></img>
     </div>
-
-    <div class="form-group col-lg-12 col-md-12 col-xs-8 add-margin-top-15" >
+    <div ng-if='pictureChosen'>
+    <div>
       <select class="form-control" id="category" placeholder="Category" ng-model="postParams.category" >
         <option value="" disabled selected>Choose a category</option>
         <option ng-repeat="category in categories">{{category}}</option>
@@ -90,6 +89,7 @@
        ui-sref='tabs.map'>
         Cancel
       </a>
+    </div>
     </div>
   </div>
 </div>

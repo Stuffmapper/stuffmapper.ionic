@@ -12,13 +12,13 @@
         </li>
         <li ng-click="post.markGone()">
           <button class='setting-option-btn mark-as-picked-up' 
-          ng-click='post.markGone()'>
+          ng-click='gone()'>
             Mark As Picked Up
           </button>
         </li>
         <li ng-show='post.showWanted()'>
           <button class='setting-option-btn reject-dibs'
-          ng-click="post.rejectDibber()">
+          ng-click="reject()">
             Reject Dibs
           </button>
         </li>
@@ -31,7 +31,7 @@
         </li> -->
         <li ng-hide='currentDib'>
           <button class='setting-option-btn delete-item' 
-          ng-click='post.remove()'>
+          ng-click='remove()'>
           <!-- consider putting deletPost into a directive that has this function in lieu of relying on the stuffctrl -->
             Delete
           </button>

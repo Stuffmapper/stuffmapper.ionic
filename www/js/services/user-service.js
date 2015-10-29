@@ -7,7 +7,7 @@ angular.module('stuffmobile')
   var login = function(username, password, callback) {
       //TODO switch to promises for consistency
       var that = this;
-      loginData = {
+      var loginData = {
         username: username,
         password: password
       };

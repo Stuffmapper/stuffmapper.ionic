@@ -14,7 +14,7 @@ angular.module('stuffmobile')
       anonymous: $scope.anonymous
     }
     UserService.signUp(userInfo).then(function(user){
-      $state.go('tabs.map');
+      $state.go('tabs.map', {}, {reload: true});
     })
   }
 }]);

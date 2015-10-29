@@ -3,47 +3,24 @@ angular.module('stuffmobile')
     '$scope', '$timeout', '$window', '$q',
     '$resource', 'ImageService','LocalService', 
     'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
-    '$http', 'ImageService', 'Post', 'ApiEndpoint', 'Post', function($scope, $timeout, $window,
+    '$http', 'ImageService', 'Post', 'ApiEndpoint', 'Post', 'ChatService', function($scope, $timeout, $window,
       $q, $resource, ImageService, LocalService,
       Map, PostsService, UserService, $ionicPopup, $rootScope,
-      $http, ImageService, Post, ApiEndpoint, Post) {
+      $http, ImageService, Post, ApiEndpoint, Post, ChatService) {
       var myCtrl = this;
       console.log('my stuff controller');
-      myCtrl.loadMyStuff  = function(currentUser){
-        if(!currentUser){ throw new Error('currentUser must be defined') };  
-        return $http.get(ApiEndpoint.url + '/my-dibs')
-        .then( 
-          function(data){ 
-            var mydibs = data.data.posts;
-            $scope.myDibs = [];
-            for(var i = 0; i < mydibs.length; i++) {
-              $scope.myDibs.push(new Post(mydibs[i]));
-            }
-            console.log($scope.myDibs);
-          },
-          function(err){
-            return err
-          }
-        )
-        .then(
-          function(){
-            return $http.get(ApiEndpoint.url + '/my-stuff')
-            .then(function(data){
-              var myposts = data.data.posts;
-              $scope.myPosts = [];
-              for(var i = 0; i < myposts.length; i++) {
-                $scope.myPosts.push(new Post(myposts[i]));
-              }
-              console.log($scope.myPosts);
-            })
 
-          },
-          function(err){
-            return err
-          }
-        )
+      myCtrl.loadMyStuff = function() {
+        PostsService.getMyPosts().then(function(data) {
+          console.log('myposts', data)
+          $scope.myPosts = data;
+        })
+        PostsService.getMyDibs().then(function(data) {
+          console.log('mydibs', data)
+          $scope.myDibs = data;
+        })
       }
-      myCtrl.loadMyStuff(UserService.getCurrentUser());
+      myCtrl.loadMyStuff();
        // $SCOPE OBJECTS
 
       $scope.categories = PostsService.categories;

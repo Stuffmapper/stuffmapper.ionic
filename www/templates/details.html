@@ -11,8 +11,8 @@
   <hr class='thin-hr'>
   <div ng-show='post.isCurrentDibber'>
     <button  class= "dib-button dib-button-send-message"
-    >Dibbed! Send a message to the lister! &gt;&gt;</button>
-    <a href='#' class='undib-link' ng-click="unDib(post)"
+    ng-click='goChat(post)'>Dibbed! Send a message to the lister! &gt;&gt;</button>
+    <a href='#' class='undib-link' ng-click="unDib()"
     >Undib! I don't want this anymore</a>
     <hr class='thin-hr'>
   </div>

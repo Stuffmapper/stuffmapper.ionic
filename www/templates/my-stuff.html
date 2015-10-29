@@ -8,10 +8,10 @@
 
 <div id="my-stuff" >
 
-  <h4 class ="">Want!ed</h4>
-  <h5 class ="">
-    <a href='#' class="pull-right">Archived >> </a>
-  </h5>
+  <h4 class ="">My Active Dibs</h4>
+<!--   <h5 class ="">
+    <a href='#' class="pull-right">Archived &lt;&lt; </a>
+  </h5> -->
   <hr>
   <div class="" >
     <div class="row" ng-repeat="want in myDibs | orderObjectBy:'updated_at':true track by $index" >
@@ -20,9 +20,9 @@
   </div>
 
   <h4 class ="">Giving</h4>
-  <h5 class ="">
-    <a href='#' class="pull-right">Archived >> </a>
-  </h5>
+<!--   <h5 class ="">
+    <a href='#' class="pull-right">Archived &lt;&lt;</a>
+  </h5> -->
   <hr>
   <div class="center">
     <div class="row center" ng-repeat="post in myPosts | orderObjectBy:'updated_at':true track by $index" >

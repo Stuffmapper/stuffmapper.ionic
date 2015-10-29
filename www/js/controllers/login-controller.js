@@ -31,7 +31,7 @@ angular.module('stuffmobile')
 
   //back to home
   userCtrl.cancel = function() {
-    $state.go('map');
+    $state.go('tabs.map', {}, {reload: true});
   }
 
 }]);

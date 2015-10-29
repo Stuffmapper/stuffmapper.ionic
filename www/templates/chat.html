@@ -1,24 +1,22 @@
 <div class='list chat-window'>
-<ion-scroll>
+<ion-scroll overflow-scroll="true">
   <div ng-repeat="message in chat">
     <div class="list">
       <div class="item item-divider">
-      sjdfaush
-        {{message.user}}
+        {{message.sender}}
       </div>
       <div class="item item-text-wrap">
-      also sdfasbdfoasdfhaosdifhu
-        {{message.message}}
+        {{message.body}}
       </div>
     </div>
   </div>
-<ion-scroll> 
+</ion-scroll> 
   <div class='list'>
     <div class="item item-input-inset">
       <label class="item-input-wrapper">
-        <input type="text" placeholder="Email">
+        <input type="text" placeholder="message" ng-model='message'>
       </label>
-      <button class="button button-small">
+      <button class="button button-small" ng-click="send(message)">
         Send
       </button>
     </div>
