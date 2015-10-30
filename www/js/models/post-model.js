@@ -51,6 +51,8 @@ angular.module('stuffmobile')
           },
           function(error){
             //TODO handle specific errors
+            console.log(error);
+            $ionicPopup.alert({title: 'Alert', template: error.data.message})
             throw error;
         }); 
     };

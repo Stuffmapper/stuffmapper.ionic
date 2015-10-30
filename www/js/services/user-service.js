@@ -73,7 +73,7 @@ angular.module('stuffmobile')
         $ionicHistory.clearCache().then(function() {
           return $ionicPopup.alert({
             title: 'Succcess',
-            template: 'Logout Successfull',
+            template: 'Logout Successful',
           })
         })
         .then(function(){

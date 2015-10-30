@@ -6,20 +6,15 @@ angular.module('stuffmobile')
       post: '='
     },
     controller: [
-      '$scope', '$http', 'UserService', 'AlertService', function($scope, $http, UserService, AlertService) {
+      '$scope', '$http', 'UserService', function($scope, $http, UserService) {
         return $scope.giveMe = function(post) {
           return post.dib()
           .then(
             function(results) {
-              return AlertService.add('success', "Dibbed your stuff");
+              return;
             },
             function(err) {
-              var key, results1, value;
-              results1 = [];
-              for (key in err) {
-                value = err[key];
-                results1.push(AlertService.add('danger', key + ' ' + value));
-              };
+              throw err;
             }
           );
         };

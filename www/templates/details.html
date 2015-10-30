@@ -3,23 +3,19 @@
 
 
 <div>
-  <button class= 'dib-button dib-button-details' ng-click='back()'>Back &lt;&lt;</button>
-
-  <settings ng-if='post.showEdit()'></settings>
-
+  <button class= 'button button-stable margin-top' ng-click='back()'>Back &lt;&lt;</button>
 
   <hr class='thin-hr'>
-  <div ng-show='post.isCurrentDibber'>
-    <button  class= "dib-button dib-button-send-message"
+  <div ng-show='post.isCurrentDibber' class='margin-bottom'>
+    <button  class= "button button-positive"
     ng-click='goChat(post)'>Dibbed! Send a message to the lister! &gt;&gt;</button>
-    <a href='#' class='undib-link' ng-click="unDib()"
-    >Undib! I don't want this anymore</a>
-    <hr class='thin-hr'>
+    <button class="button button-positive" ng-click="unDib()"
+    >Undib! (I don't want this anymore)</a>
   </div>
 
   <div ng-if="post.showEdit()">
     <div ng-hide="currentDib">  
-      <button class="dib-button not-dibbed"
+      <button class="button button-dark margin-bottom"
       >This stuff hasn't been dibbed yet...</button>
     </div>
     <div ng-show="currentDib">
@@ -31,7 +27,7 @@
     </div>
   </div>
 
-  <span>{{post.title}}</span>
+  <span><h2>{{post.title}}</h2></span>
 
   <br>
   <div class='floating stuff-category'>
@@ -42,16 +38,20 @@
     {{post.status}}
   </div>
   <a ng-href="{{post.originalImage}}" >
-    <img class="img-responsive img-detail" 
+    <img class="img-detail" 
     ng-src={{post.image_url}} fallback-src >
     </img>
   </a>
 
   <div class='detail-description'>
+    <div class='faded-text'>
+      Description
+    </div>
+    <br/>
     <span>{{post.description}}</span>
   </div>
 
-  <button ng-show="post.showDib()" class= 'dib-button dib-button-details' ng-click='dib(post)'>I want this stuff! &gt;&gt;</button>
+  <button ng-show="post.showDib()" class= 'button button-balanced' ng-click='dib(post)'>I want this stuff! &gt;&gt;</button>
 
 </div>
 </ion-content>

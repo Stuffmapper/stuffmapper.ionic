@@ -7700,7 +7700,13 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+em {
+  font-style: italic; }
+
 /*misc*/
+.capitalize {
+  text-transform: capitalize; }
+
 .scroll {
   height: 100%; }
 
@@ -7719,18 +7725,28 @@ a.button {
   margin: 15px auto;
   width: 250px; }
 
+.margin-bottom {
+  margin-bottom: 15px; }
+
+.margin-top {
+  margin-top: 15px; }
+
+.faded-text {
+  color: #888888;
+  font-size: 12px; }
+
 /*info window*/
 .infoWinderContent {
   width: 300px;
   height: 300px; }
 
 /*give stuff marker placement*/
-.centerMarker::before {
+.centerMarker::after {
   content: '';
   position: absolute;
   /*url of the marker*/
-  display: block;
-  background: url(http://maps.gstatic.com/mapfiles/markers2/marker.png) no-repeat;
+  /*display: block;*/
+  background: url(http://maps.gstatic.com/mapfiles/markers/marker_green.png) no-repeat;
   /*center the marker*/
   top: 50%;
   left: 50%;
@@ -7820,7 +7836,7 @@ a.button {
 .stuff-view {
   margin: auto;
   padding: 0;
-  height: 170px;
+  /*height: 170px;*/
   border: 1px solid grey;
   overflow: hidden;
   position: relative;
@@ -7841,10 +7857,9 @@ a.button {
   width: 100%; }
 
 /*up down button on get stuff*/
-.get-resive-btn {
-  width: 100%;
-  text-align: center;
-  height: 8%; }
+.button.get-resize-btn {
+  height: 8%;
+  margin: 0; }
 
 .get-stuff.closed {
   height: 0%; }
@@ -7904,3 +7919,23 @@ a.button {
 
 .chat-container {
   margin: auto; }
+
+/*details*/
+.floating {
+  padding: 5px;
+  /*position: relative;*/
+  font-size: 9px; }
+
+.stuff-status {
+  background-color: #784B87;
+  color: #FFFFFF;
+  float: left; }
+
+.stuff-category {
+  background-color: lightgray;
+  float: right; }
+
+.img-detail {
+  margin: auto;
+  display: block;
+  margin-top: 15px; }

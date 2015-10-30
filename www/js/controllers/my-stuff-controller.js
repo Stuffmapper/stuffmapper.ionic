@@ -1,9 +1,9 @@
 angular.module('stuffmobile')
 .controller('MyCtrl', [
-    '$scope', '$timeout', '$window', '$q',
+    '$scope', '$q',
     '$resource', 'ImageService','LocalService', 
     'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
-    '$http', 'ImageService', 'Post', 'ApiEndpoint', 'Post', 'ChatService', function($scope, $timeout, $window,
+    '$http', 'ImageService', 'Post', 'ApiEndpoint', 'Post', 'ChatService', function($scope,
       $q, $resource, ImageService, LocalService,
       Map, PostsService, UserService, $ionicPopup, $rootScope,
       $http, ImageService, Post, ApiEndpoint, Post, ChatService) {
@@ -38,9 +38,7 @@ angular.module('stuffmobile')
       }
 
 
-      $scope.showDetails = function(id){
 
-      };
     }
   ]);
 

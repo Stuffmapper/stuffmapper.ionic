@@ -12,7 +12,7 @@ angular.module('stuffmobile')
     controller: ['$scope', 'ChatService', '$interval', function($scope, ChatService, $interval) {
       $scope.unread = false;
       $scope.showChat = false;
-      $interval(function() {
+      var interval = $interval(function() {
         var dibs = $scope.post.currentDib.id;
         if(dibs) {
           console.log('check');
@@ -36,6 +36,11 @@ angular.module('stuffmobile')
           }
           console.log($scope.showChat);
         }
+        $scope.$on('$destroy', function() {
+          if(interval){
+            $interval.cancel(interval);
+          }
+        })
       }
     ],
     replace: true,

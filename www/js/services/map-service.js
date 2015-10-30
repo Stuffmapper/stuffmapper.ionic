@@ -6,6 +6,7 @@ angular.module('stuffmobile')
   var apiKey = false;
   var getMap = null;
   var giveMap = null;
+  var centerMarkers = [];
   var options = {timeout: 10000, enableHighAccuracy: true};
   function getMapInit(){
     var deferred = $q.defer(); 
@@ -62,10 +63,20 @@ angular.module('stuffmobile')
       };
  
       giveMap = new google.maps.Map(document.getElementById("giveMap"), mapOptions);
- 
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(giveMap, 'idle', function(){
-        google.maps.event.trigger(getMap, 'resize');
+        var marker = new google.maps.Marker({position: giveMap.getCenter(), map: giveMap})
+        centerMarkers.push(marker);
+        giveMap.addListener('center_changed', function() {
+        if (centerMarkers.length > 0) {
+          centerMarkers[centerMarkers.length - 1].setMap(null);
+        }
+          var marker = new google.maps.Marker({
+            position: giveMap.getCenter(),
+            map: giveMap,
+          })
+          centerMarkers.push(marker);
+        })
         deferred.resolve(giveMap);
       });
  
@@ -155,7 +166,7 @@ angular.module('stuffmobile')
   function resizeMap() {
     $timeout(function() {
       google.maps.event.trigger(getMap, 'resize');
-    }, 1)
+    }, 50)
   }
 //the give and get keep the two maps strait 
   return {

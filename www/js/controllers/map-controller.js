@@ -14,7 +14,10 @@ angular.module('stuffmobile')
   }
   console.log('get ctrl')
 
-
+  $scope.getDetails = function(post) {
+    console.log('going to', post.id)
+    $state.go('details', {id: post.id.toString()}, {reload: true});
+  }
 
 
 

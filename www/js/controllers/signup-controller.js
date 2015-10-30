@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-.controller('SignupCtrl', ['$scope', 'UserService', '$state', function($scope, UserService, $state) {
+.controller('SignupCtrl', ['$scope', 'UserService', '$state', 'PolicyService', function($scope, UserService, $state, PolicyService) {
   signupCtrl = this;
   $scope.signup = function() {
     console.log('signing up');
@@ -16,5 +16,13 @@ angular.module('stuffmobile')
     UserService.signUp(userInfo).then(function(user){
       $state.go('tabs.map', {}, {reload: true});
     })
+
+    $scope.showPrivacy = function() {
+      PolicyService.showPrivacy();
+    }
+
+    $scope.showTerms = function() {
+      PolicyService.showTerms();
+    }
   }
 }]);

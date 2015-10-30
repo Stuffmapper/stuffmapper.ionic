@@ -1,12 +1,12 @@
 angular.module('stuffmobile')
 .controller('GiveCtrl', [
-    '$scope', '$timeout', '$window', '$q',
-    '$resource', 'ImageService','LocalService', 
-    'Map','PostsService', 'UserService', '$ionicPopup','$rootScope',
-    '$http', 'ImageService', 'Post', '$state', function($scope, $timeout, $window,
-      $q, $resource, ImageService, LocalService,
-      Map, PostsService, UserService, $ionicPopup, $rootScope,
-      $http, ImageService, Post, $state) {
+    '$scope',  
+    'ImageService','LocalService', 
+    'Map','PostsService', 'UserService', '$ionicPopup',
+    '$http', 'Post', '$state', function($scope, 
+      ImageService, LocalService,
+      Map, PostsService, UserService, $ionicPopup, 
+      $http, Post, $state) {
       console.log(' give stuff controller');
       Map.giveInit();
        // $SCOPE OBJECTS
@@ -37,9 +37,14 @@ angular.module('stuffmobile')
       }
 
       $scope.choosePicture = function(imgSrc) {
-        $scope.imgSrc = imgSrc;
-        $scope.mapStatus = 'closed'
-        $scope.pictureChosen = true;
+        if(!UserService.getCurrentUser()) {
+          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+        } else {
+          $scope.imgSrc = imgSrc;
+          $scope.mapStatus = 'closed'
+          $scope.pictureChosen = true;
+          $scope.selectLocation();
+        }
       }
 
       $scope.selectLocation = function() {
@@ -135,26 +140,34 @@ angular.module('stuffmobile')
       // };
 
       $scope.submitPost = function(postParams) {
-        //TODO move this into marker service resource
-        var latlng = Map.getCenter();
-        postParams.latitude = latlng.lat(),
-        postParams.longitude = latlng.lng()
-        var post = new Post(postParams);
-        post.create()
-          .then(function(post){
-            return ImageService.uploadPicture($scope.imgSrc, post.id)
-            .then(function(){
-              $ionicPopup.alert({title: 'success', template: "Your post has been added"});
-            })
-            .then(function(){
-              $state.go('tabs.map', {}, {reload: true});
-            });
-            //need to add error handling for pic upload
+        if(!UserService.getCurrentUser()) {
+          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+        } else {
+          //TODO move this into marker service resource
+          var latlng = Map.getCenter();
+          postParams.latitude = latlng.lat()
+          postParams.longitude = latlng.lng()
+          var post = new Post(postParams);
+          post.create()
+            .then(function(post){
+              return ImageService.uploadPicture($scope.imgSrc, post.id)
+              .then(function(){
+                $ionicPopup.alert({title: 'Success', template: "Your stuff is now mapped"});
+              })
+              .then(function(){
+                $state.go('tabs.map', {}, {reload: true});
+              });
+              //need to add error handling for pic upload
 
-            return PostsService.setMarker(post);
-          })
+              return PostsService.setMarker(post);
+            })
+        }
  
       };
+
+      $scope.showLogin = function() {
+        $state.go('user');
+      }
 
     }
   ]);

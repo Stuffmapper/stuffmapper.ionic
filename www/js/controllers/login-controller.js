@@ -1,6 +1,6 @@
 //logout handled on main, ionic nav-header-bar greatness...
 angular.module('stuffmobile')
-.controller('UserCtrl', ['$scope', '$window', '$state', '$rootScope', 'UserService', 'BackService', function($scope, $window, $state, $rootScope, UserService, BackService){
+.controller('UserCtrl', ['$scope', '$state', '$rootScope', 'UserService', 'BackService', function($scope, $state, $rootScope, UserService, BackService){
   var userCtrl = this;
 
   //sends to sign up page

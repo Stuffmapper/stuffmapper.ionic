@@ -1,22 +1,7 @@
-<div class="container-fluid sign-up">
-  <div class="col-lg-12 col-md-12 col-xs-12">
-    <alerts></alerts>
-    <h3 class='col-lg-6 col-md-6 col-xs-6'>Sign Up</h3>
-<!--     <div class "col-lg-6 col-md-6 col-xs-6 add-margin-top-15">
-      <a href='#' ng-click="oaLogin('facebook')" class="pull-right"
-       alt="Facebook Signin" id="Facebook">
-        <img class='img-responsive max-icon add-margin-top-15'
-        src='<%= asset_path('fb.png')%>'>
-      </a>
-      <a href='#' ng-click="oaLogin('google_oauth2')" class="pull-right"
-       alt="Google Signin" id="Google">
-        <img class='img-responsive max-icon add-margin-top-15''
-         src='<%= asset_path('google.jpg')%>'>
-      </a>
-    </div> -->
-
-  </div>
-  <div class="col-lg-12 col-md-12 col-xs-12">
+<ion-view>
+<ion-content>
+  <ion-scroll>
+    <h3>Sign Up</h3>
     <form name="form" novalidate>
 
       <div class="form-group">
@@ -68,17 +53,18 @@
 
       <div class="form-group">
         <label>By clicking sign up, I agree to the
-          <a href="#" ng-click="showPolicy('userAgreement')">Terms of Use</a>
-          and <a href="#" ng-click="showPolicy('privacyPolicy')">Privacy Policy.</a>
+          <a href="#" ng-click="showTerms()">Terms of Use</a>
+          and <a href="#" ng-click="showPrivacy()">Privacy Policy.</a>
         </label>
       </div>
 
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-margin-top-15">
-        <button class="btn btn-primary pull-right"
+        <button class="button button-calm center"
         ng-click="form.$valid && signup()">Sign Up</button>
-        <button class="btn btn-warning pull-right add-side-margin-10"
+        <button class="button button-stable center"
         ng-click="cancel()">Cancel</button>
       </div>
     </form>
-  </div>
-</div>
+  </ion-scroll>
+</ion-content>
+</ion-view>

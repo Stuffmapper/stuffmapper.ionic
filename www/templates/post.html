@@ -1,12 +1,11 @@
 <div class="stuff-view row" ng-click='getDetails(post)' 
  title={{post.description}} ng-attr-id={{post.id + '-stuff'}} >
   <div class='col col-33'>
-    <img class="stuff-image" ng-src={{post.image_url}} fallback-src ></img>
-    <div class='floating stuff-status'>{{post.status}}</div>
     <div class='floating stuff-category'>{{post.category}}</div>
+    <img class="stuff-image" ng-src={{post.image_url}} fallback-src ></img>
   </div>
   <div class='col col-67'>
-    <span>{{post.title}}</span>
+    <span><h5>{{post.title}}</h5></span>
     <br>
     <span>{{post.description}}</span>
   </div>

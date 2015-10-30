@@ -10,7 +10,7 @@ angular.module('stuffmobile')
     controller: ['$scope', 'ChatService', '$interval', '$state', function($scope, ChatService, $interval, $state) {
       $scope.unread = false;
       $scope.showChat = false;
-        $interval(function() {
+        var interval = $interval(function() {
           var dibs = $scope.post.currentDib.id;
           if(dibs) {
             ChatService.getUnread(dibs).then(function(data) {
@@ -36,6 +36,11 @@ angular.module('stuffmobile')
         $scope.getDetails = function(){
           $state.go('details', {id: $scope.post.id.toString()}, {reload: true});
         }
+        $scope.$on('$destroy', function() {
+          if(interval) {
+            $interval.cancel(interval);
+          }
+        })
       }
     ],
     replace: true,

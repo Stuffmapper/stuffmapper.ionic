@@ -31,10 +31,16 @@ angular.module('stuffmobile')
       });
   }
   var getInfoWindow = function(posts) {
-    var innerContent = "<div class='infowWindowContent'><div ui-sref='details({id:" +
-           posts.id + "})' id='siteNotice' class='stuff-map-image'> <img src=" +
-           posts.image_url + " width='200px' height='200px'></img> </div><div id='bodyContent'> <p>" +
-           posts.title + "</p> </div> </div>";
+    var innerContent = "<div class='infowWindowContent'><div "+
+           "id='siteNotice' class='stuff-map-image'>" +
+           "<a href='#/details/" + posts.id + "'>" +
+           "<img src=" +
+           posts.image_url + " height='150px'></img></a></div><div id='bodyContent'> <h5>" +
+           posts.title + "</h5>"+
+           "<span>" + posts.description + "</span>" +
+           "<a href='#/details/" + posts.id + "'>&nbsp;details</a>"+
+           "</div>" +
+           "</div>";
     return new google.maps.InfoWindow({
       content: innerContent
     })
@@ -56,6 +62,7 @@ angular.module('stuffmobile')
     return $http.get(ApiEndpoint.url + '/my-dibs')
     .then(function(data){ 
         var mydibs = data.data.posts;
+        myDibs = [];
         for(var i = 0; i < mydibs.length; i++) {
           if(mydibs[i].currentDib && mydibs[i].status != 'gone' && mydibs[i].status != 'deleted') {
             myDibs.push(new Post(mydibs[i]));
@@ -74,6 +81,7 @@ angular.module('stuffmobile')
     return $http.get(ApiEndpoint.url + '/my-stuff')
     .then(function(data){
       var myposts = data.data.posts;
+      myPosts = [];
       for(var i = 0; i < myposts.length; i++) {
         if(myposts[i].status == 'dibbed' || myposts[i].status == 'new') {
           myPosts.push(new Post(myposts[i]));

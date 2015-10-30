@@ -34,6 +34,12 @@ angular.module('stuffmobile')
         })
         $scope.message = undefined;
       }
+
+      $scope.$on('$destroy', function() {
+        if(interval) {
+          $interval.cancel(interval);
+        }
+      })
     }],
     templateUrl: 'templates/chat.html',
   }

@@ -31,4 +31,6 @@ angular.module('stuffmobile')
     var post = $scope.post;
     $state.go('tabs.mystuff');
   }
+
+
 }])
