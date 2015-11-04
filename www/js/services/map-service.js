@@ -160,6 +160,14 @@ angular.module('stuffmobile')
     })
   }
 
+  function setUndraggable() {
+    giveMap.setOptions({draggable: false});
+  }
+
+  function setDraggable() {
+    giveMap.setOptions({draggable: true});
+  }
+
   function getCenter(){
     return giveMap.getCenter();
   }
@@ -191,7 +199,9 @@ angular.module('stuffmobile')
     getCenter: getCenter,
     resizeMap: resizeMap,
     getMap: getMap,
-    giveMap: giveMap
+    giveMap: giveMap,
+    setDraggable: setDraggable,
+    setUndraggable: setUndraggable
   }
  
 }])

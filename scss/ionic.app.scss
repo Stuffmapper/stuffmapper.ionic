@@ -36,6 +36,7 @@ em {
 }
 .center {
   margin: auto;
+  display: block;
 }
 
 #giveMap {
@@ -60,6 +61,11 @@ em {
 .faded-text {
   color: #888888;
   font-size: 12px;
+}
+
+/*forms*/
+.css-form input.ng-invalid.ng-blurred {
+  border:  1px solid #FA787E;
 }
 /*info window*/
 .infoWinderContent {

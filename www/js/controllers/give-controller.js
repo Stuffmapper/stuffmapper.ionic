@@ -41,7 +41,6 @@ angular.module('stuffmobile')
           $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
         } else {
           $scope.imgSrc = imgSrc;
-          $scope.mapStatus = 'closed'
           $scope.pictureChosen = true;
           $scope.selectLocation();
         }
@@ -49,6 +48,7 @@ angular.module('stuffmobile')
 
       $scope.selectLocation = function() {
         $scope.locationSelected = true;
+        Map.setUndraggable();
       }
 
       $scope.unselectPicture = function() {
@@ -57,10 +57,8 @@ angular.module('stuffmobile')
       }
 
       $scope.returnToSelectLocation = function() {
-        $scope.mapStatus = 'open'
         $scope.locationSelected = false;
-        $scope.imgSrc = undefined;
-        $scope.pictureChosen = false;
+        Map.setDraggable();
       }
 
       $scope.panToLocation= function(){
@@ -142,6 +140,8 @@ angular.module('stuffmobile')
       $scope.submitPost = function(postParams) {
         if(!UserService.getCurrentUser()) {
           $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+        } else if (postParams == undefined || postParams.title == "") {
+          $ionicPopup.alert({title: 'Alert', template:"Title is required"})
         } else {
           //TODO move this into marker service resource
           var latlng = Map.getCenter();

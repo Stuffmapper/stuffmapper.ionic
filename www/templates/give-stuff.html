@@ -9,91 +9,86 @@
 
 <div id="give-stuff">
 
-    <div ng-if='!locationSelected'>
-      <div ng-if='!pictureChosen'>
-        <div>
-           <h4> Is your location correct? </h4>
-           <p><span> This is where your stuff will show up on the map. If the pickup
-             location is somewhere else, move the</span> 
-            <span>pin to where you want to map the item. </span> </p>
-        </div>
+  <div ng-if='!locationSelected'>
+    <div ng-if='!pictureChosen'>
+      <div>
+       <h4> Is your location correct? </h4>
+       <p>Move the pin to plot item's location.</p>
+     </div>
 
-      <button class='button btn-margin'
-       ng-click='panToLocation()'>
-        <span class="glyphicon glyphicon-screenshot"
-          aria-hidden="true"></span><span> Find my location</span>
-      </button>
-      <button class='button button-positive btn-margin' ng-click='selectLocation()'>Choose a photo &gt;&gt;</button>
-    </div>
-    </div>
-    <div class='camera-buttons' ng-if='locationSelected'>
-      <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="takePicture()">Take a Picture
-      </button>
-      <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose from Storage 
-      </button>
-      <button ng-if="imgSrc" class='button button-calm btn-margin' ng-click="returnToSelectLocation()">Change Location</button>
-       <button ng-if="imgSrc" class='button button-positive btn-margin' ng-click="unselectPicture()">Change Image
-      </button> 
-      <div class='card' ng-if='imgSrc'>
-        <div class='item item-image'>
-          <img ng-src="{{imgSrc}}"/>
-        </div>
+     <button class='button btn-margin'
+     ng-click='panToLocation()'>
+     <span class="glyphicon glyphicon-screenshot"
+     aria-hidden="true"></span><span> Find my location</span>
+     </button>
+     <button class='button button-positive btn-margin' ng-click='selectLocation()'>Select location</button>
+   </div>
+  </div>
+  <div class='camera-buttons' ng-if='locationSelected'>
+    <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="takePicture()">Take a picture
+    </button>
+    <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose from storage 
+    </button>
+    <button ng-if="imgSrc" class='button button-calm btn-margin' ng-click="returnToSelectLocation()">Change item's location</button>
+    <button ng-if="imgSrc" class='button button-positive btn-margin' ng-click="unselectPicture()">Redo image
+    </button> 
+  </div>
+    <div class='card' ng-if='imgSrc'>
+      <div class='item item-image'>
+        <img ng-src="{{imgSrc}}"/>
       </div>
     </div>
-    <div class="camera-buttons">
-       <button ng-if="imgSrc && pictureChosen == false" class='button button-balanced btn-margin' ng-click="choosePicture(imgSrc)">Accept?
-      </button> 
-    </div>
+  <div class="camera-buttons">
+   <button ng-if="imgSrc && pictureChosen == false" class='button button-balanced btn-margin' ng-click="choosePicture(imgSrc)">Accept?
+   </button> 
   </div>
+</div>
 
-  <div ng-if='pictureChosen'>
-    <div class="card">
-      <img class="item item-image" 
-      ng-src="{{post.imageSrc}}"></img>
-    </div>
-    <div ng-if='pictureChosen'>
-    <div>
+<div ng-if='pictureChosen'>
+  <div class="card">
+    <img class="item item-image" 
+    ng-src="{{post.imageSrc}}"></img>
+  </div>
+  <form class="css-form">
     <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Title*</span>
+        <div ng-show="form.$submitted || form.title.$touched">
+          <div ng-show="form.title.$error.required">Please provide a title</div>
+        </div>
+        <input type="text" name='title' placeholder="Provide a title" ng-model="postParams.title" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Description</span>
+        <input type="text" placeholder="Provide a description" ng-model="postParams.description">
+      </label>
       <label class="item item-input item-select">
         <div class="input-label">
-        Category
+          Category
         </div>
         <select ng-model="postParams.category">
           <option value="" disabled selected>Choose a category</option>
           <option ng-repeat="category in categories">{{category}}</option>
         </select>
       </label>
-    </div>
-    </div>
-    <form>
-      <div class="list">
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Title</span>
-          <input type="text" placeholder="title" ng-model="postParams.title">
-        </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Description</span>
-          <input type="text" placeholder="description" ng-model="postParams.description">
-        </label>
-      </div>
 <!--       <li class="item item-checkbox">
          <label class="checkbox">
            <input type="checkbox" ng-model="postParams.on_the_curb"
            ng-true-value='true' ng-false-value='false'>
            <small>&nbsp;&nbsp;Item is on the curb/outside/unattended by me</small>
          </label>
-      </li> -->
-      <button class="button button-positive"
-      id="give-stuff-submit" ng-click="submitPost(postParams)">
-        Map my stuff! >>
-      </button>
+       </li> -->
+       <button class="button center button-full margin-bottom button-positive"
+       id="give-stuff-submit" ng-click="submitPost(postParams)">Map my stuff! &gt;&gt;</button>
 
-      <a class=""
+
+       <button class="button button-calm center button-full"
        ui-sref='tabs.map'>
-        Cancel
-      </a>
-    </form>
-  </div>
+       Cancel
+     </button>
+    </div>
+   </form>
+ </div>
 </div>
 </ion-content>
 </ion-vew>
