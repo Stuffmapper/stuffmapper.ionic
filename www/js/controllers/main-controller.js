@@ -3,7 +3,7 @@ angular.module('stuffmobile')
     function($scope, $state, UserService, BackService){
     var main = this;
     main.getCurrentUser = function(){
-      $scope.currentUser = UserService.currentUser;
+      $scope.currentUser = UserService.getCurrentUser();
       return $scope.currentUser;
     }
     main.logout = function() {

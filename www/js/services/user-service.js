@@ -4,6 +4,7 @@ angular.module('stuffmobile')
   var UserService = this;
   UserService.checking = false;
   UserService.checkingQueue = [];
+  var currentUser = false;
   var login = function(username, password, callback) {
       //TODO switch to promises for consistency
       var that = this;
@@ -18,7 +19,7 @@ angular.module('stuffmobile')
             title: 'Success :)',
             template: data.user + ' is now logged in',
           })
-          that.currentUser = data.user;
+          currentUser = data.user;
           that.token = data.token;
           LocalService.set('sMToken', JSON.stringify(data));
           return callback(null, data);
@@ -28,12 +29,12 @@ angular.module('stuffmobile')
             template: 'The Username and Password did not match',
           })
           LocalService.unset('sMToken');
-          that.currentUser = false;
+          currentUser = false;
         }
         // return callback(null, data);
       }).error(function(err) {
         console.log(err);
-        that.currentUser = false;
+        currentUser = false;
         $ionicPopup.alert({
           title: 'Error :(',
           template: 'An error occurred, please try again ' + data,
@@ -69,7 +70,7 @@ angular.module('stuffmobile')
       localStorage.clear();
       //should this passed into LocalService?
       return $http.get(ApiEndpoint.url + '/log_out').success(function(data) {
-        that.currentUser = false;
+        currentUser = false;
         $ionicHistory.clearCache().then(function() {
           return $ionicPopup.alert({
             title: 'Succcess',
@@ -90,7 +91,7 @@ angular.module('stuffmobile')
     check: function(){
       var that = this;
       var rejectAll = function(){
-        that.currentUser = false;
+        currentUser = false;
         while(UserService.checkingQueue.length > 0){
           var prom = UserService.checkingQueue.pop();
           prom.reject(that.currentUser)
@@ -98,7 +99,7 @@ angular.module('stuffmobile')
         UserService.checking = false;
       };
       var resolveAll = function(user){
-        that.currentUser = user;
+        currentUser = user;
         while(UserService.checkingQueue.length > 0){
           var prom = UserService.checkingQueue.pop();
           prom.resolve(that.currentUser)
@@ -127,10 +128,8 @@ angular.module('stuffmobile')
     },
 
     getCurrentUser: function(){
-      var that = this;
-      if( that.currentUser ){
-        return $q.when(that.currentUser)
-      } else { return that.check() }
-    }
+      return currentUser;
+    },
+    currentUser: currentUser,
   };
 }]);

@@ -16,7 +16,7 @@
   <div ng-if="post.showEdit()">
     <div ng-hide="currentDib">  
       <button class="button button-dark margin-bottom"
-      >This stuff hasn't been dibbed yet...</button>
+      >This stuff hasn't been Dibbed yet...</button>
     </div>
     <div ng-show="currentDib">
       <button class="dib-button dibbed">
@@ -30,7 +30,7 @@
   <span><h2>{{post.title}}</h2></span>
 
   <br>
-  <div class='floating stuff-category'>
+  <div ng-if='post.category' class='floating stuff-category'>
     {{post.category}}
   </div>
 
@@ -48,10 +48,11 @@
       Description
     </div>
     <br/>
-    <span>{{post.description}}</span>
+    <span ng-show='post.description'>{{post.description}}</span>
+    <span ng-hide='post.description'>No description provided</span>
   </div>
 
-  <button ng-show="post.showDib()" class= 'button button-balanced' ng-click='dib(post)'>I want this stuff! &gt;&gt;</button>
+  <button ng-show="post.showDib()" class= 'button button-balanced' ng-click='dib(post)'>Dibs &gt;&gt;</button>
 
 </div>
 </ion-content>

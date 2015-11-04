@@ -1,12 +1,14 @@
 <div class="stuff-view row" ng-click='getDetails(post)' 
  title={{post.description}} ng-attr-id={{post.id + '-stuff'}} >
   <div class='col col-33'>
-    <div class='floating stuff-category'>{{post.category}}</div>
+    <div ng-if="post.category" class='floating stuff-category'>{{post.category}}</div>
     <img class="stuff-image" ng-src={{post.image_url}} fallback-src ></img>
   </div>
   <div class='col col-67'>
     <span><h5>{{post.title}}</h5></span>
     <br>
-    <span>{{post.description}}</span>
+    <span ng-show='post.description'>{{post.description}}</span>
+    <span ng-hide='post.description'>No description provided</span>
+
   </div>
 </div>

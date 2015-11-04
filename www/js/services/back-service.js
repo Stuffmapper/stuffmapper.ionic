@@ -3,7 +3,11 @@ angular.module('stuffmobile')
   return {
     back: function() {
       if ($rootScope.$previousState) {
-        $state.go($rootScope.$previousState.name, {}, {reload: true});
+        if ($rootScope.$previousState == 'signup') {
+          $state.go('tabs.map', {}, {reload: true});
+        } else {
+          $state.go($rootScope.$previousState.name, {}, {reload: true});
+        }
       } else {
         $state.go('tabs.map', {}, {reload: true});
       }
