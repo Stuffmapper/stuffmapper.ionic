@@ -2,15 +2,21 @@
   <div class="container-fluid signin" id="signin" ng-controller='UserCtrl as userCtrl'>
       <h3>Login</h3>
       <a href="#" ng-click="userCtrl.openSignup()">Need to sign up?</a>
-     <form >
+     <form name="form">
         <div class="form-group">
           <label for="username">Username or Email *</label>
-          <input type="text" class="form-control" id="username" placeholder="Enter Username or Email" ng-model="username" required>
+          <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username or Email" ng-model="username" required>
+          <div ng-show="form.$submitted || form.username.$touched">
+            <span ng-show="form.username.$error.required" style="color: red">&nbsp;- Required -</span>
+          </div>
           <label for="password">Password *</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter Password" ng-model="password" required>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password" ng-model="password" required>
+          <div ng-show="form.$submitted || form.password.$touched">
+            <span ng-show="form.password.$error.required" style="color: red">&nbsp;- Required -</span>
+          </div>
           <!-- <a href='#' ng-click='userCtrl.resetPW() ' class='pull-left'>Forgot Password?</a> -->
         </div>
-        <button class="btn btn-primary" ng-click="userCtrl.signin()">Sign In</button>
+        <button class="btn btn-primary" ng-click="form.$valid && userCtrl.signin()">Sign In</button>
 
         <button class="btn btn-warning " ng-click='main.back()'>Cancel</button>
       </form>

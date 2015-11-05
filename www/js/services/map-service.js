@@ -1,5 +1,5 @@
 angular.module('stuffmobile')
-.factory('Map', ['$cordovaGeolocation', '$q', '$timeout', 'PostsService', function($cordovaGeolocation, $q, $timeout, PostsService){
+.factory('Map', ['$cordovaGeolocation', '$q', '$timeout', 'PostsService', 'UserService', function($cordovaGeolocation, $q, $timeout, PostsService, UserService){
   var Map = this;
   //need two maps because in different states
  
@@ -75,7 +75,7 @@ angular.module('stuffmobile')
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(giveMap, 'idle', function(){
         // //Use if css centering of marker stops working
-        
+
         // var marker = new google.maps.Marker({
         //   position: giveMap.getCenter(), 
         //   map: giveMap, 
@@ -127,10 +127,15 @@ angular.module('stuffmobile')
         var markerPos = new google.maps.LatLng(post.latitude, post.longitude);
 
         // Add the markerto the map
+        var icon = 'img/darkblue-pin.svg';
+        console.log('post.creator', post.creator, 'currentUser', UserService.getCurrentUser())
+        if(post.creator === UserService.getCurrentUser()){
+          icon = 'img/salmon-pin.svg';
+        }
         var marker = new google.maps.Marker({
             map: map,
             position: markerPos,
-            icon: 'img/darkblue-pin.svg'
+            icon: icon
         });
 
         addInfoWindow(marker, post, map);
