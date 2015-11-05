@@ -26,6 +26,11 @@ angular.module('stuffmobile')
 
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(getMap, 'idle', function(){
+        getMap.addListener('dragend', function(){
+          // getMap.getCenter();
+          loadMarkers(getMap);
+          console.log('dragend');
+        })
         deferred.resolve(getMap); 
       });
 
@@ -42,6 +47,10 @@ angular.module('stuffmobile')
       };
  
       getMap = new google.maps.Map(document.getElementById("getMap"), mapOptions);
+      getMap.addListener('draggend', function(){
+        // getMap.getCenter();
+        loadMarkers(getMap);
+      })
       deferred.resolve(getMap); 
     });
 
