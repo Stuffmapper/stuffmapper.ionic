@@ -6,7 +6,7 @@ angular.module('stuffmobile')
   var apiKey = false;
   var getMap = null;
   var giveMap = null;
-  var centerMarkers = [];
+  // var centerMarkers = []; // use if center marker css stops working
   var options = {timeout: 10000, enableHighAccuracy: true};
   function getMapInit(){
     var deferred = $q.defer(); 
@@ -74,18 +74,25 @@ angular.module('stuffmobile')
       giveMap = new google.maps.Map(document.getElementById("giveMap"), mapOptions);
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(giveMap, 'idle', function(){
-        var marker = new google.maps.Marker({position: giveMap.getCenter(), map: giveMap})
-        centerMarkers.push(marker);
-        giveMap.addListener('center_changed', function() {
-        if (centerMarkers.length > 0) {
-          centerMarkers[centerMarkers.length - 1].setMap(null);
-        }
-          var marker = new google.maps.Marker({
-            position: giveMap.getCenter(),
-            map: giveMap,
-          })
-          centerMarkers.push(marker);
-        })
+        // //Use if css centering of marker stops working
+        
+        // var marker = new google.maps.Marker({
+        //   position: giveMap.getCenter(), 
+        //   map: giveMap, 
+        //   icon: "img/pin.svg"
+        // })
+        // centerMarkers.push(marker);
+        // giveMap.addListener('center_changed', function() {
+        // if (centerMarkers.length > 0) {
+        //   centerMarkers[centerMarkers.length - 1].setMap(null);
+        // }
+        //   var marker = new google.maps.Marker({
+        //     position: giveMap.getCenter(),
+        //     map: giveMap,
+        //     icon: "img/pin.svg"
+        //   })
+        //   centerMarkers.push(marker);
+        // })
         deferred.resolve(giveMap);
       });
  
@@ -122,8 +129,8 @@ angular.module('stuffmobile')
         // Add the markerto the map
         var marker = new google.maps.Marker({
             map: map,
-            animation: google.maps.Animation.DROP,
-            position: markerPos
+            position: markerPos,
+            icon: 'img/darkblue-pin.svg'
         });
 
         addInfoWindow(marker, post, map);

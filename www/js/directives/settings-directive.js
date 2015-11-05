@@ -36,7 +36,7 @@ angular.module('stuffmobile')
         $scope.reject = function() {
           $scope.post.rejectDibber().then(function(data) {
             $scope.post.status = 'new';
-            $ionicPopup.alert({title: 'notice', template: 'Dib rejected'});
+            $ionicPopup.alert({title: 'Confirmation', template: 'Dibber has been rejected'});
           })
         }
       }

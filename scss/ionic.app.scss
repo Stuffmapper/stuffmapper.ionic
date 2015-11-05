@@ -73,14 +73,13 @@ em {
   height: 300px;
 }
 /*give stuff marker placement*/
-.centerMarker::after{
-  content: '';
+.center-marke{
   position:absolute;
   /*url of the marker*/
-  /*display: block;*/
-  background:url(http://maps.gstatic.com/mapfiles/markers/marker_green.png) no-repeat;
+  background:url(http://maps.gstatic.com/mapfiles/markers2/marker.png) no-repeat;
   /*center the marker*/
   top:50%;left:50%;
+
   z-index:1;
   /*fix offset when needed*/
   margin-left:-10px;
@@ -88,7 +87,25 @@ em {
   /*size of the image*/
   height:34px;
   width:20px;
+
   cursor:pointer;
+}
+
+#giveMap {
+    position: relative;
+}
+
+#giveMap:after {
+    width: 32px;
+    height: 68px;
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 50%; left: 50%;
+    margin: -68px 0 0 -16px;
+    background: url('../img/pin.svg');
+    background-size: 32px 68px; /* Since I used the HiDPI marker version this compensates for the 2x size */
+    pointer-events: none; /* This disables clicks on the marker. Not fully supported by all major browsers, though */
 }
 
 #getMap {
