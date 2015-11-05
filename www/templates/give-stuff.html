@@ -11,23 +11,26 @@
 
   <div ng-if='!locationSelected'>
     <div ng-if='!pictureChosen'>
-      <div>
-       <h4> Is your location correct? </h4>
-       <p>Move the pin to plot item's location.</p>
+      <div class="row row-center">
+      <div class="col col-80">
+        <h4> Is your location correct? </h4>
+        <p>Move the pin to plot item's location.</p>
+      </div>
+      <div class="col col-20">
+        <button class='find-location' ng-click='panToLocation()'>
+         <span class="ion-android-locate" aria-hidden="true"></span>
+        </button>
+      </div>
      </div>
 
-     <button class='button btn-margin'
-     ng-click='panToLocation()'>
-     <span class="glyphicon glyphicon-screenshot"
-     aria-hidden="true"></span><span> Find my location</span>
-     </button>
-     <button class='button button-positive btn-margin' ng-click='selectLocation()'>Select location</button>
+
+<!--      <button class='button button-positive btn-margin' ng-click='selectLocation()'>Select location</button> -->
    </div>
   </div>
-  <div class='camera-buttons' ng-if='locationSelected'>
+  <div class='camera-buttons'>
     <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="takePicture()">Take a picture
     </button>
-    <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose from storage 
+    <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose photo from storage 
     </button>
     <button ng-if="imgSrc" class='button button-calm btn-margin' ng-click="returnToSelectLocation()">Change item's location</button>
     <button ng-if="imgSrc" class='button button-positive btn-margin' ng-click="unselectPicture()">Redo image
@@ -82,10 +85,10 @@
        id="give-stuff-submit" ng-click="submitPost(postParams)">Map my stuff! &gt;&gt;</button>
 
 
-       <button class="button button-calm center button-full"
+       <a class="cancel-give"
        ui-sref='tabs.map'>
        Cancel
-     </button>
+     </a>
     </div>
    </form>
  </div>

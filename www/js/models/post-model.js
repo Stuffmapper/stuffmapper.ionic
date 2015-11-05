@@ -249,6 +249,10 @@ angular.module('stuffmobile')
 
     }
 
+    constructor.setDistance = function(distance) {
+      this.distance = distance;
+    }
+
     return Marker;
 }]);
 

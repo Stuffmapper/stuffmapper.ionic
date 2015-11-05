@@ -3,7 +3,13 @@
       <row row-top>
         <ion-scroll class='get-stuff' ng-class="openState">
           <div class='get-stuff' overflow-scroll="true">
-            <div ng-repeat="currentpost in posts">
+<!--             <div class="list list-inset">
+              <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" ng-modelplaceholder="Search">
+              </label>
+            </div> -->
+            <div ng-repeat="currentpost in posts | orderBy : 'distance'">
               <ngpost post='currentpost'></ngpost>
             </div>
           </div>

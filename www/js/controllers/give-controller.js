@@ -15,19 +15,27 @@ angular.module('stuffmobile')
       $scope.categories = PostsService.categories;
       // $SCOPE FUNCTIONS
       $scope.takePicture = function() {
-        ImageService.takePicture().then(function(imageURI) {
-          $scope.imgSrc = imageURI;
-        }, function(err) {
-          console.err(err);
-        });      
+        if(!UserService.getCurrentUser()) {
+          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+        } else {
+          ImageService.takePicture().then(function(imageURI) {
+            $scope.imgSrc = imageURI;
+          }, function(err) {
+            console.err(err);
+          });      
+        }
       }
 
       $scope.selectPictureStorage = function() {
-        ImageService.selectPicture().then(function(imageURI) {
-          $scope.imgSrc = imageURI;
-        }, function(err) {
-          throw err;
-        });   
+        if(!UserService.getCurrentUser()) {
+          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+        } else {
+          ImageService.selectPicture().then(function(imageURI) {
+            $scope.imgSrc = imageURI;
+          }, function(err) {
+            throw err;
+          });   
+        }
       };
 
       $scope.uploadPicture = function(imgUri, id){

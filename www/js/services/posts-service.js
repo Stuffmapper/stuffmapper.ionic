@@ -18,6 +18,7 @@ angular.module('stuffmobile')
  
   var getPosts = function(box){
       var url =  ApiEndpoint.url + "/posts/geolocated";
+      var getPosts;
       return $http({
         url: url,
         params: box
@@ -26,8 +27,12 @@ angular.module('stuffmobile')
           console.log('error ', err);
           return err;
         }
-          posts = response.data.posts;
-          return posts;
+        posts = [];
+        getPosts = response.data.posts;
+        for(var i = 0; i < getPosts.length; i++) {
+          posts.push(new Post(getPosts[i]));
+        }
+        return posts;
       });
   }
   var getInfoWindow = function(posts) {

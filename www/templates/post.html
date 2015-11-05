@@ -9,6 +9,7 @@
     <br>
     <span ng-show='post.description'>{{post.description}}</span>
     <span ng-hide='post.description'>No description provided</span>
+    <div class="row row-bottom" ng-if='post.distance'>{{post.distance}} mi away</div>
 
   </div>
 </div>

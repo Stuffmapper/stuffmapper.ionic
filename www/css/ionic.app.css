@@ -7902,6 +7902,19 @@ em {
 #giveMap.closed {
   height: 0%; }
 
+button.find-location {
+  display: inline;
+  margin: auto;
+  border: none;
+  background-color: #fff;
+  font-size: 25px;
+  color: #444444; }
+
+a.cancel-give {
+  display: block;
+  text-align: center;
+  margin: 15px; }
+
 /*my stuff*/
 .my-img {
   width: 100%;

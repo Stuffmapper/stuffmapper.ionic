@@ -1,11 +1,12 @@
 angular.module('stuffmobile')
-.factory('Map', ['$cordovaGeolocation', '$q', '$timeout', 'PostsService', 'UserService', function($cordovaGeolocation, $q, $timeout, PostsService, UserService){
+.factory('Map', ['$cordovaGeolocation', '$q', '$timeout', 'PostsService', 'UserService', 'Post', function($cordovaGeolocation, $q, $timeout, PostsService, UserService, Post){
   var Map = this;
   //need two maps because in different states
  
   var apiKey = false;
   var getMap = null;
   var giveMap = null;
+  var myLoc;
   // var centerMarkers = []; // use if center marker css stops working
   var options = {timeout: 10000, enableHighAccuracy: true};
   function getMapInit(){
@@ -14,10 +15,10 @@ angular.module('stuffmobile')
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
  
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
+      myLoc = latLng; 
       var mapOptions = {
         center: latLng,
-        zoom: 15,
+        zoom: 11,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       var mapEl = document.getElementById("getMap")
@@ -42,7 +43,7 @@ angular.module('stuffmobile')
  
       var mapOptions = {
         center: latLng,
-        zoom: 15,
+        zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
  
@@ -132,6 +133,9 @@ angular.module('stuffmobile')
         if(post.creator === UserService.getCurrentUser()){
           icon = 'img/salmon-pin.svg';
         }
+        if(myLoc){
+          post.setDistance(calcDistance(myLoc, markerPos));
+        }
         var marker = new google.maps.Marker({
             map: map,
             position: markerPos,
@@ -196,6 +200,10 @@ angular.module('stuffmobile')
     $timeout(function() {
       google.maps.event.trigger(getMap, 'resize');
     }, 50)
+  }
+
+  function calcDistance(p1, p2){
+    return ((google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000)*1.6).toFixed(1);
   }
 //the give and get keep the two maps strait 
   return {
