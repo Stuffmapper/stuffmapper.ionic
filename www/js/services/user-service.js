@@ -44,6 +44,7 @@ angular.module('stuffmobile')
     }
   return {
     signUp: function(userInfo) {
+      console.log('user infor in signUp', userInfo)
       return $http.post(ApiEndpoint.url + '/users', {
         user: userInfo
       }).success(function(data) {
@@ -56,10 +57,21 @@ angular.module('stuffmobile')
         return userInfo.username;
       }).error(function(error) {
         console.log('\n\n\n\n\n\n\n\n\n Data from signup ERROR', error)
-        $ionicPopup.alert({
-          title: 'failure',
-          template: 'Something went wrong'
-        })
+        if(error.base || error.username) {
+          $ionicPopup.alert({title: 'Notice', template: 'Username or Email has been taken'})
+        } else if (error.password_confirmation) {
+          $ionicPopup.alert({title: 'Notice', template: 'Passwords do not match'})
+        } else if (error.email) {
+          $ionicPopup.alert({title: 'Notice', template: 'Please enter a valid email'})
+        } else if (error.password) {
+          $ionicPopup.alert({title: 'Notice', template: 'Password must be 6 or more charactors'})
+        } else {
+          $ionicPopup.alert({
+            title: 'Notice',
+            template: 'An error occurred.  Please try again later'
+          })          
+        }
+
         throw error;
       });    
     },
@@ -74,7 +86,7 @@ angular.module('stuffmobile')
         $ionicHistory.clearCache().then(function() {
           return $ionicPopup.alert({
             title: 'Succcess',
-            template: 'Logout Successful',
+            template: 'Logout successful',
           })
         })
         .then(function(){

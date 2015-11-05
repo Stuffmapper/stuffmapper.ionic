@@ -15,7 +15,7 @@ angular.module('stuffmobile')
         $scope.remove = function() {
           $scope.post.remove().then(function(data) {
             $scope.post.status = 'deleted';
-            $ionicPopup.alert({title: 'notice', template: 'Post has been deleted'});
+            $ionicPopup.alert({title: 'Cornfirmation', template: 'Listing has been deleted'});
           })
         }
 
@@ -29,7 +29,7 @@ angular.module('stuffmobile')
         $scope.gone = function() {
           $scope.post.markGone().then(function(data) {
             $scope.ipost.status = 'gone';
-            $ionicPopup.alert({title: 'notice', template: 'Post has been marked as picked up'});
+            $ionicPopup.alert({title: 'Confirmation', template: 'You\'ve indicated that item has been exchanged'});
           })
         }
 

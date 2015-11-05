@@ -5,9 +5,9 @@
      <form >
         <div class="form-group">
           <label for="username">Username or Email *</label>
-          <input type="text" class="form-control" id="username" placeholder="Username" ng-model="username">
+          <input type="text" class="form-control" id="username" placeholder="Enter Username or Email" ng-model="username" required>
           <label for="password">Password *</label>
-          <input type="password" class="form-control" id="password" placeholder="Password" ng-model="password">
+          <input type="password" class="form-control" id="password" placeholder="Enter Password" ng-model="password" required>
           <!-- <a href='#' ng-click='userCtrl.resetPW() ' class='pull-left'>Forgot Password?</a> -->
         </div>
         <button class="btn btn-primary" ng-click="userCtrl.signin()">Sign In</button>

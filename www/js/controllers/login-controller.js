@@ -1,6 +1,6 @@
 //logout handled on main, ionic nav-header-bar greatness...
 angular.module('stuffmobile')
-.controller('UserCtrl', ['$scope', '$state', '$rootScope', 'UserService', 'BackService', function($scope, $state, $rootScope, UserService, BackService){
+.controller('UserCtrl', ['$scope', '$state', '$rootScope', '$ionicPopup', 'UserService', 'BackService', function($scope, $state, $rootScope, $ionicPopup, UserService, BackService){
   var userCtrl = this;
 
   //sends to sign up page
@@ -14,19 +14,25 @@ angular.module('stuffmobile')
 
   //sign in user
   userCtrl.signin = function() {
-    UserService.login($scope.username, $scope.password, function(err, data) {
-      console.log(data)
-      if (err) {
-        console.log('error in sign in', err)
-      } else if (data.user) {
-        console.log('sign in successfull');
-        $scope.user = data.user
-        BackService.back();
-        return data.user;
-      } else {
-        return console.log(data.error);
-      }
-    });
+    if (!$scope.username) {
+      $ionicPopup.alert({title: 'Notice', template: 'Please enter your username'});
+    } else if (!$scope.password || !$scope.password.length < 6) {
+      $ionicPopup.alert({title: 'Notice', template: 'Please enter a valid password (min 6 charactors)'});
+    } else {
+      UserService.login($scope.username, $scope.password, function(err, data) {
+        console.log(data)
+        if (err) {
+          console.log('error in sign in', err)
+        } else if (data.user) {
+          console.log('sign in successfull');
+          $scope.user = data.user
+          BackService.back();
+          return data.user;
+        } else {
+          return console.log(data.error);
+        }
+      });
+    }
   }
 
   //back to home
