@@ -213,8 +213,8 @@ angular.module('stuffmobile')
     //VISUALIZATION BOOLEANS
 
     constructor.showEdit = function() {
-      return ( this.creator && UserService.currentUser &&
-        this.creator == UserService.currentUser);
+      return ( this.creator && UserService.getCurrentUser() &&
+        this.creator == UserService.getCurrentUser());
     };
 
     constructor.showDib = function() {

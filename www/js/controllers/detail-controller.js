@@ -16,9 +16,13 @@ angular.module('stuffmobile')
     } else {
       var post = $scope.post;
       post.dib().then(function(data) {
-        $ionicPopup.alert({title: 'Dibbed', template: 'Item has been dibbed!'})
+        $ionicPopup.alert({title: 'Item Succesfully Dibbed', template: 'Message the lister within 30 minutes to keep your Dibs!'})
       }, function(err) {
-        throw err;
+        if (err.data.creator[0] === 'Please verify your email to dib') {
+          $ionicPopup.alert({title: 'Alert', template: 'Please confirm your email to Dibs!'})
+        } else {
+          throw err;
+        }
       });
     }
   }
@@ -30,7 +34,9 @@ angular.module('stuffmobile')
 
   $scope.unDib = function() {
     var post = $scope.post;
-    post.unDib();
+    post.unDib().then(function(){
+      $state.go('tabs.map');
+    });
   }
 
   $scope.goChat = function() {

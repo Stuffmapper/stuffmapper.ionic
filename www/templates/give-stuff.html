@@ -30,7 +30,7 @@
   <div class='camera-buttons'>
     <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="takePicture()">Take a picture
     </button>
-    <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose photo from storage 
+    <button ng-if="imgSrc == undefined" class='button button-calm btn-margin' ng-click="selectPictureStorage()">Choose from storage 
     </button>
     <button ng-if="imgSrc" class='button button-calm btn-margin' ng-click="returnToSelectLocation()">Change item's location</button>
     <button ng-if="imgSrc" class='button button-positive btn-margin' ng-click="unselectPicture()">Redo image
@@ -42,7 +42,7 @@
       </div>
     </div>
   <div class="camera-buttons">
-   <button ng-if="imgSrc && pictureChosen == false" class='button button-balanced btn-margin' ng-click="choosePicture(imgSrc)">Accept?
+   <button ng-if="imgSrc && pictureChosen == false" class='button button-balanced btn-margin margin-bottom' ng-click="choosePicture(imgSrc)">Proceed&nbsp;&gt;&gt;
    </button> 
   </div>
 </div>
@@ -81,7 +81,7 @@
            <small>&nbsp;&nbsp;Item is on the curb/outside/unattended by me</small>
          </label>
        </li> -->
-       <button class="button center button-full margin-bottom button-positive"
+       <button class="button center button-full margin-bottom button-balanced"
        id="give-stuff-submit" ng-click="submitPost(postParams)">Map my stuff! &gt;&gt;</button>
 
 

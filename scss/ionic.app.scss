@@ -50,7 +50,7 @@ em {
   width: 250px;
 }
 
-.margin-bottom {
+button.margin-bottom {
   margin-bottom: 15px;
 }
 
@@ -61,6 +61,17 @@ em {
 .faded-text {
   color: #888888;
   font-size: 12px;
+}
+
+/*header bar */
+.bar-energized.custom-header {
+  background-color: #445D75;
+}
+
+.logo-img {
+  width: 110px;
+  margin-top: 8px;
+  overflow: visible;
 }
 
 /*forms*/
@@ -289,7 +300,7 @@ a.cancel-give {
 }
 
 .newMessage:after {
-  content: 'New Message!';
+  content: 'New message!';
 }
 
 .noNewMessage:after {
@@ -339,4 +350,10 @@ a.cancel-give {
   margin: auto;
   display: block;
   margin-top: 15px;
+}
+
+.button.dibs-button {
+  display: block;
+  margin: 15px auto;
+  width: 175px;
 }

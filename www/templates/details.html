@@ -7,10 +7,10 @@
 
   <hr class='thin-hr'>
   <div ng-show='post.isCurrentDibber' class='margin-bottom'>
-    <button  class= "button button-positive"
+    <button  class= "button button-balanced button-full"
     ng-click='goChat(post)'>Dibbed! Send a message to the lister! &gt;&gt;</button>
-    <button class="button button-positive" ng-click="unDib()"
-    >Undib! (I don't want this anymore)</a>
+    <a class="cancel-give" ng-click="unDib()"
+    >UnDibs! (I don't want this anymore)</a>
   </div>
 
   <div ng-if="post.showEdit()">
@@ -37,11 +37,9 @@
   <div class='floating stuff-status'>
     {{post.status}}
   </div>
-  <a ng-href="{{post.originalImage}}" >
-    <img class="img-detail" 
-    ng-src={{post.image_url}} fallback-src >
-    </img>
-  </a>
+  <img class="img-detail" 
+  ng-src={{post.image_url}} fallback-src >
+  </img>
 
   <div class='detail-description'>
     <div class='faded-text'>
@@ -52,7 +50,7 @@
     <span ng-hide='post.description'>No description provided</span>
   </div>
 
-  <button ng-show="post.showDib()" class= 'button button-balanced' ng-click='dib(post)'>Dibs &gt;&gt;</button>
+  <button ng-show="post.showDib()" class= 'button button-balanced dibs-button' ng-click='dib(post)'>Dibs &gt;&gt;</button>
 
 </div>
 </ion-content>

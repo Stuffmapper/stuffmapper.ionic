@@ -9,7 +9,7 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
   // url: '/api'
 })
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, $ionicLoading, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -25,6 +25,15 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
     });
 
   });
+  $rootScope.$on('loading:show', function() {
+    if ($state.current.name != "tabs.mystuff") {
+      $ionicLoading.show({delay: 1000, template: '<ion-spinner icon="ripple"></ion-spinner>', noBackdrop: true})
+    }
+  })
+
+  $rootScope.$on('loading:hide', function() {
+    $ionicLoading.hide()
+  })
 })
 .config(function($stateProvider, $urlRouterProvider, $compileProvider, $httpProvider) {
  
@@ -86,6 +95,16 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
     controller: 'SignupCtrl',
     controllerAs: 'signupCtrl'
   })
+  .state('terms', {
+    url: '/terms',
+    templateUrl: 'templates/terms.html',
+    controller: 'TermsCtrl'
+  })
+  .state('policy', {
+    url: '/policy',
+    templateUrl: 'templates/policy.html',
+    controller: 'TermsCtrl'
+  })
 
 
 
@@ -99,4 +118,16 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
   $httpProvider.defaults.withCredentials = true;
   $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = token
   $httpProvider.interceptors.push('AuthInterceptor')
+  $httpProvider.interceptors.push(function($rootScope) {
+    return {
+      request: function(config) {
+        $rootScope.$broadcast('loading:show')
+        return config
+      },
+      response: function(response) {
+        $rootScope.$broadcast('loading:hide')
+        return response
+      }
+    }
+  })
 });

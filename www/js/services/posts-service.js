@@ -13,7 +13,8 @@ angular.module('stuffmobile')
         'Furniture & Household',
         'General',
         'Kids & Babies',
-        'Recreation'
+        'Recreation',
+        'other'
       ]; 
  
   var getPosts = function(box){

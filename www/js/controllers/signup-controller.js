@@ -42,11 +42,12 @@ angular.module('stuffmobile')
   $scope.cancel = function() {
     BackService.back();
   }
-  $scope.showPrivacy = function() {
+  signupCtrl.showprivacy = function() {
     PolicyService.showPrivacy();
   }
 
-  $scope.showTerms = function() {
+  signupCtrl.showterms = function() {
+    console.log('show terms in ctrl')
     PolicyService.showTerms();
   }
 }]);
