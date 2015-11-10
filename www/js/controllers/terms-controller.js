@@ -1,6 +1,6 @@
 angular.module('stuffmobile')
-.controller('TermsCtrl', ['$scope', 'BackService', function($scope, BackService){
+.controller('TermsCtrl', ['$scope', '$state', 'BackService', function($scope, $state, BackService){
   $scope.back = function() {
-    BackService.back();
+    $state.go('signup');
   }
 }])

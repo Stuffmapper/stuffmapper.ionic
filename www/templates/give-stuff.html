@@ -43,7 +43,8 @@
     </div>
   <div class="camera-buttons">
    <button ng-if="imgSrc && pictureChosen == false" class='button button-balanced btn-margin margin-bottom' ng-click="choosePicture(imgSrc)">Proceed&nbsp;&gt;&gt;
-   </button> 
+   </button>
+   <div class="buffer"></div>
   </div>
 </div>
 
@@ -63,7 +64,7 @@
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Description</span>
-        <input type="text" placeholder="Provide a description" ng-model="postParams.description">
+        <input type="text" placeholder="Provide a description (i.e. condition, size, dimensions)" ng-model="postParams.description">
       </label>
       <label class="item item-input item-select">
         <div class="input-label">

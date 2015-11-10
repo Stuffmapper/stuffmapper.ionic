@@ -33,13 +33,12 @@ angular.module('stuffmobile')
         }
         // return callback(null, data);
       }).error(function(err) {
-        console.log(err);
         currentUser = false;
         $ionicPopup.alert({
-          title: 'Error :(',
-          template: 'An error occurred, please try again ' + data,
+          title: 'Error',
+          template: 'An error occurred, please try again',
         })
-        return callback(err);
+        // return callback(err);
       });
     }
   return {
@@ -140,6 +139,7 @@ angular.module('stuffmobile')
     },
 
     getCurrentUser: function(){
+      console.log(currentUser, "current user")
       return currentUser;
     },
     currentUser: currentUser,

@@ -1,6 +1,7 @@
 <ion-view>
 <ion-content>
-  <ion-scroll overflow-scroll="true">
+  <ion-scroll>
+  <div>
     <h3>Sign Up</h3>
     <div>
       <p>By clicking sign up, I agree to the
@@ -81,11 +82,11 @@
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-margin-top-15">
         <button class="button button-full button-calm center"
         ng-click="form.$valid && signup(user)">Sign Up</button>
-        <button class="button button-full button-stable center"
-        ng-click="cancel()">Cancel</button>
       </div>
     </form>
-
+    <button class="button button-full button-stable center"
+        ng-click="cancel()">Cancel</button>
+  </div>
   </ion-scroll>
 </ion-content>
 </ion-view>

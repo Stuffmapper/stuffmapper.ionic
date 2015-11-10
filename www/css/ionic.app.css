@@ -7704,6 +7704,9 @@ em {
   font-style: italic; }
 
 /*misc*/
+.buffer {
+  height: 30px; }
+
 .capitalize {
   text-transform: capitalize; }
 

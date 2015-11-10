@@ -7,9 +7,16 @@ angular.module('stuffmobile')
     scope: {
       post: '='
     },
-    controller: ['$scope', 'ChatService', '$interval', '$state', function($scope, ChatService, $interval, $state) {
+    controller: ['$scope', 'ChatService', '$interval', '$state', 'Post', function($scope, ChatService, $interval, $state, Post) {
       $scope.unread = false;
       $scope.showChat = false;
+
+      $scope.unDib = function() {
+        var post = $scope.post;
+        post.unDib().then(function(){
+          $state.go('tabs.map');
+        });
+      }
         var interval = $interval(function() {
           var dibs = $scope.post.currentDib.id;
           if(dibs) {

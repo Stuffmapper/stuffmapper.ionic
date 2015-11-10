@@ -60,7 +60,7 @@ angular.module('stuffmobile')
     constructor.dib = function(){
       var self = this;
       return $http.post(ApiEndpoint.url + '/posts/' + self.id + '/dibs')
-        .then( function(data){
+        .then(function(data){
           angular.extend(self, data.data.post)
           return self;
         }, function(error){
