@@ -52,7 +52,7 @@ angular.module('stuffmobile')
           function(error){
             //TODO handle specific errors
             console.log(error);
-            $ionicPopup.alert({title: 'Alert', template: error.data.message})
+            $ionicPopup.alert({title: 'Alert', template: "Please confirm your email to submit a listing."})
             throw error;
         }); 
     };
