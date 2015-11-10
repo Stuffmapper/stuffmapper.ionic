@@ -6,7 +6,7 @@ angular.module('stuffmobile')
   var apiKey = false;
   var getMap = null;
   var giveMap = null;
-  var myLoc;
+  var myLoc, giveMarker;
   // var centerMarkers = []; // use if center marker css stops working
   var options = {timeout: 10000, enableHighAccuracy: true};
   function getMapInit(){
@@ -129,7 +129,6 @@ angular.module('stuffmobile')
 
         // Add the markerto the map
         var icon = 'img/darkblue-pin.svg';
-        console.log('post.creator', post.creator, 'currentUser', UserService.getCurrentUser())
         if(post.creator === UserService.getCurrentUser()){
           icon = 'img/salmon-pin.svg';
         }
@@ -187,9 +186,15 @@ angular.module('stuffmobile')
 
   function setUndraggable() {
     giveMap.setOptions({draggable: false});
+    giveMarker = new google.maps.Marker({
+        map: giveMap,
+        position: giveMap.getCenter(),
+        icon: 'img/pin.svg'
+    });
   }
 
   function setDraggable() {
+    giveMarker.setMap(null);
     giveMap.setOptions({draggable: true});
   }
 

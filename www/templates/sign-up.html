@@ -35,7 +35,7 @@
 
       <div class="form-group">
         <label for="email">Email Address *</label>
-        <input type="email" name="email" class="form-control" id="email"
+        <input type="email" name="email" class="form-control wide" id="email"
         placeholder="Enter email" ng-model="user.email" required>
           <div ng-show="form.$submitted || form.email.$touched">
             <span ng-show="form.email.$error.required" style="color: red">&nbsp;- Required -</span>
@@ -55,9 +55,10 @@
       <div class="form-group">
         <label for="password">Password *</label>
         <input type="password" name="password" class="form-control" id="password"
-        placeholder="Password" ng-model="user.password" required>
+        placeholder="Password" ng-model="user.password" required ng-minlength="6">
         <div ng-show="form.$submitted || form.password.$touched">
           <span ng-show="form.password.$error.required" style="color: red">&nbsp;- Required -</span>
+          <span ng-show="form.password.$error.minlength" style="color: red">&nbsp;- Minimum of 6 Characters -</span>
         </div>
       </div>
 

@@ -139,7 +139,6 @@ angular.module('stuffmobile')
     },
 
     getCurrentUser: function(){
-      console.log(currentUser, "current user")
       return currentUser;
     },
     currentUser: currentUser,

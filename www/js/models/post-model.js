@@ -64,7 +64,7 @@ angular.module('stuffmobile')
           angular.extend(self, data.data.post)
           return self;
         }, function(error){
-          throw error;
+          throw error; 
         })
     };
 

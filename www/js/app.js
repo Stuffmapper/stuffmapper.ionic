@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
 .constant('ApiEndpoint', {
-  // url: "http://blooming-eyrie-8909.herokuapp.com/api"
-  url: '/api'
+  url: "http://blooming-eyrie-8909.herokuapp.com/api"
+  // url: '/api'
 })
 
 .run(function($ionicPlatform, $rootScope, $ionicLoading, $state) {
@@ -127,6 +127,10 @@ angular.module('stuffmobile', ['ionic', 'ngCordova', 'ngResource'])
       response: function(response) {
         $rootScope.$broadcast('loading:hide')
         return response
+      },
+      responseError: function(error) {
+        $rootScope.$broadcast('loading:hide')
+        throw error
       }
     }
   })
