@@ -16,7 +16,7 @@ angular.module('stuffmobile')
       // $SCOPE FUNCTIONS
       $scope.takePicture = function() {
         if(!UserService.getCurrentUser()) {
-          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+          $ionicPopup.alert({title: 'Alert', template: 'Please login to list an item!'})
         } else {
           ImageService.takePicture().then(function(imageURI) {
             $scope.imgSrc = imageURI;
@@ -28,7 +28,7 @@ angular.module('stuffmobile')
 
       $scope.selectPictureStorage = function() {
         if(!UserService.getCurrentUser()) {
-          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+          $ionicPopup.alert({title: 'Alert', template: 'Please login to list an item!'})
         } else {
           ImageService.selectPicture().then(function(imageURI) {
             $scope.imgSrc = imageURI;
@@ -46,7 +46,7 @@ angular.module('stuffmobile')
 
       $scope.choosePicture = function(imgSrc) {
         if(!UserService.getCurrentUser()) {
-          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+          $ionicPopup.alert({title: 'Alert', template: 'Please login to list an item!'})
         } else {
           $scope.imgSrc = imgSrc;
           $scope.pictureChosen = true;
@@ -147,7 +147,7 @@ angular.module('stuffmobile')
 
       $scope.submitPost = function(postParams) {
         if(!UserService.getCurrentUser()) {
-          $ionicPopup.alert({title: 'Alert', template: 'Must login to submit an item!'})
+          $ionicPopup.alert({title: 'Alert', template: 'Please login to list an item!'})
         } else if (postParams == undefined || postParams.title == "") {
           $ionicPopup.alert({title: 'Alert', template:"Title is required"})
         } else {

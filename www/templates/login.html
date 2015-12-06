@@ -1,15 +1,15 @@
 <ion-content>
   <div class="container-fluid signin" id="signin" ng-controller='UserCtrl as userCtrl'>
       <h3>Login</h3>
-      <a ui-sref="signup">Need to sign up?</a>
+      <a ui-sref="signup">Need to Sign Up?</a>
      <form name="form">
         <div class="form-group">
-          <label for="username">Username or Email *</label>
+          <label for="username"><b>Username or Email</b> *</label>
           <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username or Email" ng-model="username" required>
           <div ng-show="form.$submitted || form.username.$touched">
             <span ng-show="form.username.$error.required" style="color: red">&nbsp;- Required -</span>
           </div>
-          <label for="password">Password *</label>
+          <label for="password"><b>Password</b> *</label>
           <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password" ng-model="password" required>
           <div ng-show="form.$submitted || form.password.$touched">
             <span ng-show="form.password.$error.required" style="color: red">&nbsp;- Required -</span>

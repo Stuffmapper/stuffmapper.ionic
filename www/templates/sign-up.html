@@ -13,7 +13,7 @@
 
       <div class="form-group">
         <div id="first-name">
-          <label for="first_name">First Name *</label>
+          <label for="first_name"><b>First Name </b>*</label>
           <input type="text" name='first_name' class="form-control" id="first_name"
           placeholder="First Name" ng-model="user.first_name" required>
           <div ng-show="form.$submitted || form.first_name.$touched">
@@ -24,7 +24,7 @@
 
       <div class="form-group">
         <div id="last-name">
-          <label for="last_name">Last Name *</label>
+          <label for="last_name"><b>Last Name</b> *</label>
           <input type="text" name="last_name" class="form-control" id="last_name"
           placeholder="Last Name" ng-model="user.last_name" required>
           <div ng-show="form.$submitted || form.last_name.$touched">
@@ -34,7 +34,7 @@
       </div>
 
       <div class="form-group">
-        <label for="email">Email Address *</label>
+        <label for="email"><b>Email Address</b> *</label>
         <input type="email" name="email" class="form-control wide" id="email"
         placeholder="Enter email" ng-model="user.email" required>
           <div ng-show="form.$submitted || form.email.$touched">
@@ -44,7 +44,7 @@
       </div>
 
       <div class="form-group">
-        <label for="username">Username *</label>
+        <label for="username"><b>Username</b> *</label>
         <input type="text" name="username" class="form-control" id="username"
         placeholder="Username" ng-model="user.username" required>
           <div ng-show="form.$submitted || form.username.$touched">
@@ -53,7 +53,7 @@
       </div>
 
       <div class="form-group">
-        <label for="password">Password *</label>
+        <label for="password"><b>Password</b> *</label>
         <input type="password" name="password" class="form-control" id="password"
         placeholder="Password" ng-model="user.password" required ng-minlength="6">
         <div ng-show="form.$submitted || form.password.$touched">
@@ -63,7 +63,7 @@
       </div>
 
       <div class="form-group">
-        <label for="password_confirmation">Password Confirmation *</label>
+        <label for="password_confirmation"><b>Password Confirmation</b> *</label>
         <input type="password" name="password_confirmation" class="form-control"
         id="password_confirmation" placeholder="Confirm Password"
         ng-model="user.password_confirmation" required>
@@ -73,7 +73,7 @@
       </div>
 
       <div class="form-group">
-        <label for="phone_number">Phone Number</label>
+        <label for="phone_number"><b>Phone Number</b></label>
         <label id="option" for="optional"> (optional) </label>
         <input type="tel" class="form-control" id="phone_number" placeholder="Phone Number" ng-model="user.phone_number">
       </div>
@@ -82,11 +82,11 @@
 
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-margin-top-15">
         <button class="button button-full button-calm center"
-        ng-click="form.$valid && signup(user)">Sign Up</button>
+        ng-click="form.$valid && signup(user)"><b>Sign Up</b></button>
       </div>
     </form>
     <button class="button button-full button-stable center"
-        ng-click="cancel()">Cancel</button>
+        ng-click="cancel()"><b>Cancel</b></button>
   </div>
   </ion-scroll>
 </ion-content>

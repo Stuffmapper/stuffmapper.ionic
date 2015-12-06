@@ -18,7 +18,7 @@ angular.module('stuffmobile')
           $ionicPopup.alert({
             title: 'Success :)',
             template: data.user + ' is now logged in',
-          })
+          });
           currentUser = data.user;
           that.token = data.token;
           LocalService.set('sMToken', JSON.stringify(data));
@@ -52,7 +52,12 @@ angular.module('stuffmobile')
         //   title: 'Success',
         //   template: 'Logged In'
         // })
-        login(userInfo.username, userInfo.password)
+        $ionicPopup.alert({
+          title: 'Success',
+          template: 'Almost Done! Please check your email to confirm account.',
+        }).then(function() {
+          login(userInfo.username, userInfo.password)
+        })
         return userInfo.username;
       }).error(function(error) {
         console.log('\n\n\n\n\n\n\n\n\n Data from signup ERROR', error)

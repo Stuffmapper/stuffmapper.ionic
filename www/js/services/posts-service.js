@@ -14,7 +14,7 @@ angular.module('stuffmobile')
         'General',
         'Kids & Babies',
         'Recreation',
-        'other'
+        'other',
       ]; 
  
   var getPosts = function(box){

@@ -12,6 +12,8 @@ angular.module('stuffmobile')
       });
     });
   }
+
+
   console.log('get ctrl')
 
   $scope.getDetails = function(post) {
@@ -21,6 +23,7 @@ angular.module('stuffmobile')
 
 
 
+  $scope.categories = PostsService.categories;
   $scope.listOpen = true;
   $scope.openState = 'open';
 
