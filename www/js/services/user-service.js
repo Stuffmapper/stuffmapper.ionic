@@ -48,7 +48,7 @@ angular.module('stuffmobile')
         // })
         $ionicPopup.alert({
           title: 'Success',
-          template: 'Almost Done! Please check your email to confirm account.',
+          template: 'Almost done! Please check your email to confirm account.',
         }).then(function() {
           login(userInfo.username, userInfo.password)
         })
