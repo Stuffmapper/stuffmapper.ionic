@@ -23,24 +23,18 @@ angular.module('stuffmobile')
           that.token = data.token;
           LocalService.set('sMToken', JSON.stringify(data));
           return callback(null, data);
-        } else {
-          $ionicPopup.alert({
-            title: 'Error :(',
-            template: 'The Username and Password did not match',
-          })
-          LocalService.unset('sMToken');
-          currentUser = false;
         }
         // return callback(null, data);
       }).error(function(err) {
-        currentUser = false;
         $ionicPopup.alert({
-          title: 'Error',
-          template: 'An error occurred, please try again',
+          title: 'Error :(',
+          template: 'The Username and Password did not match',
         })
+        LocalService.unset('sMToken');
+        currentUser = false;
         // return callback(err);
       });
-    }
+  }
   return {
     signUp: function(userInfo) {
       console.log('user infor in signUp', userInfo)

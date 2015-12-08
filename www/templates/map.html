@@ -10,8 +10,7 @@
               </label>
             </div> -->
             <div class="list">
-              <label class="item item-input item-select">
-                <div class="input-label">
+                <div style="display:inline;" class="input-label">
                   <div class="list list-inset">
                     <label class="item item-input">
                       <i class="icon ion-search placeholder-icon"></i>
@@ -19,11 +18,6 @@
                     </label>
                   </div>
                 </div>
-                <select ng-model="searchParams.category">
-                    <option value="" selected>- No Category Selected -</option>
-                    <option ng-repeat="category in categories">{{category}}</option>
-                </select>
-              </label>
             </div>
             <div ng-repeat="currentpost in posts | filter:searchParams | orderBy : 'distance'">
               <ngpost post='currentpost'></ngpost>
