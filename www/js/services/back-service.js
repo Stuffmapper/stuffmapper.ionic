@@ -1,18 +1,19 @@
 angular.module('stuffmobile')
-.factory('BackService', ['$rootScope', '$state', function($rootScope, $state) {
+.factory('BackService', ['$ionicHistory', '$rootScope', '$state', function($ionicHistory, $rootScope, $state) {
   return {
     back: function() {
-      var previous = $rootScope.$previousState.name;
-      if ($rootScope.$previousState) {
-        console.log('previousState', $rootScope.$previousState)
+      var previous = $ionicHistory.backView().stateName;
+      if ($ionicHistory.backView().stateName) {
+        console.log('previousState', $ionicHistory.backView().stateName)
         if (previous == 'signup' || previous == 'terms' || previous == 'privacy') {
           $state.go('tabs.map', {}, {reload: true});
         } else {
-          $state.go($rootScope.$previousState.name, {}, {reload: true});
+          $state.go($ionicHistory.backView().stateName, {}, {reload: true});
         }
       } else {
         $state.go('tabs.map', {}, {reload: true});
       }
+      // $state.go('tabs.map', {}, {reload: true});
     }
   }
 }])
