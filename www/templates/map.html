@@ -11,12 +11,12 @@
             </div> -->
             <div class="list">
                 <div style="display:inline;" class="input-label">
-                  <div class="list list-inset">
+<!--                   <div class="list list-inset">
                     <label class="item item-input">
                       <i class="icon ion-search placeholder-icon"></i>
                       <input ng-model="searchParams.title" type="text" placeholder="Search">
                     </label>
-                  </div>
+                  </div> -->
                 </div>
             </div>
             <div ng-repeat="currentpost in posts | filter:searchParams | orderBy : 'distance'">

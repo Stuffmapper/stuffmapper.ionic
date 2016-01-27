@@ -16,7 +16,7 @@ angular.module('stuffmobile')
     } else {
       var post = $scope.post;
       post.dib().then(function(data) {
-        $ionicPopup.alert({title: 'Item Successfully Dibbed', template: 'Message the lister within 30 minutes to keep your Dibs!'})
+        $ionicPopup.alert({title: 'Item Successfully Dibbed', template: 'Message the lister within 15 minutes to keep your Dibs!'})
       }, function(err) {
         if (err.data.creator[0] === 'Please verify your email to dib') {
           $ionicPopup.alert({title: 'Alert', template: 'Please confirm your email to Dibs!'})

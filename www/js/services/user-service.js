@@ -36,6 +36,57 @@ angular.module('stuffmobile')
       });
   }
   return {
+    facebookLogin: function(keyData, callback) {
+      return $http.post(ApiEndpoint.authUrl + '/auth/facebook/callback', keyData)
+      .success(function(data) {
+        console.log("succesful facebook login", data);
+        if (data && data.user) {
+          $ionicPopup.alert({
+            title: 'Success :)',
+            template: data.user + ' is now logged in',
+          });
+          currentUser = data.user;
+          that.token = data.token;
+          LocalService.set('sMToken', JSON.stringify(data));
+          return callback(null, data);
+        }
+        // return callback(null, data);
+      }).error(function(err) {
+        $ionicPopup.alert({
+          title: 'Error :(',
+          template: 'There was an error logging in, please try again later',
+        })
+        LocalService.unset('sMToken');
+        currentUser = false;
+        // return callback(err);
+      });
+    },
+    googleLogin: function(keyData, callback) {
+      return $http.post(ApiEndpoint.authUrl + '/auth/google_oauth2/callback', keyData)
+      .success(function(data) {
+        console.log("succesful google login", data);
+        if (data && data.user) {
+          $ionicPopup.alert({
+            title: 'Success :)',
+            template: data.user + ' is now logged in',
+          });
+          currentUser = data.user;
+          that.token = data.token;
+          LocalService.set('sMToken', JSON.stringify(data));
+          return callback(null, data);
+        }
+        // return callback(null, data);
+      }).error(function(err) {
+        console.log("succesful google login");
+        $ionicPopup.alert({
+          title: 'Error :(',
+          template: 'There was an error logging in, please try again later',
+        })
+        LocalService.unset('sMToken');
+        currentUser = false;
+        // return callback(err);
+      });
+    },
     signUp: function(userInfo) {
       console.log('user infor in signUp', userInfo)
       return $http.post(ApiEndpoint.url + '/users', {
@@ -140,6 +191,7 @@ angular.module('stuffmobile')
     getCurrentUser: function(){
       return currentUser;
     },
+
     currentUser: currentUser,
   };
 }]);
