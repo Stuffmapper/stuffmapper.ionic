@@ -2,6 +2,7 @@
   <div class="container-fluid signin" id="signin" ng-controller='UserCtrl as userCtrl'>
       <h3>Login</h3>
       <a ui-sref="signup">Need to Sign Up?</a>
+
      <form name="form">
         <div class="form-group">
           <label for="username"><b>Username or Email</b> *</label>
@@ -20,6 +21,8 @@
 
         <button class="btn btn-warning " ng-click='main.back()'>Cancel</button>
       </form>
+      <br>
+      <a href="#" ng-click="userCtrl.resetPW()">Forgot password?</a>
       <br>
       
       <button class="loginBtn loginBtn-google" ng-click='userCtrl.signinGoogle()'>Google Signin</button>

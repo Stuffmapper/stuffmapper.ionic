@@ -4,7 +4,6 @@ angular.module('stuffmobile')
     back: function() {
       var previous = $ionicHistory.backView().stateName;
       if ($ionicHistory.backView().stateName) {
-        console.log('previousState', $ionicHistory.backView().stateName)
         if (previous == 'signup' || previous == 'terms' || previous == 'privacy') {
           $state.go('tabs.map', {}, {reload: true});
         } else {
@@ -13,7 +12,6 @@ angular.module('stuffmobile')
       } else {
         $state.go('tabs.map', {}, {reload: true});
       }
-      // $state.go('tabs.map', {}, {reload: true});
     }
   }
 }])

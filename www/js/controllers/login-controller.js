@@ -11,6 +11,16 @@ angular.module('stuffmobile')
 
   //send to resets pw
   userCtrl.resetPW = function() {
+    $ionicPopup.prompt({
+      title: 'Password Reset',
+      template: 'Enter your email to reset password',
+      inputType: 'email',
+      inputPlaceholder: 'Your@email.com'
+    }).then(function(email) {
+      UserService.passwordReset(email).then(function() {
+        BackService.back();
+      })
+    });
   }
 
   //sign in user
@@ -50,6 +60,7 @@ angular.module('stuffmobile')
       console.log(err);
     });
   }
+
 
   //back to home
   userCtrl.cancel = function() {

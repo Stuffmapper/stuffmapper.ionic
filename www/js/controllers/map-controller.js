@@ -1,22 +1,20 @@
 angular.module('stuffmobile')
 .controller('MapCtrl', ['$scope', '$state', 'Map', 'PostsService', function($scope, $state, Map, PostsService) {
 
-  if(Map.getMap) {
-    Map.loadMarkers(Map.getMap).then(function(posts) {
-      $scope.posts = posts;
-    });
-  } else {
-    $(function(){
-      document.addEventListener("deviceready", onDeviceReady, false);
-    })
-  }
+  document.addEventListener("deviceready", onDeviceReady, false);
 
   function onDeviceReady() {
-    Map.getInit().then(function(map) {
-      Map.loadMarkers(map).then(function(posts){
+    if(Map.getMap) {
+      Map.loadMarkers(Map.getMap).then(function(posts) {
         $scope.posts = posts;
       });
-    });
+    } else {
+      Map.getInit().then(function(map) {
+        Map.loadMarkers(map).then(function(posts){
+          $scope.posts = posts;
+        });
+      });
+    }
   }
 
 

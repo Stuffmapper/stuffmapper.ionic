@@ -200,6 +200,17 @@ angular.module('stuffmobile')
       } 
       return defer.promise;
     },
+    passwordReset: function(email) {
+      return $http({
+        url: ApiEndpoint.url + "/password_resets",
+        method: "POST",
+        params: {email: email}
+      }).success(function() {
+        $ionicPopup.alert({title: "Password Rest", template: "Reset email sent"})
+      }).error(function() {
+        $ionicPopup.alert({title: "error", template: "Something went wrong, please double check your email."})
+      })
+    },
 
     getCurrentUser: function(){
       return currentUser;
