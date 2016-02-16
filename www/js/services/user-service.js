@@ -36,56 +36,67 @@ angular.module('stuffmobile')
       });
   }
   return {
-    facebookLogin: function(keyData, callback) {
-      return $http.post(ApiEndpoint.authUrl + '/auth/facebook/callback', keyData)
-      .success(function(data) {
-        console.log("succesful facebook login", data);
-        if (data && data.user) {
-          $ionicPopup.alert({
-            title: 'Success :)',
-            template: data.user + ' is now logged in',
+    facebookLogin: function() {
+      var defer = $q.defer();
+      var url =  ApiEndpoint.authUrl + '/auth/facebook';
+      var ref = window.open(url, '_blank', 'location=no');
+      ref.addEventListener('loadstop', function(ev) {
+        if (ev.url.indexOf(ApiEndpoint.authUrl) !== -1) {
+          ref.executeScript({
+            code: "localStorage.getItem('sMToken');"
+          }, function(token) {
+              if(token){
+                var data = JSON.parse(token);
+                  LocalService.set('sMToken', token);
+                  ref.close();
+                  $ionicPopup.alert({
+                  title: 'Success :)',
+                  template: data.user + ' is now logged in',
+                });
+                  defer.resolve(data);
+              } else { 
+                ref.close();
+                $ionicPopup.alert({
+                  title: 'Error :(',
+                  template: 'The user us not logged in',
+                });
+                defer.reject('failed login');
+              }
           });
-          currentUser = data.user;
-          that.token = data.token;
-          LocalService.set('sMToken', JSON.stringify(data));
-          return callback(null, data);
         }
-        // return callback(null, data);
-      }).error(function(err) {
-        $ionicPopup.alert({
-          title: 'Error :(',
-          template: 'There was an error logging in, please try again later',
-        })
-        LocalService.unset('sMToken');
-        currentUser = false;
-        // return callback(err);
       });
+      return defer.promise;
     },
     googleLogin: function(keyData, callback) {
-      return $http.post(ApiEndpoint.authUrl + '/auth/google_oauth2/callback', keyData)
-      .success(function(data) {
-        console.log("succesful google login", data);
-        if (data && data.user) {
-          $ionicPopup.alert({
-            title: 'Success :)',
-            template: data.user + ' is now logged in',
+      var defer = $q.defer();
+      var url =  ApiEndpoint.authUrl + '/auth/google';
+      var ref = window.open(url, '_blank', 'location=no');
+      ref.addEventListener('loadstop', function(ev) {
+        if (ev.url.indexOf(ApiEndpoint.authUrl) !== -1) {
+          ref.executeScript({
+            code: "localStorage.getItem('sMToken');"
+          }, function(token) {
+              if(token){
+                var data = JSON.parse(token);
+                  LocalService.set('sMToken', token);
+                  ref.close();
+                  $ionicPopup.alert({
+                  title: 'Success :)',
+                  template: data.user + ' is now logged in',
+                });
+                  defer.resolve(data);
+              } else { 
+                ref.close();
+                $ionicPopup.alert({
+                  title: 'Error :(',
+                  template: 'The user us not logged in',
+                });
+                defer.reject('failed login');
+              }
           });
-          currentUser = data.user;
-          that.token = data.token;
-          LocalService.set('sMToken', JSON.stringify(data));
-          return callback(null, data);
         }
-        // return callback(null, data);
-      }).error(function(err) {
-        console.log("succesful google login");
-        $ionicPopup.alert({
-          title: 'Error :(',
-          template: 'There was an error logging in, please try again later',
-        })
-        LocalService.unset('sMToken');
-        currentUser = false;
-        // return callback(err);
       });
+      return defer.promise;
     },
     signUp: function(userInfo) {
       console.log('user infor in signUp', userInfo)

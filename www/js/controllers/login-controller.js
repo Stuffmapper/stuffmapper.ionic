@@ -31,26 +31,23 @@ angular.module('stuffmobile')
   }
 
   userCtrl.signinGoogle = function() {
-
-      UserService.googleLogin()
+    UserService.googleLogin()
+    .then(function(data){
+      $scope.user = data.user
+      BackService.back();
+    },function(err){
+      console.log(err);
+    });
 
   }
 
   userCtrl.signinFacebook = function() {
-    var url =  ApiEndpoint.authUrl + '/auth/facebook';
-    if ($window.cordova) {
-      url += '?redirect=/'+ encodeURIComponent('http://i.imgur.com/XseoGPD.png')
-    } else {
-      url += '?redirect=' + encodeURIComponent(window.location.href);
-    }
-    var ref = window.open(url, '_blank', 'location=no');
-    ref.addEventListener('loadstop', function(ev) {
-      alert("hello")
-      if (ev.url.indexOf('/auth/facebook') === -1) {
-        ref.close();
-        $scope.load();
-
-      }
+    UserService.facebookLogin()
+    .then(function(data){
+      $scope.user = data.user
+      BackService.back();
+    },function(err){
+      console.log(err);
     });
   }
 
