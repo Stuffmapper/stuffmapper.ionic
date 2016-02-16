@@ -58,7 +58,7 @@ angular.module('stuffmobile')
                 ref.close();
                 $ionicPopup.alert({
                   title: 'Error :(',
-                  template: 'The user us not logged in',
+                  template: 'The user is not logged in',
                 });
                 defer.reject('failed login');
               }
@@ -89,7 +89,7 @@ angular.module('stuffmobile')
                 ref.close();
                 $ionicPopup.alert({
                   title: 'Error :(',
-                  template: 'The user us not logged in',
+                  template: 'The user is not logged in',
                 });
                 defer.reject('failed login');
               }
