@@ -49,6 +49,7 @@ angular.module('stuffmobile')
                 var data = JSON.parse(token);
                   LocalService.set('sMToken', token);
                   ref.close();
+                   currentUser = data.user;
                   $ionicPopup.alert({
                   title: 'Success :)',
                   template: data.user + ' is now logged in',
@@ -69,7 +70,7 @@ angular.module('stuffmobile')
     },
     googleLogin: function(keyData, callback) {
       var defer = $q.defer();
-      var url =  ApiEndpoint.authUrl + '/auth/google';
+      var url =  ApiEndpoint.authUrl + '/auth/google_oauth2';
       var ref = window.open(url, '_blank', 'location=no');
       ref.addEventListener('loadstop', function(ev) {
         if (ev.url.indexOf(ApiEndpoint.authUrl) !== -1) {
@@ -78,6 +79,7 @@ angular.module('stuffmobile')
           }, function(token) {
               if(token){
                 var data = JSON.parse(token);
+                 currentUser = data.user;
                   LocalService.set('sMToken', token);
                   ref.close();
                   $ionicPopup.alert({
