@@ -12,7 +12,7 @@ angular.module('stuffmobile')
   $scope.dib = function() {
     console.log('dibbing')
     if (!UserService.getCurrentUser()) {
-      $ionicPopup.alert({title: 'Alert', template: 'Sign in to Dibs items'})
+      $ionicPopup.alert({title: 'Alert', template: '<p><a ui-sref="login">Sign in</a> to Dibs items<p>'})
     } else {
       var post = $scope.post;
       post.dib().then(function(data) {
